@@ -1,0 +1,598 @@
+body {
+  background-color: #fff;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+  color: #2C3B42;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 2.5rem;
+}
+
+@media (max-width: 992px) {
+  h1 {
+    margin-top: 50px;
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.75rem;
+  }
+}
+
+/* Mengatur label ketika input terpilih */
+.form-check-input:checked ~ .form-check-label {
+  color: #2C3B42;
+  font-weight: bold;
+}
+
+/* Mengatur lebar kotak select */
+.select2-container--bootstrap-5 .select2-selection--single {
+  border: 1.5px solid #2C3B42;
+  border-radius: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  height: calc(1.5em + 0.75rem + 2px);
+  width: 100%;         
+  max-width: 500px; 
+}
+
+/* Mengatur teks dalam kotak select dan tombol */
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered,
+.btn {
+  color: #2C3B42;
+  font-weight: bold;
+  font-size: 1rem;
+  white-space: nowrap; /* Mencegah teks dalam select untuk membungkus */
+}
+
+/* Mengatur panah dalam kotak select */
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow b {
+  border-color: #2C3B42 transparent transparent transparent;
+}
+
+/* Mengatur opsi yang terpilih dalam hasil dropdown */
+.select2-container--bootstrap-5 .select2-results__option[aria-selected="true"] {
+  background-color: #65B789 !important;
+  color: #ffffff !important;
+  width: 100%; 
+  max-width: 500px;
+}
+
+/* Mengatur kotak pencarian dalam dropdown */
+.select2-container--bootstrap-5 .select2-search--dropdown .select2-search__field {
+  border-color: #65B789 !important;
+}
+
+.select2-container--bootstrap-5 .select2-search--dropdown {
+  border-color: #65B789 !important;
+  width: 100%;       
+  max-width: 500px;
+  box-sizing: border-box; 
+}
+
+/* Mengatur kotak dropdown untuk menyesuaikan dengan lebar yang diinginkan */
+.select2-container--bootstrap-5 .select2-dropdown {
+  width: 100%;
+  max-width: 500px;
+}
+
+.form-label,
+.add-form-label {
+  color: #2C3B42;
+  font-weight: bold;
+  font-size: 1.3em;
+  display: block;
+}
+@media (max-width: 992px) {
+  .form-label,
+  .add-form-label {
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 768px) {
+  .form-label,
+  .add-form-label {
+    font-size: 1em;
+  }
+}
+
+.add-form-control {
+  border-width: 2px;
+  border-color: #2C3B42 !important;
+  display: block;
+  width: 50%;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 8px;
+}
+@media (max-width: 992px) {
+  .add-form-control {
+    width: 50%;
+    padding: 8px;
+    font-size: 0.95rem;
+  }
+}
+@media (max-width: 768px) {
+  .add-form-control {
+    width: 75%;
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+}
+@media (max-width: 576px) {
+  .add-form-control {
+    width: 100%;
+    padding: 4px;
+    font-size: 0.85rem;
+  }
+}
+
+/* CSS untuk gambar dan input file */
+.gambar {
+  width: 50%;
+  height: auto;
+  margin-bottom: 10px;
+}
+.input-gambar {
+  width: 50%;
+}
+@media (max-width: 922px) {
+  .gambar {
+      width: 50%; 
+  }
+  .input-gambar {
+      width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .gambar {
+      width: 75%;
+  }
+  .input-gambar {
+      width: 75%;
+  }
+}
+@media (max-width: 576px) {
+  .gambar {
+      width: 100%;
+  }
+  .input-file {
+      width: 100%;
+  }
+}
+
+.no-hover-link {
+  display: inline-block;
+  margin-bottom: 5px;
+  color:#2C3B42;
+  text-decoration: none;
+
+}
+
+.no-hover-link:hover {
+  color: #2C3B42; 
+  text-decoration: none;  
+}
+
+.input-file {
+  width: 50%;
+  border-color: #2C3B42;
+  border-width: 2px;
+  border-radius: 5px;
+
+}
+
+@media (max-width: 922px) {
+  .no-hover-link,
+  .input-berkas {
+      width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .no-hover-link,
+  .input-berkas {
+      width: 75%;
+  }
+}
+
+@media (max-width: 576px) {
+  .no-hover-link,
+  .input-berkas {
+      width: 100%;
+  }
+}
+
+.mb-3 {
+  margin-bottom: 1rem !important;
+}
+.form-check-input {
+  margin-top: 0.3rem;
+  margin-left: 0;
+}
+.fixed-top {
+  top: 0;
+  z-index: 1030;
+}
+
+.btn {
+  background-color: #2C3B42; 
+  border-color: #fff;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.btn:hover {
+  background-color: #65B789;
+  border-color: #fff; 
+  color: #fff;
+  font-weight: bold;
+}
+
+
+thead {
+  background-color: #2C3B42 !important;
+  color: #fff;
+}
+
+table {
+  width: 100% !important;
+  border-collapse: collapse;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+}
+
+.table td {
+  vertical-align: middle;
+}
+.centered-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 999px) {
+  table {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 768px) {
+  table {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  table {
+    font-size: 0.7rem;
+  }
+}
+
+
+/* CSS untuk mengatur tabel */
+.table-container {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* CSS untuk menetapkan lebar tetap untuk kolom tabel data */
+.fixed-width-column {
+  width: 275px;
+}
+.action-column {
+  width: 150px; 
+}
+
+.fixed-user-column {
+  width: 220px; 
+}
+.fixed-aksi-column {
+  width: 270px; 
+}
+
+/* Ubah warna kolom sebelah kiri */
+.table th {
+  background-color: #2C3B42; 
+  color: #fff;
+}
+.row.my-2 .col-md h3 {
+  color: #2C3B42;
+}
+
+.table.table-striped.mb-0.fixed-width-table th {
+  width: 250px !important; 
+}
+
+.table.table-striped.mb-0.fixed-width-table td {
+  word-wrap: break-word;
+}
+
+/* Media query untuk layar kecil */
+@media (max-width: 768px) {
+  .table.table-striped.mb-0.fixed-width-table th {
+    width: 150px !important; /* Kurangi ukuran kolom pada layar kecil */
+  }
+}
+
+/* Media query untuk layar sangat kecil */
+@media (max-width: 576px) {
+  .table.table-striped.mb-0.fixed-width-table th {
+    width: 100px !important;
+  }
+}
+
+
+/*Login*/
+.login-box-area {
+  width: 930px;
+}
+.login-right-box {
+  padding: 40px 30px 40px 40px;
+}
+::placeholder {
+  font-size: 15px;
+}
+.rounded-4 {
+  border-radius: 20px;
+}
+.rounded-5 {
+  border-radius: 30px;
+}
+@media only screen and (max-width: 768px) {
+  .login-box-area {
+    margin: 0 10px;
+  }
+
+  .login-left-box {
+    height: 100px;
+    overflow: hidden;
+  }
+
+  .login-right-box {
+    padding: 20px;
+  }
+}
+.featured-image img {
+  margin-top: 25px;
+}
+.text-white {
+  margin-top: -30px;
+}
+.header-text {
+  text-align: center; 
+  margin-bottom: 20px;
+}
+.header-text h2 {
+  font-size: 25px; 
+  color: #2C3B42; 
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.header-text p {
+  font-size: 14px; 
+  color: #616161; 
+}
+
+/* Search */
+.header {
+  padding: 30px 10px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start; 
+  flex-direction: column; /* Stack items vertically */
+  box-shadow: 0 2px 4px rgba(44, 59, 66, 0.7);
+  border-radius: 5px;
+  background-color: #ebeaea;
+  width: 50%;
+}
+.search-box {
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  border: 1.8px solid #2C3B42;
+  background-color: #ffffff;
+  padding: 4px;
+  height: 45px; /* Sesuaikan tinggi agar sesuai dengan tinggi tombol */
+  margin-bottom: 20px; /* Tambahkan margin bawah untuk jarak */
+  margin-top: 15px;
+  width: 100%; /* Mengisi lebar penuh dari parent (header) */
+  max-width: 400px; /* Atur lebar maksimum jika perlu */
+}
+
+.icon-container {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 6px;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  fill: #2C3B42;
+}
+.search-input {
+  flex: 1;
+  color: #2C3B42;
+  height: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+  width: 100%; /* Mengisi lebar penuh dari parent (header) */
+  max-width: 400px; /* Atur lebar maksimum jika perlu */
+}
+.search-button {
+  background-color: #2C3B42;
+  color: #ffffff;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.search-button:hover {
+  background-color: #65B789;
+}
+
+@media (max-width: 992px) {
+  .header{
+    width: 70%;
+  }
+}
+
+@media (max-width: 880px) {
+  .header{
+    width: 70%;
+  }
+}
+
+@media (max-width: 768px) {
+  .header{
+    width: 70%;
+  }
+}
+
+@media (max-width: 576px) {
+  .header{
+    width: 100%;
+  }
+}
+@media (max-width: 400px) {
+  .header{
+    width: 100%;
+  }
+  .search-input {
+    height: 100%;
+    padding: 5px;
+    font-size: 12px;
+  }
+  .search-button {
+    padding: 4px 6px;
+  }
+}
+
+/*Tombol Download*/
+.download-button {
+  background-color: #2C3B42;
+  color: white;
+  padding: 12px 15px;
+  border-radius: 5px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 20px;
+  right: 50px;
+}
+.download-button i {
+  margin-right: 10px;
+}
+.download-button:hover {
+  background-color: #65B789;
+}
+@media (max-width: 992px) {
+  .download-button {
+    top: 20px;
+    right: 40px;
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+}
+@media (min-width: 768px) and(max-width: 830px) {
+  .download-button {
+    top: 20px;
+    right: 40px;
+    padding: 6px 8px;
+    font-size: 9px;
+  }
+}
+@media (max-width: 576px) {
+  .download-button {
+    top: 20px;
+    right: 40px;
+    padding: 5px 6px;
+    font-size: 8px;
+  }
+}
+
+/*Pagingnation*/
+.pagination .page-item .page-link {
+  border-color: #2C3B42;
+  color: #2C3B42;
+}
+/* Warna latar belakang dan teks untuk tombol aktif */
+.pagination .page-item.active .page-link {
+  background-color: #2C3B42;
+  border-color: #2C3B42;
+  color: #fff;
+}
+/* Warna latar belakang dan teks untuk tombol Previous dan Next */
+.pagination .page-item .page-link.prev, .pagination .page-item .page-link.next {
+  background-color: #2C3B42;
+  border-color:  #fff;
+}
+/* Warna latar belakang dan teks untuk tombol non-aktif */
+.pagination .page-item.disabled .page-link {
+  background-color:#fff;
+  border-color: #2C3B42;
+  color:#2C3B42;
+}
+
+.koordinat{
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/*radio button */
+.custom-radio-input[type="radio"] {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.custom-radio-input[type="radio"]:checked {
+  background-color: #2C3B42;
+  border-color: #2C3B42;
+}
+.custom-radio-lable {
+  font-size:18px;
+}
+
+.custom-select-search {
+  width: 100%;
+  max-width: 500px;
+}
+
+@media (max-width: 1400px) {
+  .custom-select-search {
+    width: 50%;
+  }
+}
+@media (max-width: 992px) {
+  .custom-select-search {
+    width: 50%;
+  }
+}
+@media (max-width: 768px) {
+  .custom-select-search {
+    width: 75%;
+  }
+}
+@media (max-width: 576px) {
+  .custom-select-search {
+    width:100%;
+  }
+}
