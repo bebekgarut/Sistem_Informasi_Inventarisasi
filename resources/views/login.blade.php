@@ -16,17 +16,15 @@
 <body>
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="row border rounded-5 p-3 bg-white shadow login-box-area">
-            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column login-left-box"
-                style="background: #2C3B42">
+            <div class="col-md-6 rounded-4 d-flex justify-content-center align-items-center flex-column">
                 <div class="featured-image mb-3">
-                    <img src="{{ asset('img/login.png') }}" class="img-fluid" style="width: 400px;">
-                </div class="mb-2">
-                <p class="text-white fs-2" style="font-weight: 600;">Be Verified</p>
+                    <img src="{{ asset('img/bpkad.jpg') }}" class="img-fluid" style="width: 400px; border-radius: 8px;">
+                </div>
             </div>
             <div class="col-md-6 login-right-box">
                 <div class="row align-items-center">
-                    <div class="header-text mb-4">
-                        <h2>Selamat Datang</h2>
+                    <div class="header-text mb-3 mt-1">
+                        <h2>Sinta BMD Kota Palembang</h2>
                         <p>Silahkan Masukkan username dan password anda.</p>
                         @if (session()->has('gagal'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -54,6 +52,9 @@
             </div>
         </div>
     </div>
+
+    <div class="overlay"></div>
+
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">

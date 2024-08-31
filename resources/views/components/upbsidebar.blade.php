@@ -1,3 +1,4 @@
+<div class="overlay"></div>
 <nav id="sidebar">
     <div class="custom-menu">
         <button type="button" id="sidebarCollapse" class="btn-side">
@@ -16,7 +17,7 @@
                 class="sidebar-item {{ Request::is('halaman*') || Request::is('add-upb*') || Request::is('detail-upb*') || Request::is('edit-upb*') ? 'active' : '' }}">
                 <a href="#" class="sidebar-link collapsed" data-bs-target="#data" data-bs-toggle="collapse"
                     aria-expanded="false">
-                    <i class="fa fa-file mr-3" style="color:#65B789"></i> Rekap Data</a>
+                    <i class="fa fa-file mr-3" style="color:#65B789"></i> Data KIB</a>
                 <ul id="data" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                     <li
                         class="sidebar-item {{ Request::is('halaman-upb-a/*') || Request::is('add-upb-a/*') || Request::is('detail-upb-a/*') || Request::is('edit-upb-a/*') ? 'active' : '' }}">

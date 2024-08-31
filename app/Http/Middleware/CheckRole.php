@@ -17,16 +17,16 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next): Response
     {
+        $user = Auth::user();
         if (Auth::check()) {
             if (Auth::user()->role == 'admin') {
                 return $next($request);
             } else {
-
-                abort(404);
+                $kodeUpb = $user->KODE_UPB;
+                return redirect()->route('home-upb', ['KODE_UPB' => $kodeUpb]);
             }
         } else {
-
-            abort(404);
+            return redirect()->route('login');
         }
     }
 }

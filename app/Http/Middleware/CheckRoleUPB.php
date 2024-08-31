@@ -27,13 +27,13 @@ class CheckRoleUPB
                 if ($userKodeUpb == $requestKodeUpb) {
                     return $next($request);
                 } else {
-                    return abort(403, 'Unauthorized action.');
+                    return redirect()->route('home-upb', ['KODE_UPB' => $userKodeUpb]);
                 }
             } else {
-                return abort(403, 'Unauthorized action.');
+                return redirect()->route('home');
             }
         } else {
-            return abort(403, 'Unauthorized action.');
+            return redirect()->route('login');
         }
     }
 }

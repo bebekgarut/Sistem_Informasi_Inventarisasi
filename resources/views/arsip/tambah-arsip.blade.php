@@ -92,21 +92,18 @@
                     const listItem = document.createElement('li');
                     listItem.textContent = file.name;
 
-                    // Tambahkan tombol hapus untuk setiap file
                     const removeButton = document.createElement('button');
-                    removeButton.textContent = 'Hapus';
-                    removeButton.style.marginLeft = '10px';
-                    removeButton.type = 'button'; // Tambahkan type="button" agar tidak submit form
+                    removeButton.innerHTML = '&times;'; // Menggunakan simbol 'x'
+                    removeButton.className = 'remove-button'; // Menambahkan kelas CSS
+                    removeButton.type = 'button';
                     removeButton.addEventListener('click', function() {
-                        // Hapus file dari filesArray
+
                         filesArray = filesArray.filter(f => f.name !== file.name);
 
-                        // Perbarui DataTransfer dan file input
                         const dataTransfer = new DataTransfer();
                         filesArray.forEach(f => dataTransfer.items.add(f));
                         fileInput.files = dataTransfer.files;
 
-                        // Hapus elemen list dari DOM
                         fileList.removeChild(listItem);
                     });
 
@@ -114,17 +111,14 @@
                     fileList.appendChild(listItem);
                 });
 
-                // Buat DataTransfer baru untuk mengupdate input file
                 const dataTransfer = new DataTransfer();
                 filesArray.forEach(file => {
                     dataTransfer.items.add(file);
                 });
 
-                // Set file input dengan file-file dari DataTransfer
                 fileInput.files = dataTransfer.files;
             });
         </script>
-
         <script src="js/jquery.min.js"></script>
         <script src="js/popper.js"></script>
         <script src="js/bootstrap.min.js"></script>

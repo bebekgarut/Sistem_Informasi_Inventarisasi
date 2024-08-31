@@ -33,22 +33,39 @@
 <body>
     <div class="wrapper">
         <x-sidebar></x-sidebar>
-
         <div id="content" class="p-4 p-md-5 pt-5">
+            <div class="container">
+                <div class= "header">
+                    <div class="container custom-select-container">
+                        <form action="{{ route('arsipSearch') }}">
+                            <label for="custom-select1" class="form-label perintah">Masukkan Kata Kunci</label>
+                            <div class="search-box" method="GET">
+                                <div class="icon-container">
+                                    <svg viewBox="0 0 20 20" aria-hidden="true" class="icon">
+                                        <path
+                                            d="M16.72 17.78a.75.75 0 1 0 1.06-1.06l-1.06 1.06ZM9 14.5A5.5 5.5 0 0 1 3.5 9H2a7 7 0 0 0 7 7v-1.5ZM3.5 9A5.5 5.5 0 0 1 9 3.5V2a7 7 0 0 0-7 7h1.5ZM9 3.5A5.5 5.5 0 0 1 14.5 9H16a7 7 0 0 0-7-7v1.5Zm3.89 10.45 3.83 3.83 1.06-1.06-3.83-3.83-1.06 1.06ZM14.5 9a5.48 5.48 0 0 1-1.61 3.89l1.06 1.06A6.98 6.98 0 0 0 16 9h-1.5Zm-1.61 3.89A5.48 5.48 0 0 1 9 14.5V16a6.98 6.98 0 0 0 4.95-2.05l-1.06-1.06Z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <input type="text" class="search-input" name="keyword" placeholder="Search..."
+                                    value="{{ request('keyword') }}">
+                                <button class="search-button" type="submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <br><br>
             <div class="container">
                 <div class="row my-2">
                     <div class="col-md">
-                        <h3 class="text-center fw-bold text-uppercase">Arsip Lainnya</h3>
+                        @if (request()->has('keyword') && request()->input('keyword') != '')
+                            <h3 class="fw-bold text-uppercase">Hasil Pencarian : {{ request()->input('keyword') }}</h3>
+                        @else
+                            <h3 class="fw-bold text-uppercase">Arsip Lainnya</h3>
+                        @endif
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
-                        @if (session('hapus'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('hapus') }}
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
                             </div>
@@ -58,13 +75,13 @@
                 </div>
                 <div class="row my-2">
                     <div class="col-md">
-                        <a href="{{ route('arsipTambah') }}" class="btn "><i class="fas fa-plus"></i>&nbsp;Tambah
+                        <a href="{{ route('arsipTambah') }}" class="btn"><i class="fas fa-plus"></i>&nbsp;Tambah
                             Data</a>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="table-responsive col-md">
-                        {{-- Showing {{ $arsip->count() }} of {{ $arsip->total() }} data --}}
+                        Showing {{ $arsip->count() }} of {{ $arsip->total() }} data
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
@@ -72,7 +89,7 @@
                                     <th class="fixed-width-column">Nama Subjek</th>
                                     <th class="fixed-width-column">Alamat</th>
                                     <th class="fixed-width-column">File</th>
-                                    <th class="action-column">Aksi</th>
+                                    <th class="fixed-aksi-column">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,17 +101,50 @@
                                         <td>
                                             @foreach ($item->files as $file)
                                                 <a href="{{ route('filesArsip', ['filename' => basename($file->file_path)]) }}"
-                                                    style="color: blue">{{ basename($file->file_path) }}</a><br>
+                                                    style="color: blue"><i class="fas fa-file-pdf mr-1"
+                                                        style="color: red"></i>{{ basename($file->file_path) }}</a><br>
                                             @endforeach
                                         </td>
                                         <td>
-                                            <a class="btn">edit</a>
-                                            <a class="btn">hapus</a>
+                                            <a href="{{ route('arsipEdit', $item->id) }}" class="btn btn-sm user"><i
+                                                    class="bi bi-pencil-square"></i>&nbsp;Edit</a>
+                                            <button class="btn btn-sm user" data-bs-toggle="modal"
+                                                data-bs-target="#hapusModal{{ $item->id }}"><i
+                                                    class="bi bi-trash-fill"></i>&nbsp;Hapus</button>
+                                            <div class="modal fade" id="hapusModal{{ $item->id }}" tabindex="-1"
+                                                aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title"
+                                                                id="hapusModalLabel{{ $item->id }}">Konfirmasi
+                                                                Hapus</h5>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body text-left">
+                                                            Apakah Anda yakin ingin menghapus data
+                                                            <b>{{ $item->nama_subjek }}</b>?
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <form method="post"
+                                                                action="{{ route('arsipHapus', $item->id) }}">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit"
+                                                                    class="btn btn-danger">Hapus</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="5" class="text-center">Tidak ada data KIB B yang tersedia.
+                                        <td colspan="5" class="text-center">Tidak ada data yang tersedia.
                                         </td>
                                     </tr>
                                 @endforelse
@@ -107,7 +157,7 @@
                         <div class="col-12">
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center">
-                                    {{-- {{ $arsip->links('pagination::bootstrap-4') }} --}}
+                                    {{ $arsip->links('pagination::bootstrap-4') }}
                                 </ul>
                             </nav>
                         </div>

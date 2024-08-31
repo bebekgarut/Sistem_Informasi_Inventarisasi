@@ -1,6 +1,19 @@
 body {
-  background-color: #fff;
   font-family: 'Roboto', sans-serif;
+  background: url('/img/bpkad.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+  overflow-x: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.7); /* Putih dengan opacity 50% */
+  pointer-events: none; /* Agar overlay tidak mengganggu interaksi */
+  z-index: -1;
 }
 
 h1 {
@@ -132,36 +145,193 @@ h1 {
 }
 
 /* CSS untuk gambar dan input file */
-.gambar {
-  width: 50%;
-  height: auto;
-  margin-bottom: 10px;
-}
+.gambar, 
 .input-gambar {
+    width: 50%;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+/* Responsif untuk lebar yang berbeda */
+@media (max-width: 992px) {
+    .gambar, 
+    .input-gambar {
+        width: 50%;
+    }
+}
+
+@media (max-width: 768px) {
+    .gambar, 
+    .input-gambar {
+        width: 75%;
+    }
+}
+
+@media (max-width: 576px) {
+    .gambar, 
+    .input-gambar {
+        width: 100%;
+    }
+}
+
+#fileList {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
   width: 50%;
 }
-@media (max-width: 922px) {
-  .gambar {
-      width: 50%; 
-  }
-  .input-gambar {
+
+#fileList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 8px;
+  border: 1px solid #54656d;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media (max-width: 992px) {
+  #fileList {
       width: 50%;
+      padding: 8px;
+      font-size: 0.95rem;
   }
 }
+
 @media (max-width: 768px) {
-  .gambar {
+  #fileList {
       width: 75%;
-  }
-  .input-gambar {
-      width: 75%;
+      padding: 6px;
+      font-size: 0.9rem;
   }
 }
+
 @media (max-width: 576px) {
-  .gambar {
+  #fileList {
       width: 100%;
+      padding: 4px;
+      font-size: 0.85rem;
   }
+}
+
+/* Gaya untuk tombol silang */
+.remove-button {
+  background-color: transparent;
+  border: none;
+  color: #ff5c5c;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 0;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+.remove-button:hover {
+  color: #ff1a1a;
+}
+
+.input-file {
+  border-width: 2px;
+  border-color: #2C3B42 !important;
+  display: block;
+  width: 50% !important;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+
+/* Responsif untuk lebar yang berbeda */
+@media (max-width: 992px) {
+    .input-file {
+    width: 50% !important;
+    font-size: 0.95rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .input-file {
+    width: 75% !important;
+    font-size: 0.9rem;
+    }
+  }
+
+  @media (max-width: 576px) {
   .input-file {
+  width: 100% !important;
+  font-size: 0.85rem;
+  }
+}
+
+/* Mengatur gaya untuk daftar file */
+.file-list {
+  list-style-type: none;
+  width: 50%; 
+  margin: 0px;
+}
+
+.file-list ul {
+  list-style: none; 
+  padding: 4px;
+  margin: 0;
+  font-size: 12px;
+  padding: 8px;
+  margin-bottom: 0.5rem; 
+  border: 2px solid #2C3B42;
+  border-radius: 5px;
+  background-color: #fff;
+}
+.file-list li:last-child {
+  margin-bottom: 0; 
+}
+
+.file-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.file-list button.btn-delete {
+  background-color: #dc3545; 
+  border: none;
+  color: #fff;
+  padding: 0.25rem;
+  font-size: 0.8rem;
+  cursor: pointer; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.file-list a:hover {
+  background-color: #e2e6ea;
+}
+.file-list button.btn-delete:hover {
+  background-color: #c82333; 
+}
+@media (max-width: 992px) {
+  .file-list {
+      width: 50%;
+      padding: 8px;
+      font-size: 0.95rem;
+      margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .file-list {
+      width: 75%;
+      padding: 4px;
+      font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .file-list {
       width: 100%;
+      padding: 4px;
+      font-size: 0.85rem;
+      margin: 0;
   }
 }
 
@@ -178,13 +348,6 @@ h1 {
   text-decoration: none;  
 }
 
-.input-file {
-  width: 50%;
-  border-color: #2C3B42;
-  border-width: 2px;
-  border-radius: 5px;
-
-}
 
 @media (max-width: 922px) {
   .no-hover-link,
@@ -233,10 +396,34 @@ h1 {
   font-weight: bold;
 }
 
+@media (max-width: 500px) {
+  .btn {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .detail {
+      display: flex;
+      align-items: center;
+      font-size: 0 !important; /* Sembunyikan teks */
+  }
+
+  .detail i {
+      font-size: 1.2em !important; /* Pastikan ikon tetap terlihat */
+  }
+}
+
+
+thead th {
+  position: sticky !important;
+  top: 0;
+}
 
 thead {
   background-color: #2C3B42 !important;
   color: #fff;
+  position: sticky;
 }
 
 table {
@@ -250,6 +437,7 @@ table {
 
 .table td {
   vertical-align: middle;
+  background-color: #fff !important;
 }
 .centered-cell {
   display: flex;
@@ -269,26 +457,24 @@ table {
   }
 }
 
-@media (max-width: 576px) {
-  table {
-    font-size: 0.7rem;
-  }
-}
-
-
 /* CSS untuk mengatur tabel */
 .table-container {
   width: 100%;
   max-height: 200px;
   overflow-y: auto;
+  overflow-x: auto;
+  display: block;
 }
 
 /* CSS untuk menetapkan lebar tetap untuk kolom tabel data */
+.no{
+  width: 40px;
+}
 .fixed-width-column {
-  width: 275px;
+  width: 250px;
 }
 .action-column {
-  width: 150px; 
+  width: 100px; 
 }
 
 .fixed-user-column {
@@ -303,6 +489,7 @@ table {
   background-color: #2C3B42; 
   color: #fff;
 }
+
 .row.my-2 .col-md h3 {
   color: #2C3B42;
 }
@@ -347,12 +534,15 @@ table {
   border-radius: 30px;
 }
 @media only screen and (max-width: 768px) {
-  .login-box-area {
-    margin: 0 10px;
-  }
 
-  .login-left-box {
-    height: 100px;
+  /* .login-left-box {
+    height: 230px;
+    overflow: hidden;
+  } */
+
+  .img-fluid{
+    border-radius: 8px !important;
+    height: 230px;
     overflow: hidden;
   }
 

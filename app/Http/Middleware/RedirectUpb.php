@@ -19,10 +19,9 @@ class RedirectUpb
         $user = Auth::user();
 
         if ($user && $user->role === 'upb') {
-            $kodeUpb = $user->KODE_UPB; // Sesuaikan dengan nama atribut KODE_UPB di model User
+            $kodeUpb = $user->KODE_UPB;
             return redirect()->route('home-upb', ['KODE_UPB' => $kodeUpb]);
         }
-
         return $next($request);
     }
 }

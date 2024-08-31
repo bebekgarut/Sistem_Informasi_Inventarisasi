@@ -25,8 +25,7 @@ Route::get('/photos/{filename}', [ControllerA::class, 'showPhoto'])->middleware(
 Route::group(['middleware' => 'admin'], function () {
     Route::get('/home', function () {
         return view('home');
-    });
-
+    })->name('home');
     Route::get('/data_kiba', [ControllerA::class, 'index'])->name('datakiba');
     Route::get('/getUnits/{kodeBidang}', [ControllerA::class, 'getUnits']);
     Route::get('/getSubunits/{kodeUnits}', [ControllerA::class, 'getSubunits']);
@@ -86,6 +85,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/arsip/tambah', [ArsipController::class, 'tambah'])->name('arsipTambah');
     Route::post('/arsip/store', [ArsipController::class, 'store'])->name('arsipStore');
     Route::get('/arsip/edit/{id}', [ArsipController::class, 'edit'])->name('arsipEdit');
+    Route::delete('/arsip/file/hapus/{id}', [ArsipController::class, 'hapusFileEdit'])->name('arsipHapusFile');
+    Route::post('/arsip/update/{id}', [ArsipController::class, 'update'])->name('arsipUpdate');
+    Route::get('/arsip/search', [ArsipController::class, 'search'])->name('arsipSearch');
+    Route::delete('/arsip/hapus/{id}', [ArsipController::class, 'hapusArsip'])->name('arsipHapus');
     Route::get('arsip/files/{filename}', [ArsipController::class, 'showFile'])->name('filesArsip');
 });
 

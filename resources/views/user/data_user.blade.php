@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="row my-3">
-                    <div class="col-md">
+                    <div class="table-responsive col-md">
                         <div>
                             Showing {{ $users->count() }} of {{ $users->total() }} data
                         </div>
@@ -87,11 +87,11 @@
                                         <td>Password Terenkripsi</td>
                                         <td>{{ $user->role }}</td>
                                         <td>
-                                            <a href="{{ route('editDataUser', $user->id) }}" class="btn btn-sm "
+                                            <a href="{{ route('editDataUser', $user->id) }}" class="btn btn-sm user"
                                                 style="font-weight: 600; margin-top:0px;"><i
                                                     class="bi bi-pencil-square"></i>&nbsp;Edit</a>
 
-                                            <button type="button" class="btn btn-sm" data-bs-toggle="modal"
+                                            <button type="button" class="btn btn-sm user" data-bs-toggle="modal"
                                                 data-bs-target="#hapusModal{{ $user->id }}"
                                                 style="font-weight: 600; margin-top:0px;">
                                                 <i class="bi bi-trash-fill"></i>&nbsp;Hapus

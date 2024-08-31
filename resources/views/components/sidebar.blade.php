@@ -1,3 +1,4 @@
+<div class="overlay"></div>
 <nav id="sidebar" class="">
     <div class="custom-menu">
         <button type="button" id="sidebarCollapse" class="btn-side">
