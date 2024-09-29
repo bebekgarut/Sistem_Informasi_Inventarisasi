@@ -100,7 +100,7 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="no">No.</th>
                                     <th class="fixed-width-column">Nama Barang</th>
                                     <th class="fixed-width-column">Letak/Alamat</th>
                                     <th class="fixed-width-column">Keterangan</th>
@@ -126,15 +126,12 @@
             </div>
         </div>
     </div>
-
-    <script src="js/jquery.min.js"></script>
-    <script src="js/popper.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
 </body>
 

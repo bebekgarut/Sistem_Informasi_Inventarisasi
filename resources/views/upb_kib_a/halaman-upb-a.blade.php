@@ -71,7 +71,7 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="no">No.</th>
                                     <th class="fixed-width-column">Nama Barang</th>
                                     <th class="fixed-width-column">Letak/Alamat</th>
                                     <th class="fixed-width-column">Penggunaan</th>

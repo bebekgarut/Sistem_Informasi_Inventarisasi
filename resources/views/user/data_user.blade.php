@@ -72,7 +72,7 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="no">No.</th>
                                     <th class="fixed-user-column">Username</th>
                                     <th class="fixed-user-column">Password</th>
                                     <th class="fixed-user-column">Role</th>

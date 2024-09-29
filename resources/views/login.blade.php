@@ -24,7 +24,7 @@
             <div class="col-md-6 login-right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-3 mt-1">
-                        <h2>Sinta BMD Kota Palembang</h2>
+                        <h2>SiPindang Kota Palembang</h2>
                         <p>Silahkan Masukkan username dan password anda.</p>
                         @if (session()->has('gagal'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">

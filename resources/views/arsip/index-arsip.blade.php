@@ -36,7 +36,7 @@
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="container">
                 <div class= "header">
-                    <div class="container custom-select-container">
+                    <div class="custom-select-container">
                         <form action="{{ route('arsipSearch') }}">
                             <label for="custom-select1" class="form-label perintah">Masukkan Kata Kunci</label>
                             <div class="search-box" method="GET">
@@ -55,113 +55,112 @@
                 </div>
             </div>
             <br><br>
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-md">
-                        @if (request()->has('keyword') && request()->input('keyword') != '')
-                            <h3 class="fw-bold text-uppercase">Hasil Pencarian : {{ request()->input('keyword') }}</h3>
-                        @else
-                            <h3 class="fw-bold text-uppercase">Arsip Lainnya</h3>
-                        @endif
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
-                        <hr>
-                    </div>
+            <div class="row my-2">
+                <div class="col-md">
+                    @if (request()->has('keyword') && request()->input('keyword') != '')
+                        <h3 class="fw-bold text-uppercase">Hasil Pencarian : {{ request()->input('keyword') }}</h3>
+                    @else
+                        <h3 class="fw-bold text-uppercase">Arsip Digital</h3>
+                        <p class="deskripsi1 mt-0" style="font-style: italic">
+                            "Arsip Digital ini berisi dokumen-dokumen penting terkait alas hak tanah dan aset
+                            lainnya."</p>
+                    @endif
+                    @if (session('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
+                    <hr>
                 </div>
-                <div class="row my-2">
-                    <div class="col-md">
-                        <a href="{{ route('arsipTambah') }}" class="btn"><i class="fas fa-plus"></i>&nbsp;Tambah
-                            Data</a>
-                    </div>
+            </div>
+            <div class="row my-2">
+                <div class="col-md">
+                    <a href="{{ route('arsipTambah') }}" class="btn"><i class="fas fa-plus"></i>&nbsp;Tambah
+                        Data</a>
                 </div>
-                <div class="row my-3">
-                    <div class="table-responsive col-md">
-                        Showing {{ $arsip->count() }} of {{ $arsip->total() }} data
-                        <table class="table table-striped text-center mb-0">
-                            <thead>
+            </div>
+            <div class="row my-3">
+                <div class="table-responsive col-md">
+                    Showing {{ $arsip->count() }} of {{ $arsip->total() }} data
+                    <table class="table table-striped text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="no">No.</th>
+                                <th class="fixed-width-column">Nama Subjek</th>
+                                <th class="fixed-width-column">Alamat</th>
+                                <th class="fixed-width-column">File</th>
+                                <th class="fixed-aksi-column">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($arsip as $item)
                                 <tr>
-                                    <th>No.</th>
-                                    <th class="fixed-width-column">Nama Subjek</th>
-                                    <th class="fixed-width-column">Alamat</th>
-                                    <th class="fixed-width-column">File</th>
-                                    <th class="fixed-aksi-column">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @forelse ($arsip as $item)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->nama_subjek }}</td>
-                                        <td>{{ $item->alamat }}</td>
-                                        <td>
-                                            @foreach ($item->files as $file)
-                                                <a href="{{ route('filesArsip', ['filename' => basename($file->file_path)]) }}"
-                                                    style="color: blue"><i class="fas fa-file-pdf mr-1"
-                                                        style="color: red"></i>{{ basename($file->file_path) }}</a><br>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            <a href="{{ route('arsipEdit', $item->id) }}" class="btn btn-sm user"><i
-                                                    class="bi bi-pencil-square"></i>&nbsp;Edit</a>
-                                            <button class="btn btn-sm user" data-bs-toggle="modal"
-                                                data-bs-target="#hapusModal{{ $item->id }}"><i
-                                                    class="bi bi-trash-fill"></i>&nbsp;Hapus</button>
-                                            <div class="modal fade" id="hapusModal{{ $item->id }}" tabindex="-1"
-                                                aria-labelledby="hapusModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title"
-                                                                id="hapusModalLabel{{ $item->id }}">Konfirmasi
-                                                                Hapus</h5>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body text-left">
-                                                            Apakah Anda yakin ingin menghapus data
-                                                            <b>{{ $item->nama_subjek }}</b>?
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Batal</button>
-                                                            <form method="post"
-                                                                action="{{ route('arsipHapus', $item->id) }}">
-                                                                @method('DELETE')
-                                                                @csrf
-                                                                <button type="submit"
-                                                                    class="btn btn-danger">Hapus</button>
-                                                            </form>
-                                                        </div>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $item->nama_subjek }}</td>
+                                    <td>{{ $item->alamat }}</td>
+                                    <td>
+                                        @foreach ($item->files as $file)
+                                            <a href="{{ route('filesArsip', ['filename' => basename($file->file_path)]) }}"
+                                                style="color: blue"><i class="fas fa-file-pdf mr-1"
+                                                    style="color: red"></i>{{ basename($file->file_path) }}</a><br>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('arsipEdit', $item->id) }}" class="btn btn-sm user"><i
+                                                class="bi bi-pencil-square"></i>&nbsp;Edit</a>
+                                        <button class="btn btn-sm user" data-bs-toggle="modal"
+                                            data-bs-target="#hapusModal{{ $item->id }}"><i
+                                                class="bi bi-trash-fill"></i>&nbsp;Hapus</button>
+                                        <div class="modal fade" id="hapusModal{{ $item->id }}" tabindex="-1"
+                                            aria-labelledby="hapusModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="hapusModalLabel{{ $item->id }}">Konfirmasi
+                                                            Hapus</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body text-left">
+                                                        Apakah Anda yakin ingin menghapus data
+                                                        <b>{{ $item->nama_subjek }}</b>?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <form method="post"
+                                                            action="{{ route('arsipHapus', $item->id) }}">
+                                                            @method('DELETE')
+                                                            @csrf
+                                                            <button type="submit"
+                                                                class="btn btn-danger">Hapus</button>
+                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">Tidak ada data yang tersedia.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
-                    </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Tidak ada data yang tersedia.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        <div class="col-12">
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    {{ $arsip->links('pagination::bootstrap-4') }}
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {{ $arsip->links('pagination::bootstrap-4') }}
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>

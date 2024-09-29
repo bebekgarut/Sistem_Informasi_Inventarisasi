@@ -97,7 +97,7 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="no">No.</th>
                                     <th class="fixed-width-column">Nama Barang</th>
                                     <th class="fixed-width-column">Letak/Alamat</th>
                                     <th class="fixed-width-column">Penggunaan</th>
@@ -127,7 +127,7 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
-
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
 </body>
 

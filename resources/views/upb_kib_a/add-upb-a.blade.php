@@ -19,8 +19,6 @@
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
     @vite(['resources/js/app.js'])
-
-
 </head>
 
 <body>

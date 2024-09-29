@@ -1,9 +1,10 @@
 
 body {
-  font-family: 'Roboto', sans-serif;
   background: url('/img/bpkad.jpg') no-repeat center center fixed !important;
   background-size: cover !important;
   overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 .overlay {
   position: fixed;
@@ -11,7 +12,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.7);
   pointer-events: none; 
   z-index: -1;
 }
@@ -347,25 +348,6 @@ pre {
 .pre-scrollable {
   max-height: 340px;
   overflow-y: scroll; }
-
-.container {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto; }
-  @media (min-width: 576px) {
-    .container {
-      max-width: 540px; } }
-  @media (min-width: 768px) {
-    .container {
-      max-width: 720px; } }
-  @media (min-width: 992px) {
-    .container {
-      max-width: 960px; } }
-  @media (min-width: 1200px) {
-    .container {
-      max-width: 1140px; } }
 
 .container-fluid {
   width: 100%;
@@ -5848,7 +5830,6 @@ h1, h2, h3, h4, h5,
 
 /*sidebar*/
   .wrapper {
-    display: flex;
     width: 100%;
   }
   
@@ -5873,15 +5854,17 @@ h1, h2, h3, h4, h5,
   #sidebar h1 {
     margin-bottom: 28px;
     font-weight: 700;
-    font-size: 30px;
+    font-size: 35px;
+    line-height: 1.2;
   }
   #sidebar h1 .logo {
-    color: #fff;
+    color: #FFF;
   }
   #sidebar h1 .logo span {
-    font-size: 20px;
+    font-size: 17px;
     color: #65B789;
     display: block;
+    line-height: 1.4;
   }
   #sidebar ul.components {
     padding: 0;
@@ -5965,8 +5948,6 @@ h1, h2, h3, h4, h5,
     
   }
 
-  
-
   #sidebar .custom-menu {
     display: inline-block;
     position: absolute;
@@ -6027,18 +6008,115 @@ h1, h2, h3, h4, h5,
     right: 0;
     transform: translateY(-50%);
   }
-  
+.container{
+ width: 100% !important;
+}
 
 /*CONTENT*/
 #content {
   width: 100%;
   padding: 0;
   min-height: 100vh;
-  transition: all 0.3s;
+  transition: all 0.3s ease; 
 }
- 
+
 /* Untuk layar dengan lebar lebih besar atau sama dengan 992px */
-@media (min-width: 992px) {
+@media (min-width: 1951px){
+  #content {
+    margin-left: 100px;
+    width: calc(100% - 100px);
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 83%;
+      transition: all 0.3s ease; 
+    }
+  }
+
+  #sidebar.active ~ #content {
+    width: 100% !important;
+    margin-left: -250px;
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 95%;
+      margin-left: 230px !important;
+      transition: all 0.3s ease; 
+    }
+  }
+}
+
+@media (min-width: 1751px) and (max-width: 1950px){
+  #content {
+    margin-left: 90px;
+    width: calc(100% - 90px);
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 80%;
+      transition: all 0.3s ease; 
+    }
+  }
+
+  #sidebar.active ~ #content {
+    width: 100% !important;
+    margin-left: -180px;
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 95%;
+      margin-left: 220px !important;
+      transition: all 0.3s ease; 
+      
+    }
+  }
+
+  
+}
+
+@media (min-width: 1661px) and (max-width: 1750px){
+  #content {
+    margin-left: 145px;
+    width: calc(100% - 145px);
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 80%;
+      transition: all 0.3s ease; 
+    }
+  }
+
+  #sidebar.active ~ #content {
+    width: 100% !important;
+    margin-left: -150px;
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 95%;
+      margin-left: 200px !important;
+      transition: all 0.3s ease; 
+    }
+  }
+}
+
+@media (min-width: 1551px) and (max-width: 1660px){
+  #content {
+    width: calc(100% - 140px);
+    margin-left: 140px;
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 80%;
+      transition: all 0.3s ease; 
+    }
+  }
+
+  #sidebar.active ~ #content {
+    margin-left:-100px;
+    width: 100% !important;
+
+    .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+      max-width: 95%;
+      margin-left: 130px !important;
+      transition: all 0.3s ease; 
+    }
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1550px){
   #content {
     margin-left: 270px;
     width: calc(100% - 270px);
@@ -6051,7 +6129,7 @@ h1, h2, h3, h4, h5,
 }
 
 /* Untuk layar dengan lebar lebih besar atau sama dengan 768px tapi kurang dari 992px */
-@media (min-width: 768px) and (max-width: 992px) {
+@media (min-width: 769px) and (max-width: 992px) {
   #content {
     margin-left: 270px;
     width: calc(100% - 270px);
@@ -6063,13 +6141,21 @@ h1, h2, h3, h4, h5,
   }
 }
 
+
 @media (max-width: 768px) {
   #content {
-    margin-left: 0;
+    margin-left:0px;
     width: 100%; 
   }
 }
-  
+
+@media (max-width: 680px) {
+  #content {
+    margin-left:0;
+    width: 100%; 
+  }
+}
+
   #content h2 .welcome {
     color: #2C3B42;
     font-size: 45px;
@@ -6080,12 +6166,12 @@ h1, h2, h3, h4, h5,
   }
   
   #content h2 .welcome span {
-    font-size: 38px;
+    font-size: 30px;
     color: #2C3B42;
     display: block;
     font-weight: bold;
     margin-top: 5px; 
-    line-height: 1.1; 
+    line-height: 1.3; 
   }
   
   .deskripsi1 {
@@ -6098,7 +6184,7 @@ h1, h2, h3, h4, h5,
       font-size: 40px;
     }
     #content h2 .welcome span {
-      font-size: 36px;
+      font-size: 30px;
     }
   }
   @media (max-width: 992px) {
@@ -6136,6 +6222,12 @@ h1, h2, h3, h4, h5,
     }
     .deskripsi1 {
       font-size: 12px;
+    }
+  }
+
+  @media (min-width: 1450px) {
+    .deskripsi1 {
+      font-size: 25px;
     }
   }
   
@@ -6191,3 +6283,4 @@ a.sidebar-link {
   .icon-logout{
     color: #65B789;
   }
+

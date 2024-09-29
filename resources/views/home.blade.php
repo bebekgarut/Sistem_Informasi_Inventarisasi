@@ -14,6 +14,7 @@
     <!--Icon-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <!--CSS-->
+    <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="css/sidebar.css?v=<?php echo time(); ?>">
 </head>
 <style>
@@ -30,26 +31,32 @@
 </style>
 
 <body>
-    <div class="wrapper d-flex align-items-stretch">
+    <div class="wrapper">
         <x-sidebar></x-sidebar>
         <div id="content" class="p-4 p-md-5 pt-5">
-            <h2><a class="welcome">Selamat Datang <span>Di Sistem Informasi Inventarisasi <br> Barang Milik
-                        Daerah</span></a></h2>
-            <p class="deskripsi1">Sistem Informasi Inventarisasi Barang Milik Daerah Kota Palembang merupakan sebuah
-                platform yang dirancang
-                khusus untuk memfasilitasi bidang aset di kantor BPKAD Kota Palembang.
-                Selain menyediakan fungsi untuk mengumpulkan, mengelola, dan menganalisis data sensus yang relevan,
-                sistem ini juga dilengkapi dengan fitur-fitur yang ditujukan untuk mempermudah pengelolaan aset daerah.
-            </p>
-            <p class="deskripsi1">Dengan integrasi fungsi-fungsi ini, kantor BPKAD dapat lebih efisien dalam mengelola
-                aset-aset Kota
-                Palembang secara holistik. Sistem ini memungkinkan mereka untuk dengan cepat mengakses informasi
-                tentang aset yang dimiliki, mengidentifikasi kebutuhan perawatan atau pemeliharaan, serta melacak
-                perubahan-perubahan yang terjadi pada
-                aset tersebut dari waktu ke waktu. Sebagai hasilnya, pengelolaan aset daerah dapat dilakukan secara
-                lebih efektif dan transparan, yang pada gilirannya
-                akan mendukung perencanaan keuangan dan pembangunan yang lebih baik untuk Kota Palembang secara
-                keseluruhan.</p>
+            <div class="container">
+                <h2><a class="welcome">Selamat Datang <span>Di Sistem Informasi Penatausahaan, Inventarisasi dan
+                            Laporan Barang Milik Daerah</span></a></h2>
+                <p class="deskripsi1">Sistem Informasi Penatausahaan, Inventarisasi dan Laporan Milik Daerah Kota
+                    Palembang
+                    merupakan sebuah
+                    platform yang dirancang
+                    khusus untuk memfasilitasi bidang aset di kantor BPKAD Kota Palembang.
+                    Selain menyediakan fungsi untuk mengumpulkan, mengelola, dan menganalisis data sensus yang relevan,
+                    sistem ini juga dilengkapi dengan fitur-fitur yang ditujukan untuk mempermudah pengelolaan aset
+                    daerah.
+                </p>
+                <p class="deskripsi1">Dengan integrasi fungsi-fungsi ini, kantor BPKAD dapat lebih efisien dalam
+                    mengelola
+                    aset-aset Kota
+                    Palembang secara holistik. Sistem ini memungkinkan mereka untuk dengan cepat mengakses informasi
+                    tentang aset yang dimiliki, mengidentifikasi kebutuhan perawatan atau pemeliharaan, serta melacak
+                    perubahan-perubahan yang terjadi pada
+                    aset tersebut dari waktu ke waktu. Sebagai hasilnya, pengelolaan aset daerah dapat dilakukan secara
+                    lebih efektif dan transparan, yang pada gilirannya
+                    akan mendukung perencanaan keuangan dan pembangunan yang lebih baik untuk Kota Palembang secara
+                    keseluruhan.</p>
+            </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"

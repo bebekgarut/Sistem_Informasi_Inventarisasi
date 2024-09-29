@@ -98,7 +98,7 @@
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
+                                    <th class="no">No.</th>
                                     <th class="fixed-width-column">Nama Barang</th>
                                     <th class="fixed-width-column">Merk_Type</th>
                                     <th class="fixed-width-column">Nomor Polisi</th>
@@ -131,6 +131,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.full.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
 
 
 </body>

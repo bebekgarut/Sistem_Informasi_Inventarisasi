@@ -35,7 +35,7 @@
         <div id="content" class="p-4 p-md-5 pt-5">
             <div class="container">
                 <div class= "header">
-                    <div class="container custom-select-container">
+                    <div class="custom-select-container">
                         <form action="{{ route('search-upb-a', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}">
                             <label for="custom-select1" class="form-label perintah">Masukkan Kata Kunci</label>
                             <div class="search-box" method="GET">
@@ -54,67 +54,61 @@
                 </div>
             </div>
             <br><br>
-            <div class="container">
-                <div class="row my-2">
-                    <div class="col-md">
-                        @if (request()->has('keyword') && request()->input('keyword') != '')
-                            <h3 class="fw-bold text-uppercase">Hasil Pencarian : {{ request()->input('keyword') }}
-                            </h3>
-                        @else
-                            <h3 class="fw-bold text-uppercase">Data KIB A</h3>
-                        @endif
-                        <hr>
-                    </div>
+            <div class="row my-2">
+                <div class="col-md">
+                    @if (request()->has('keyword') && request()->input('keyword') != '')
+                        <h3 class="fw-bold text-uppercase">Hasil Pencarian : {{ request()->input('keyword') }}
+                        </h3>
+                    @else
+                        <h3 class="fw-bold text-uppercase">Data KIB A</h3>
+                    @endif
+                    <hr>
                 </div>
-                <div class="row my-3">
-                    <div class="table-responsive col-md">
-                        Showing {{ $kiba->count() }} of {{ $kiba->total() }} data
-                        <table class="table table-striped text-center mb-0">
-                            <thead>
+            </div>
+            <div class="row my-3">
+                <div class="table-responsive col-md">
+                    Showing {{ $kiba->count() }} of {{ $kiba->total() }} data
+                    <table class="table table-striped text-center mb-0">
+                        <thead>
+                            <tr>
+                                <th class="no">No.</th>
+                                <th class="fixed-width-column">Nama Barang</th>
+                                <th class="fixed-width-column">Letak/Alamat</th>
+                                <th class="fixed-width-column">Penggunaan</th>
+                                <th class="action-column">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($kiba as $kibas)
                                 <tr>
-                                    <th>No.</th>
-                                    <th class="fixed-width-column">Nama Barang</th>
-                                    <th class="fixed-width-column">Letak/Alamat</th>
-                                    <th class="fixed-width-column">Penggunaan</th>
-                                    <th class="action-column">Aksi</th>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $kibas->NAMA_BARANG }}</td>
+                                    <td>{{ $kibas->LETAK_ALAMAT }}</td>
+                                    <td>{{ $kibas->PENGGUNAAN }}</td>
+                                    <td>
+                                        <a href="{{ route('detail-upb-a', ['KODE_UPB' => $kibas->KODE_UPB, 'id' => $kibas->id]) }}"
+                                            class="btn btn-sm d-block d-md-inline-block mb-2 mb-md-0 detail"
+                                            data-id="nis1" style="font-weight: 600; margin-top:0px;">
+                                            <i class="bi bi-info-circle-fill"></i>&nbsp;Detail
+                                        </a>
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                            <tbody>
-                                @forelse ($kiba as $kibas)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $kibas->NAMA_BARANG }}</td>
-                                        <td>{{ $kibas->LETAK_ALAMAT }}</td>
-                                        <td>{{ $kibas->PENGGUNAAN }}</td>
-                                        <td>
-                                            <a href="{{ route('detail-upb-a', ['KODE_UPB' => $kibas->KODE_UPB, 'id' => $kibas->id]) }}"
-                                                class="btn btn-sm d-block d-md-inline-block mb-2 mb-md-0 detail"
-                                                data-id="nis1" style="font-weight: 600; margin-top:0px;">
-                                                <i class="bi bi-info-circle-fill"></i>&nbsp;Detail
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @empty
-                                    <tr>
-                                        <td colspan="5" class="text-center">Data tidak ditemukan atau Data tidak
-                                            ada.
-                                        </td>
-                                    </tr>
-                                @endforelse
-                            </tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-12">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center mt-3">
-                                        {{ $kiba->links('pagination::bootstrap-4') }}
-                                    </ul>
-                                </nav>
-                            </div>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">Data tidak ditemukan atau Data tidak
+                                        ada.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-12">
+                            <nav aria-label="Page navigation">
+                                <ul class="pagination justify-content-center mt-3">
+                                    {{ $kiba->links('pagination::bootstrap-4') }}
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
@@ -144,7 +138,6 @@
             updatePagination();
         });
     </script>
-
 </body>
 
 </html>

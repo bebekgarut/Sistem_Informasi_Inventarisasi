@@ -18,7 +18,8 @@
     <!--CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/sidebar.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
+    <link rel="stylesheet" href="css/sidebar.css?v=<?php echo time(); ?>">
     @vite(['resources/js/app.js'])
 </head>
 

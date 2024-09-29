@@ -357,43 +357,43 @@ $(document).ready(function() {
     });
 
 
-    (function($) {
-        "use strict";
+    // (function($) {
+    //     "use strict";
     
-        var fullHeight = function() {
-            $('.js-fullheight').css('height', $(window).height());
-            $(window).resize(function(){
-                $('.js-fullheight').css('height', $(window).height());
-            });
-        };
-        fullHeight();
+    //     var fullHeight = function() {
+    //         $('.js-fullheight').css('height', $(window).height());
+    //         $(window).resize(function(){
+    //             $('.js-fullheight').css('height', $(window).height());
+    //         });
+    //     };
+    //     fullHeight();
     
-        var handleResponsive = function() {
-            var windowWidth = $(window).width();
+    //     var handleResponsive = function() {
+    //         var windowWidth = $(window).width();
     
-            if (windowWidth < 769) {
-                $('#sidebar').addClass('active');
-                $('#content').addClass('active');
-            } else {
-                $('#sidebar').removeClass('active');
-                $('#content').removeClass('active');
-            }
-        };
+    //         if (windowWidth < 769) {
+    //             $('#sidebar').addClass('active');
+    //             $('#content').addClass('active');
+    //         } else {
+    //             $('#sidebar').removeClass('active');
+    //             $('#content').removeClass('active');
+    //         }
+    //     };
     
-        // Call the function when the page loads and when it's resized
-        handleResponsive();
-        $(window).resize(handleResponsive);
+    //     // Call the function when the page loads and when it's resized
+    //     handleResponsive();
+    //     $(window).resize(handleResponsive);
     
-        $('#sidebarCollapse').on('click', function () {
-            var windowWidth = $(window).width();
+    //     $('#sidebarCollapse').on('click', function () {
+    //         var windowWidth = $(window).width();
     
-            if (windowWidth >= 769) {
-                $('#sidebar').toggleClass('active');
-                $('#content').toggleClass('active');
-            }
-        });
+    //         if (windowWidth >= 769) {
+    //             $('#sidebar').toggleClass('active');
+    //             $('#content').toggleClass('active');
+    //         }
+    //     });
     
-    })(jQuery);
+    // })(jQuery);
     
 });
 

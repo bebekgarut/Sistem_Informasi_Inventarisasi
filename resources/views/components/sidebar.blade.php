@@ -7,7 +7,8 @@
         </button>
     </div>
     <div class="p-4">
-        <h1><a href="" class="logo">Sistem Informasi <span>Inventarisasi</span></a></h1>
+        <h1><a href="" class="logo">Sistem Informasi <span>Penatausahaan, Inventarisasi <br>&
+                    Laporan</span></a></h1>
         <ul class="list-unstyled components mb-5">
             <li class="{{ Request::is('home') ? 'active' : '' }}">
                 <a href="/home"><span class="fa fa-home mr-3"></span>Home</a>
@@ -55,7 +56,7 @@
                 <a href="/rekapkoordinat-a"><i class="fa fa-map mr-3" style="color:#65B789"></i>Rekap Koordinat</a>
             </li>
             <li class="{{ Request::is('arsip*') ? 'active' : '' }}">
-                <a href="/arsip"><span class="fas fa-box-open mr-3"></span></span>Arsip Lainnya</a>
+                <a href="/arsip"><span class="fas fa-box-open mr-3"></span></span>Arsip Digital</a>
             </li>
             <li
                 class="{{ Request::is('data_user') || Request::is('tambah-user') || Request::is('edit_user/*') ? 'active' : '' }}">

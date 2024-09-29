@@ -7,7 +7,8 @@
         </button>
     </div>
     <div class="p-4">
-        <h1><a href="" class="logo">Sistem Informasi <span>Inventarisasi</span></a></h1>
+        <h1><a href="" class="logo">Sistem Informasi <span>Penatausahaan, Inventarisasi <br>&
+                    Laporan</span></a></h1>
         <ul class="list-unstyled components mb-5">
             <li class="{{ Request::is('home-upb/*') ? 'active' : '' }}">
                 <a href="{{ route('home-upb', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"><span
