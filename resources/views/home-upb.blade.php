@@ -37,7 +37,7 @@
             <div class="container">
                 <h2><a class="welcome">Selamat Datang <span>Di Sistem Informasi Penatausahaan, Inventarisasi dan
                             Laporan Barang Milik Daerah</span></a></h2>
-                <p class="deskripsi1">Sistem Informasi Penatausahaan, Inventarisasi dan Laporan Milik Daerah Kota
+                <p class="deskripsi1">Sistem Informasi Penatausahaan, Inventarisasi dan Laporan Barang Milik Daerah Kota
                     Palembang
                     merupakan sebuah
                     platform yang dirancang

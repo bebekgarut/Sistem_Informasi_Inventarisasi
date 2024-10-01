@@ -9,10 +9,8 @@ class ArsipFile extends Model
 {
     use HasFactory;
 
-    // Nama tabel
     protected $table = 'arsip_files';
 
-    // Kolom yang dapat diisi secara massal
     protected $fillable = [
         'arsip_id',
         'file_path',

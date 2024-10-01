@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserControllerA;
 use App\Http\Controllers\UserControllerB;
 use App\Http\Controllers\UserControllerC;
-use App\Models\Arsip;
 use Illuminate\Auth\Events\Login;
 
 Route::get('/', function () {

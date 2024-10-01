@@ -59,7 +59,7 @@
                 <div class="row my-2">
                     <div class="col-md">
                         <a href="{{ route('add-upb-b', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}" class="btn "><i
-                                class="bi bi-person-plus-fill"></i>&nbsp;Tambah
+                                class="fas fa-plus"></i>&nbsp;Tambah
                             Data</a>
                         <a href="{{ route('export-upb-b', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}" target="_blank"
                             class="btn"><i class="bi bi-file-earmark-spreadsheet-fill"></i>&nbsp;Ekspor ke

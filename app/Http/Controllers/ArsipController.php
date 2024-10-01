@@ -24,17 +24,14 @@ class ArsipController extends Controller
 
     public function store(Request $request)
     {
-
         $request->validate([
             'nama_subjek' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'files.*' => 'nullable|mimes:pdf|max:10000',
+            'files.*' => 'nullable|mimes:pdf|max:25000',
         ]);
 
         $arsip = Arsip::create($request->only('nama_subjek', 'alamat'));
 
-
-        // Tambahkan file baru
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -42,21 +39,16 @@ class ArsipController extends Controller
                 $filepath = 'private/arsip/' . $filename . '.' . $extension;
                 $counter = 1;
 
-                // Cek apakah file dengan nama yang sama sudah ada
                 while (Storage::exists($filepath)) {
-                    // Jika file ada, tambahkan angka dalam kurung
                     $filepath = 'private/arsip/' . $filename . "($counter)." . $extension;
                     $counter++;
                 }
 
-                // Simpan file baru ke dalam storage
                 $file->storeAs('private/arsip', basename($filepath));
 
-                // Simpan path yang benar ke dalam database
                 $arsip->files()->create(['file_path' => $filepath]);
             }
         }
-
         return redirect()->route('arsip')->with('success', 'Data berhasil ditambahkan');
     }
 
@@ -73,18 +65,14 @@ class ArsipController extends Controller
     public function hapusFileEdit($id)
     {
         try {
-            // Temukan file berdasarkan ID
             $file = ArsipFile::findOrFail($id);
 
-            // Dapatkan path file di storage
             $filePath = storage_path('app/public/' . $file->file_path);
 
-            // Hapus file dari storage
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
 
-            // Hapus data file dari database
             $deleted = $file->delete();
 
             if (!$deleted) {
@@ -99,19 +87,16 @@ class ArsipController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
             'nama_subjek' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
-            'files.*' => 'nullable|mimes:pdf|max:10000',
+            'files.*' => 'nullable|mimes:pdf|max:25000',
         ]);
 
         $arsip = Arsip::findOrFail($id);
 
-        // Update data arsip (nama_subjek dan alamat)
         $arsip->update($request->only('nama_subjek', 'alamat'));
 
-        // Tambahkan file baru
         if ($request->hasFile('files')) {
             foreach ($request->file('files') as $file) {
                 $filename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -119,17 +104,13 @@ class ArsipController extends Controller
                 $filepath = 'private/arsip/' . $filename . '.' . $extension;
                 $counter = 1;
 
-                // Cek apakah file dengan nama yang sama sudah ada
                 while (Storage::exists($filepath)) {
-                    // Jika file ada, tambahkan angka dalam kurung
                     $filepath = 'private/arsip/' . $filename . "($counter)." . $extension;
                     $counter++;
                 }
 
-                // Simpan file baru ke dalam storage
                 $file->storeAs('private/arsip', basename($filepath));
 
-                // Simpan path yang benar ke dalam database
                 $arsip->files()->create(['file_path' => $filepath]);
             }
         }
@@ -172,10 +153,8 @@ class ArsipController extends Controller
     public function hapusArsip($id)
     {
         try {
-            // Temukan arsip berdasarkan ID beserta file yang terkait
             $arsip = Arsip::with('files')->findOrFail($id);
 
-            // Loop melalui setiap file yang terkait dan hapus file dari storage
             foreach ($arsip->files as $file) {
                 $filePath = storage_path('app/public/' . $file->file_path);
 
@@ -183,13 +162,9 @@ class ArsipController extends Controller
                     unlink($filePath);
                 }
 
-                // Hapus data file dari database
                 $file->delete();
             }
-
-            // Hapus data arsip dari database
             $arsip->delete();
-
             return redirect()->route('arsip')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());

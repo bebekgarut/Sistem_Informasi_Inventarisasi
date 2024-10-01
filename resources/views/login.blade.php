@@ -8,6 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Anton&family=Rowdies:wght@300;400;700&family=Spicy+Rice&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
     <title>Login</title>
@@ -24,7 +27,7 @@
             <div class="col-md-6 login-right-box">
                 <div class="row align-items-center">
                     <div class="header-text mb-3 mt-1">
-                        <h2>SiPindang Kota Palembang</h2>
+                        <h2 style="font-family: 'Ubuntu', sans-serif;">Sipindang</h2>
                         <p>Silahkan Masukkan username dan password anda.</p>
                         @if (session()->has('gagal'))
                             <div class="alert alert-danger alert-dismissible fade show" role="alert">

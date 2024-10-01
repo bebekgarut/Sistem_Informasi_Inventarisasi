@@ -9,10 +9,8 @@ class Arsip extends Model
 {
     use HasFactory;
 
-    // Nama tabel
     protected $table = 'arsip';
 
-    // Kolom yang dapat diisi secara massal
     protected $fillable = [
         'nama_subjek',
         'alamat',

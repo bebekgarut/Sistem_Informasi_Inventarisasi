@@ -89,14 +89,14 @@
                 </div>
                 <div class="row my-2">
                     <div class="col-md">
-                        <a href="/add-c" class="btn"><i class="bi bi-person-plus-fill"></i>&nbsp;Tambah
+                        <a href="/add-c" class="btn"><i class="fas fa-plus"></i>&nbsp;Tambah
                             Data</a>
                         <a href="/exportc" id="exportBtnc" target="_blank" class="btn"><i
                                 class="bi bi-file-earmark-spreadsheet-fill"></i>&nbsp;Ekspor ke Excel</a>
                     </div>
                 </div>
                 <div class="row my-3">
-                    <div class="col-md">
+                    <div class="table-responsive col-md">
                         <table class="table table-striped text-center mb-0">
                             <thead>
                                 <tr>

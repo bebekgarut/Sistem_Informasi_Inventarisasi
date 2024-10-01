@@ -97,8 +97,8 @@ h1 {
   .select2-container--bootstrap-5 .select2-selection--single {
     border: 1.7px solid #2C3B42;
     border-radius: 0.25rem;
-    padding: 0.5rem; /* Hanya padding horizontal */
-    height: calc(2rem + 1rem + 3px); /* Tetap sama */
+    padding: 0.5rem;
+    height: calc(2rem + 1rem + 3px);
     width: 100%;         
     max-width: 750px; 
   }
@@ -584,7 +584,7 @@ table {
   width: 400px !important;
 }
 .header-text h2 {
-  font-size: 25px; 
+  font-size: 40px; 
   color: #2C3B42; 
   font-weight: bold;
   margin-bottom: 5px;
@@ -592,6 +592,16 @@ table {
 .header-text p {
   font-size: 14px; 
   color: #616161; 
+}
+.featured-image img {
+  margin-top: 25px;
+}
+.text-white {
+  margin-top: -30px;
+}
+.header-text {
+  text-align: center; 
+  margin-bottom: 20px;
 }
 
 @media only screen and (min-width: 1450px) {
@@ -607,7 +617,7 @@ table {
     width: 450px !important;
   }
   .header-text h2 {
-    font-size: 30px; 
+    font-size: 40px; 
   }
   .header-text p {
     font-size: 16px; 
@@ -622,16 +632,28 @@ table {
   .login-right-box {
     padding: 20px;
   }
+  .container{
+    padding: 20px;
+  }
 }
-.featured-image img {
-  margin-top: 25px;
+@media only screen and (max-width: 576px) {
+  .container{
+    padding: 30px;
+  }
+  .header-text h2 {
+    font-size: 30px; 
+  }
+  
 }
-.text-white {
-  margin-top: -30px;
-}
-.header-text {
-  text-align: center; 
-  margin-bottom: 20px;
+
+@media only screen and (max-width: 400px) {
+  .img-fluid{
+    width: 380px !important;
+    height: 150px !important;
+  }
+  .header-text p {
+    font-size: 14px; 
+  }
 }
 
 
@@ -683,8 +705,8 @@ table {
   border: none;
   border-radius: 5px;
   outline: none;
-  width: 100%; /* Mengisi lebar penuh dari parent (header) */
-  max-width: 400px; /* Atur lebar maksimum jika perlu */
+  width: 100%; 
+  max-width: 400px;
 }
 .search-button {
   background-color: #2C3B42;
@@ -859,8 +881,8 @@ table {
   .download-button {
     top: 40px;
     right: 40px;
-    padding: 15px 17px;
-    font-size: 25px;
+    padding: 12px 14px;
+    font-size:20px;
   }
 }
 
@@ -869,18 +891,18 @@ table {
   border-color: #2C3B42;
   color: #2C3B42;
 }
-/* Warna latar belakang dan teks untuk tombol aktif */
+
 .pagination .page-item.active .page-link {
   background-color: #2C3B42;
   border-color: #2C3B42;
   color: #fff;
 }
-/* Warna latar belakang dan teks untuk tombol Previous dan Next */
+
 .pagination .page-item .page-link.prev, .pagination .page-item .page-link.next {
   background-color: #2C3B42;
   border-color:  #fff;
 }
-/* Warna latar belakang dan teks untuk tombol non-aktif */
+
 .pagination .page-item.disabled .page-link {
   background-color:#fff;
   border-color: #2C3B42;
