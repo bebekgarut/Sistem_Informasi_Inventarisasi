@@ -32,6 +32,13 @@
                     <div class="col-md">
                         <h3 class="fw-bold text-uppercase"><i class="bi bi-info-circle"></i></i>&nbsp;Detail Data</h3>
                     </div>
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+                            {{ session('success') }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                aria-label="Close"></button>
+                        </div>
+                    @endif
                     <hr>
                 </div>
                 <div class="row my-2">

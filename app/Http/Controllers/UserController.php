@@ -51,7 +51,6 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $user = User::findOrFail($id);
         $validatedData = $request->validate([
             'username' => [
@@ -69,7 +68,6 @@ class UserController extends Controller
 
         return redirect()->route('datauser')->with('successEdit', 'Data berhasil diupdate');
     }
-
 
     public function destroy($id)
     {

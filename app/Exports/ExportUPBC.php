@@ -17,7 +17,6 @@ class ExportUPBC implements FromCollection, WithHeadings, WithMapping
         $this->KODE_UPB = $KODE_UPB;
     }
 
-
     public function collection()
     {
         return Kibc::where('KODE_UPB', $this->KODE_UPB)
@@ -41,8 +40,6 @@ class ExportUPBC implements FromCollection, WithHeadings, WithMapping
             )
             ->get();
     }
-
-
 
     public function headings(): array
     {

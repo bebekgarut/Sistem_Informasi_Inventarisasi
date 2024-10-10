@@ -355,46 +355,6 @@ $(document).ready(function() {
         var formData = $('#filterFormc').serialize();
         window.location.href = '/exportc?' + formData;
     });
-
-
-    // (function($) {
-    //     "use strict";
-    
-    //     var fullHeight = function() {
-    //         $('.js-fullheight').css('height', $(window).height());
-    //         $(window).resize(function(){
-    //             $('.js-fullheight').css('height', $(window).height());
-    //         });
-    //     };
-    //     fullHeight();
-    
-    //     var handleResponsive = function() {
-    //         var windowWidth = $(window).width();
-    
-    //         if (windowWidth < 769) {
-    //             $('#sidebar').addClass('active');
-    //             $('#content').addClass('active');
-    //         } else {
-    //             $('#sidebar').removeClass('active');
-    //             $('#content').removeClass('active');
-    //         }
-    //     };
-    
-    //     // Call the function when the page loads and when it's resized
-    //     handleResponsive();
-    //     $(window).resize(handleResponsive);
-    
-    //     $('#sidebarCollapse').on('click', function () {
-    //         var windowWidth = $(window).width();
-    
-    //         if (windowWidth >= 769) {
-    //             $('#sidebar').toggleClass('active');
-    //             $('#content').toggleClass('active');
-    //         }
-    //     });
-    
-    // })(jQuery);
-    
 });
 
     // Menyimpan nilai ke localStorage setelah user memilih
@@ -418,8 +378,6 @@ $('#subunit').on('change', function() {
 $('#upb').on('change', function() {
     var KODE_UPB = $(this).val();
     localStorage.setItem('KODE_UPB', KODE_UPB);
-    var NAMA_UPB = $(this).find('option:selected').text();
-    localStorage.setItem('NAMA_UPB', NAMA_UPB);
 });
  // Mengambil nilai dari localStorage
  $('#KODE_BIDANG').val(localStorage.getItem('KODE_BIDANG'));
@@ -427,42 +385,12 @@ $('#upb').on('change', function() {
  $('#KODE_SUB_UNITS').val(localStorage.getItem('KODE_SUB_UNITS'));
  $('#NAMA_SUB_UNITS').val(localStorage.getItem('NAMA_SUB_UNITS'));
  $('#KODE_UPB').val(localStorage.getItem('KODE_UPB'));
- $('#NAMA_UPB').val(localStorage.getItem('NAMA_UPB'));
-
 
 $('#bidang, #unit, #subunit, #upb').change(function() {
     localStorage.setItem('filter_bidang', $('#bidang').val());
     localStorage.setItem('filter_unit', $('#unit').val());
     localStorage.setItem('filter_subunit', $('#subunit').val());
     localStorage.setItem('filter_upb', $('#upb').val());
-});
-
-
-$('#editForm').on('submit', function(e) {
-    e.preventDefault();
-
-    var formData = new FormData(this);
-    var id = window.location.pathname.split('/').pop(); 
-
-    $.ajax({
-        url: '/update/' + id,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function(response) {
-            if (response.success) {
-                sessionStorage.setItem('editMessage', response.message);
-
-                window.location.href = '/detail/' + id;
-            } else {
-                alert(response.message);
-            }
-        },
-        error: function(xhr) {
-            alert('Gagal menyimpan data');
-        }
-    });
 });
 
 document.getElementById('DOWNLOAD').addEventListener('change', function() {

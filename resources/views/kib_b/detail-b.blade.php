@@ -137,7 +137,6 @@
                     <div class="col-md text-center">
                         <a href="{{ route('editDataKibb', $kibb->id) }}" class="btn"><i class="bi bi-pencil"></i>
                             Edit</a>
-
                         <button type="button" class="btn" data-bs-toggle="modal"
                             data-bs-target="#hapusModal">Hapus</button>
                         <a href="{{ session('previous_url') }}" class="btn">Kembali</a>

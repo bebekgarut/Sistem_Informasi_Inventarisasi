@@ -45,7 +45,6 @@ class LoginController extends Controller
             'password' => 'required'
         ]);
 
-
         if (Auth::attempt($credentials)) {
 
             if (Auth::User()->role == 'admin') {
@@ -58,7 +57,6 @@ class LoginController extends Controller
                 return redirect()->route('home-upb', ['KODE_UPB' => Auth::user()->KODE_UPB]);;
             }
         }
-
         return back()->with('gagal', 'Username atau Password salah!!!');
     }
 

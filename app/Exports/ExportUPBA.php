@@ -16,7 +16,6 @@ class ExportUPBA implements FromCollection, WithHeadings, WithMapping
         $this->KODE_UPB = $KODE_UPB;
     }
 
-
     public function collection()
     {
         return Kiba::where('KODE_UPB', $this->KODE_UPB)
@@ -37,8 +36,6 @@ class ExportUPBA implements FromCollection, WithHeadings, WithMapping
             )
             ->get();
     }
-
-
 
     public function headings(): array
     {

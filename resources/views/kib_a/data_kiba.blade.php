@@ -43,13 +43,6 @@
                                     aria-label="Close"></button>
                             </div>
                         @endif
-                        @if (session()->has('add'))
-                            <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                                {{ session('add') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
                         <label for="bidang" class="form-label">Pilih Bidang</label>
                         <select class="form-select" id="bidang" name="bidang" data-placeholder="Choose one option">
                             <option selected>Choose one option</option>

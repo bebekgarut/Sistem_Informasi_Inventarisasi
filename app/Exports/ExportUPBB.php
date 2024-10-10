@@ -19,7 +19,6 @@ class ExportUPBB implements FromCollection, WithHeadings, WithMapping
 
     public function collection()
     {
-
         return Kibb::where('KODE_UPB', $this->KODE_UPB)
             ->select(
                 'NAMA_BARANG',
@@ -39,8 +38,6 @@ class ExportUPBB implements FromCollection, WithHeadings, WithMapping
             )
             ->get();
     }
-
-
 
     public function headings(): array
     {

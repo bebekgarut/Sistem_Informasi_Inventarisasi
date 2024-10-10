@@ -32,9 +32,10 @@
                         </h3>
                     </div>
                     @if ($errors->any())
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <strong>Error:</strong> Terdapat kesalahan dalam pengisian form(mungkin ukuran foto atau
-                            file melewati batas). Silakan periksa kembali.
+                        <div class="alert alert-danger alert-dismissible fade show mt-4">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                         </div>
@@ -43,7 +44,7 @@
                 </div>
                 <div class="row my-2">
                     <div class="col-md">
-                        <form action="{{ route('store-upb-a', ['KODE_UPB' => $KODE_UPB]) }}" method="post"
+                        <form action="{{ route('store-upb-a', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -145,11 +146,6 @@
                                     accept=".jpg, .png, .jpeg ">
                                 <span id="fotoError" style="color:red;"></span>
                             </div>
-                            <input type="hidden" name="KODE_BIDANG" value="{{ $KODE_BIDANG }}">
-                            <input type="hidden" name="KODE_UNITS" value="{{ $KODE_UNITS }}">
-                            <input type="hidden" name="KODE_SUB_UNITS" value="{{ $KODE_SUB_UNITS }}">
-                            <input type="hidden" name="KODE_UPB" value="{{ $KODE_UPB }}">
-                            <input type="hidden" name="PENGGUNA_BARANG" value="{{ $PENGGUNA_BARANG }}">
                             <hr>
                             <a href="{{ route('data-upb-a', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
                                 class="btn">Kembali</a>

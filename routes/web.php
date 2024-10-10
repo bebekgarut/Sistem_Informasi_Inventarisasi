@@ -14,7 +14,7 @@ use Illuminate\Auth\Events\Login;
 
 Route::get('/', function () {
     return redirect('/login');
-})->middleware('redirectUPB');
+})->middleware('guest');
 
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate']);
@@ -30,45 +30,39 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/getSubunits/{kodeUnits}', [ControllerA::class, 'getSubunits']);
     Route::get('/getUPB/{kodeSubunits}', [ControllerA::class, 'getUPB']);
     Route::get('/getKibaByUPB/{kodeUPB}', [ControllerA::class, 'getByUPB']);
-    Route::get('/add', function () {
-        return view('kib_a.tambah');
-    });
+    Route::get('/add', [ControllerA::class, 'create']);
     Route::post('/add', [ControllerA::class, 'store'])->name('storeDataKiba');
     Route::get('/detail/{id}', [ControllerA::class, 'detail'])->name('detailDataKiba');
     Route::get('/edit/{id}', [ControllerA::class, 'edit'])->name('editDataKiba');
-    Route::put('/update/{id}', [ControllerA::class, 'update'])->name('updateDataKiba');
-    Route::delete('/hapus/{id}', [ControllerA::class, 'hapusDataKiba'])->name('hapusDataKiba');
+    Route::post('/update/{id}', [ControllerA::class, 'update'])->name('updateDataKiba');
+    Route::delete('/hapus/{id}', [ControllerA::class, 'destroy'])->name('hapusDataKiba');
     Route::get('/export', [ControllerA::class, 'export'])->name('export');
     Route::get('/export-all', [ControllerA::class, 'exportAll'])->name('exportAll');
     Route::get('/search-a', [ControllerA::class, 'search'])->name('search-a');
     Route::get('/rekapkoordinat-a', [ControllerA::class, 'rekapKoordinat'])->name('koordinat-a');
 
     Route::get('/getKibbByUPB/{kodeUPB}', [ControllerB::class, 'getByUPB']);
-    Route::get('/data_kibb', [ControllerB::class, 'b'])->name('datakibb');
-    Route::get('/add-b', function () {
-        return view('kib_b.tambah-b');
-    });
-    Route::post('/add-b', [ControllerB::class, 'storeb'])->name('storeDataKibb');
-    Route::get('/detail-b/{id}', [ControllerB::class, 'detailb'])->name('detailDataKibb');
-    Route::get('/edit-b/{id}', [ControllerB::class, 'editb'])->name('editDataKibb');
-    Route::put('/update-b/{id}', [ControllerB::class, 'updateb'])->name('updateDataKibb');
-    Route::delete('/hapus-b/{id}', [ControllerB::class, 'hapusDataKibb'])->name('hapusDataKibb');
-    Route::get('/exportb', [ControllerB::class, 'exportb'])->name('exportb');
-    Route::get('/export-allb', [ControllerB::class, 'exportAllb'])->name('exportAllb');
+    Route::get('/data_kibb', [ControllerB::class, 'index'])->name('datakibb');
+    Route::get('/add-b', [ControllerB::class, 'create']);
+    Route::post('/add-b', [ControllerB::class, 'store'])->name('storeDataKibb');
+    Route::get('/detail-b/{id}', [ControllerB::class, 'detail'])->name('detailDataKibb');
+    Route::get('/edit-b/{id}', [ControllerB::class, 'edit'])->name('editDataKibb');
+    Route::put('/update-b/{id}', [ControllerB::class, 'update'])->name('updateDataKibb');
+    Route::delete('/hapus-b/{id}', [ControllerB::class, 'destroy'])->name('hapusDataKibb');
+    Route::get('/exportb', [ControllerB::class, 'export'])->name('exportb');
+    Route::get('/export-allb', [ControllerB::class, 'exportAll'])->name('exportAllb');
     Route::get('/search-b', [ControllerB::class, 'search'])->name('search-b');
 
     Route::get('/getKibcByUPB/{kodeUPB}', [ControllerC::class, 'getByUPB']);
-    Route::get('/data_kibc', [ControllerC::class, 'c'])->name('datakibc');
-    Route::get('/add-c', function () {
-        return view('kib_c.tambah-c');
-    });
-    Route::post('/add-c', [ControllerC::class, 'storec'])->name('storeDataKibc');
-    Route::get('/detail-c/{id}', [ControllerC::class, 'detailc'])->name('detailDataKibc');
-    Route::get('/edit-c/{id}', [ControllerC::class, 'editc'])->name('editDataKibc');
-    Route::put('/update-c/{id}', [ControllerC::class, 'updatec'])->name('updateDataKibc');
-    Route::delete('/hapus-c/{id}', [ControllerC::class, 'hapusDataKibc'])->name('hapusDataKibc');
-    Route::get('/exportc', [ControllerC::class, 'exportc'])->name('exportc');
-    Route::get('/export-allc', [ControllerC::class, 'exportAllc'])->name('exportAllc');
+    Route::get('/data_kibc', [ControllerC::class, 'index'])->name('datakibc');
+    Route::get('/add-c', [ControllerC::class, 'create']);
+    Route::post('/add-c', [ControllerC::class, 'store'])->name('storeDataKibc');
+    Route::get('/detail-c/{id}', [ControllerC::class, 'detail'])->name('detailDataKibc');
+    Route::get('/edit-c/{id}', [ControllerC::class, 'edit'])->name('editDataKibc');
+    Route::put('/update-c/{id}', [ControllerC::class, 'update'])->name('updateDataKibc');
+    Route::delete('/hapus-c/{id}', [ControllerC::class, 'destroy'])->name('hapusDataKibc');
+    Route::get('/exportc', [ControllerC::class, 'export'])->name('exportc');
+    Route::get('/export-allc', [ControllerC::class, 'exportAll'])->name('exportAllc');
     Route::get('/search-c', [ControllerC::class, 'search'])->name('search-c');
 
     Route::get('/data_user', [UserController::class, 'data'])->name('datauser');

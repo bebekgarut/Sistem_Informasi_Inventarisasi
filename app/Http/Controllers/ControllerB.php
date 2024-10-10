@@ -14,7 +14,7 @@ use App\Exports\DataExportAllb;
 
 class ControllerB extends Controller
 {
-    public function b()
+    public function index()
     {
         $bidangs = Bidang::all();
         return view('kib_b.data_kibb', compact('bidangs'));
@@ -25,9 +25,13 @@ class ControllerB extends Controller
         return response()->json($kibbs);
     }
 
-    public function storeb(Request $request)
+    public function create()
     {
+        return view('kib_b.tambah-b');
+    }
 
+    public function store(Request $request)
+    {
         $data = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
             'KODE_BARANG' => 'required|string|max:255',
@@ -51,29 +55,27 @@ class ControllerB extends Controller
             'KODE_SUB_UNITS' => 'required|numeric',
             'KODE_UPB' => 'required|numeric',
             'PENGGUNA_BARANG' => 'required|string|max:100'
-
         ]);
 
+        if ($request->hasFile('FOTO')) {
+            $path = $request->file('FOTO')->store('private/photos');
+            $data['FOTO'] = $path;
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $path = $request->file('DOWNLOAD')->store('private/files');
+            $data['DOWNLOAD'] = $path;
+        }
+
         try {
-            if ($request->hasFile('FOTO')) {
-                $path = $request->file('FOTO')->store('private/photos');
-                $data['FOTO'] = $path;
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $path = $request->file('DOWNLOAD')->store('private/files');
-                $data['DOWNLOAD'] = $path;
-            }
-
             Kibb::create($data);
-
-            return redirect('/data_kibb')->with('add', 'Data berhasil ditambahkan.');
+            return redirect('/data_kibb')->with('success', 'Data berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
         }
     }
 
-    public function detailb($id, Request $request)
+    public function detail($id, Request $request)
     {
         $request->session()->put('previous_url', url()->previous());
         $kibb = Kibb::find($id);
@@ -83,83 +85,72 @@ class ControllerB extends Controller
         return view('kib_b.detail-b', compact('kibb'));
     }
 
-    public function editb(Request $request, $id)
+    public function edit(Request $request, $id)
     {
         $kibb = Kibb::where('id', $id)->first();
         return view('kib_b.edit-b', compact('kibb'));
     }
 
-    public function updateb(Request $request, $id)
+    public function update(Request $request, $id)
     {
+        $datab = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:255',
+            'NOMOR_REGISTER' => 'required|string|max:50',
+            'MERK_TYPE' => 'nullable|string|max:255',
+            'UKURAN_CC' => 'nullable|string|max:255',
+            'BAHAN' => 'nullable|string|max:255',
+            'TAHUN_PEMBELIAN' => 'nullable|date_format:Y',
+            'NOMOR_PABRIK' => 'nullable|string|max:100',
+            'NOMOR_RANGKA' => 'nullable|string|max:50',
+            'NOMOR_MESIN' => 'nullable|string|max:255',
+            'NOMOR_POLISI' => 'nullable|string|max:20',
+            'NOMOR_BPKB' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|string|max:255',
+            'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
+            'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
+        ]);
+
+        if ($request->hasFile('FOTO')) {
+            $file = $request->file('FOTO');
+            $path = $file->store('private/photos');
+            $datab['FOTO'] = $path;
+        } else {
+            unset($datab['FOTO']);
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $file = $request->file('DOWNLOAD');
+            $path = $file->store('private/files');
+            $datab['DOWNLOAD'] = $path;
+        } else {
+            unset($datab['DOWNLOAD']);
+        }
+
         try {
-            $datab = $request->validate([
-                'NAMA_BARANG' => 'required|string|max:255',
-                'KODE_BARANG' => 'required|string|max:255',
-                'NOMOR_REGISTER' => 'required|string|max:50',
-                'MERK_TYPE' => 'nullable|string|max:255',
-                'UKURAN_CC' => 'nullable|string|max:255',
-                'BAHAN' => 'nullable|string|max:255',
-                'TAHUN_PEMBELIAN' => 'nullable|date_format:Y',
-                'NOMOR_PABRIK' => 'nullable|string|max:100',
-                'NOMOR_RANGKA' => 'nullable|string|max:50',
-                'NOMOR_MESIN' => 'nullable|string|max:255',
-                'NOMOR_POLISI' => 'nullable|string|max:20',
-                'NOMOR_BPKB' => 'nullable|string|max:255',
-                'ASAL_USUL' => 'nullable|string|max:255',
-                'HARGA' => 'nullable|numeric',
-                'KETERANGAN' => 'nullable|string|max:255',
-                'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
-                'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
-            ]);
-
-            if ($request->hasFile('FOTO')) {
-                $request->validate([
-                    'FOTO' => 'image|mimes:jpeg,png,jpg|max:3072'
-                ]);
-
-                $file = $request->file('FOTO');
-                $path = $file->store('private/photos');
-                $datab['FOTO'] = $path;
-            } else {
-                unset($datab['FOTO']);
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $request->validate([
-                    'DOWNLOAD' => 'mimes:pdf|max:4096'
-                ]);
-
-                $file = $request->file('DOWNLOAD');
-                $path = $file->store('private/files');
-                $datab['DOWNLOAD'] = $path;
-            } else {
-                unset($datab['DOWNLOAD']);
-            }
-
             DB::table('kibbs')->where('id', $id)->update($datab);
-
             return redirect()->route('detailDataKibb', ['id' => $id])->with('success', 'Data berhasil diupdate.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal edit data: ' . $e->getMessage()]);
         }
     }
 
-    public function hapusDataKibb($id)
+    public function destroy($id)
     {
         try {
             $deleted = Kibb::where('id', $id)->delete();
-
             if (!$deleted) {
                 return redirect()->route('kib_b.data_kibb')->with('error', 'Data tidak ditemukan');
             }
-
             return redirect()->route('datakibb')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->route('datakibb')->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 
-    public function exportb(Request $request)
+    public function export(Request $request)
     {
         $bidang = $request->input('bidang');
         $unit = $request->input('unit');
@@ -213,7 +204,7 @@ class ControllerB extends Controller
         return Excel::download(new DataExportb($kibb, $columnsb), $namaFile);
     }
 
-    public function exportAllb()
+    public function exportAll()
     {
         $all = Kibb::orderBy('kode_upb')->get();
 

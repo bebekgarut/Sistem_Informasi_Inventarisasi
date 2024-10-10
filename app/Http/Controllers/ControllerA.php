@@ -64,79 +64,10 @@ class ControllerA extends Controller
         // return view('kib_a.detail', compact('kiba', 'googleMapsApiKey'));
     }
 
-    public function edit(Request $request, $id)
+    public function create()
     {
-        $kiba = Kiba::where('id', $id)->first();
-        return view('kib_a.edit', compact('kiba'));
+        return view('kib_a.tambah');
     }
-
-    public function update(Request $request, $id)
-    {
-        try {
-            $data = $request->validate([
-                'NAMA_BARANG' => 'required|string|max:255',
-                'KODE_BARANG' => 'required|string|max:50',
-                'NOMOR_REGISTER' => 'required|string|max:50',
-                'LUAS' => 'nullable|numeric',
-                'TAHUN_PENGADAAN' => 'nullable|date_format:Y',
-                'LETAK_ALAMAT' => 'nullable|string|max:255',
-                'HAK' => 'nullable|string|max:255',
-                'TANGGAL_SERTIFIKAT' => 'nullable|date',
-                'NO_SERTIFIKAT' => 'nullable|string|max:100',
-                'PENGGUNAAN' => 'nullable|string|max:255',
-                'ASAL_USUL' => 'nullable|string|max:255',
-                'HARGA' => 'nullable|numeric',
-                'KETERANGAN' => 'nullable|string|max:255',
-                'KOORDINAT' => 'nullable|string|max:255',
-            ]);
-
-            if ($request->hasFile('FOTO')) {
-                $request->validate([
-                    'FOTO' => 'image|mimes:jpeg,png,jpg,gif|max:3072'
-                ]);
-
-                $file = $request->file('FOTO');
-                $path = $file->store('private/photos');
-                $data['FOTO'] = $path;
-            } else {
-                unset($data['FOTO']);
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $request->validate([
-                    'DOWNLOAD' => 'mimes:pdf|max:4096'
-                ]);
-
-                $file = $request->file('DOWNLOAD');
-                $path = $file->store('private/files');
-                $data['DOWNLOAD'] = $path;
-            } else {
-                unset($data['DOWNLOAD']);
-            }
-
-            DB::table('kibas')->where('id', $id)->update($data);
-
-            return response()->json(['success' => true, 'message' => 'Data berhasil diupdate']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Gagal menyimpan data: ' . $e->getMessage()]);
-        }
-    }
-
-    public function hapusDataKiba($id)
-    {
-        try {
-            $deleted = Kiba::where('id', $id)->delete();
-
-            if (!$deleted) {
-                return redirect()->route('kib_a.data_kiba')->with('error', 'Data tidak ditemukan');
-            }
-
-            return redirect()->route('datakiba')->with('success', 'Data berhasil dihapus');
-        } catch (\Exception $e) {
-            return redirect()->route('datakiba')->with('error', 'Gagal menghapus data: ' . $e->getMessage());
-        }
-    }
-
 
     public function store(Request $request)
     {
@@ -164,23 +95,93 @@ class ControllerA extends Controller
             'PENGGUNA_BARANG' => 'required|string|max:100'
         ]);
 
+        if ($request->hasFile('FOTO')) {
+            $path = $request->file('FOTO')->store('private/photos');
+            $data['FOTO'] = $path;
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $path = $request->file('DOWNLOAD')->store('private/files');
+            $data['DOWNLOAD'] = $path;
+        }
 
         try {
-            if ($request->hasFile('FOTO')) {
-                $path = $request->file('FOTO')->store('private/photos');
-                $data['FOTO'] = $path;
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $path = $request->file('DOWNLOAD')->store('private/files');
-                $data['DOWNLOAD'] = $path;
-            }
-
             Kiba::create($data);
-
-            return redirect()->route('datakiba')->with('add', 'Data berhasil ditambahkan.');
+            return redirect()->route('datakiba')->with('success', 'Data berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function edit(Request $request, $id)
+    {
+        $kiba = Kiba::where('id', $id)->first();
+        return view('kib_a.edit', compact('kiba'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:50',
+            'NOMOR_REGISTER' => 'required|string|max:50',
+            'LUAS' => 'nullable|numeric',
+            'TAHUN_PENGADAAN' => 'nullable|date_format:Y',
+            'LETAK_ALAMAT' => 'nullable|string|max:255',
+            'HAK' => 'nullable|string|max:255',
+            'TANGGAL_SERTIFIKAT' => 'nullable|date',
+            'NO_SERTIFIKAT' => 'nullable|string|max:100',
+            'PENGGUNAAN' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|string|max:255',
+            'KOORDINAT' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('FOTO')) {
+            $request->validate([
+                'FOTO' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072'
+            ]);
+
+            $file = $request->file('FOTO');
+            $path = $file->store('private/photos');
+            $data['FOTO'] = $path;
+        } else {
+            unset($data['FOTO']);
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $request->validate([
+                'DOWNLOAD' => 'nullable|mimes:pdf|max:4096'
+            ]);
+
+            $file = $request->file('DOWNLOAD');
+            $path = $file->store('private/files');
+            $data['DOWNLOAD'] = $path;
+        } else {
+            unset($data['DOWNLOAD']);
+        }
+
+        try {
+            DB::table('kibas')->where('id', $id)->update($data);
+            return redirect()->route('detailDataKiba', ['id' => $id])->with('success', 'Data berhasil diupdate.');
+        } catch (\Exception $e) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $deleted = Kiba::where('id', $id)->delete();
+
+            if (!$deleted) {
+                return redirect()->route('kib_a.data_kiba')->with('error', 'Data tidak ditemukan');
+            }
+
+            return redirect()->route('datakiba')->with('success', 'Data berhasil dihapus');
+        } catch (\Exception $e) {
+            return redirect()->route('datakiba')->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 
@@ -198,7 +199,9 @@ class ControllerA extends Controller
             ->where('KODE_SUB_UNITS', $subunit)
             ->where('KODE_UPB', $upb)
             ->get([
-                'NAMA_BARANG', 'KODE_BARANG', 'NOMOR_REGISTER',
+                'NAMA_BARANG',
+                'KODE_BARANG',
+                'NOMOR_REGISTER',
                 'LUAS',
                 'TAHUN_PENGADAAN',
                 'LETAK_ALAMAT',

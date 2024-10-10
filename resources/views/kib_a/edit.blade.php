@@ -32,14 +32,23 @@
                 <div class="row my-2">
                     <div class="col-md">
                         <h3 class="fw-bold text-uppercase"><i class="bi bi-pencil-square"></i>&nbsp;Edit Data</h3>
+                        @if ($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show mt-4">
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        @endif
                     </div>
                     <hr>
                 </div>
                 <div class="row my-2">
                     <div class="col-md">
-                        <form id="editForm" enctype="multipart/form-data">
+                        <form action="{{ route('updateDataKiba', $kiba->id) }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
-                            @method('PUT')
                             <div class="mb-3">
                                 <label for="NAMA_BARANG" class="add-form-label">Jenis Barang/Nama Barang</label>
                                 <input type="text" class="add-form-control" id="NAMA_BARANG"

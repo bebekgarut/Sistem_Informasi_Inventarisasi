@@ -15,7 +15,7 @@ use App\Exports\DataExportAllc;
 
 class ControllerC extends Controller
 {
-    public function c()
+    public function index()
     {
         $bidangs = Bidang::all();
         return view('kib_c.data_kibc', compact('bidangs'));
@@ -27,7 +27,12 @@ class ControllerC extends Controller
         return response()->json($kibbs);
     }
 
-    public function storec(Request $request)
+    public function create()
+    {
+        return view('kib_c.tambah-c');
+    }
+
+    public function store(Request $request)
     {
         $data = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
@@ -53,31 +58,26 @@ class ControllerC extends Controller
             'KODE_SUB_UNITS' => 'required|numeric',
             'KODE_UPB' => 'required|numeric',
             'PENGGUNA_BARANG' => 'required|string|max:255'
-
         ]);
 
+        if ($request->hasFile('FOTO')) {
+            $path = $request->file('FOTO')->store('private/photos');
+            $data['FOTO'] = $path;
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $path = $request->file('DOWNLOAD')->store('private/files');
+            $data['DOWNLOAD'] = $path;
+        }
         try {
-
-            if ($request->hasFile('FOTO')) {
-                $path = $request->file('FOTO')->store('private/photos');
-                $data['FOTO'] = $path;
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $path = $request->file('DOWNLOAD')->store('private/files');
-                $data['DOWNLOAD'] = $path;
-            }
-
-
             Kibc::create($data);
-
-            return redirect('/data_kibc')->with('add', 'Data berhasil ditambahkan.');
+            return redirect('/data_kibc')->with('success', 'Data berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
         }
     }
 
-    public function detailc($id, Request $request)
+    public function detail($id, Request $request)
     {
         $request->session()->put('previous_url', url()->previous());
         $kibc = Kibc::find($id);
@@ -87,66 +87,64 @@ class ControllerC extends Controller
         return view('kib_c.detail-c', compact('kibc'));
     }
 
-    public function editc(Request $request, $id)
+    public function edit(Request $request, $id)
     {
         $kibc = Kibc::where('id', $id)->first();
         return view('kib_c.edit-c', compact('kibc'));
     }
 
-    public function updatec(Request $request, $id)
+    public function update(Request $request, $id)
     {
-        try {
-            $datac = $request->validate([
-                'NAMA_BARANG' => 'required|string|max:255',
-                'KODE_BARANG' => 'required|string|max:255',
-                'NOMOR_REGISTER' => 'required|string|max:50',
-                'KONDISI_BANGUNAN' => 'nullable|string|string|max:255',
-                'BANGUNAN_BERTINGKAT' => 'nullable|string|max:255',
-                'BANGUNAN_BETON' => 'nullable|string|max:255',
-                'LUAS_LANTAI' => 'nullable|numeric',
-                'LETAK_ALAMAT' => 'nullable|string|max:255',
-                'TANGGAL_DOKUMEN' => 'nullable|date',
-                'NOMOR_DOKUMEN' => 'nullable|string|max:255',
-                'LUAS' => 'nullable|numeric',
-                'STATUS_TANAH' => 'nullable|string|max:255',
-                'NOMOR_KODE_TANAH' => 'nullable|string|max:255',
-                'HARGA' => 'nullable|numeric',
-                'ASAL_USUL' => 'nullable|string|max:255',
-                'KETERANGAN' => 'nullable|string|max:255',
+        $datac = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:255',
+            'NOMOR_REGISTER' => 'required|string|max:50',
+            'KONDISI_BANGUNAN' => 'nullable|string|string|max:255',
+            'BANGUNAN_BERTINGKAT' => 'nullable|string|max:255',
+            'BANGUNAN_BETON' => 'nullable|string|max:255',
+            'LUAS_LANTAI' => 'nullable|numeric',
+            'LETAK_ALAMAT' => 'nullable|string|max:255',
+            'TANGGAL_DOKUMEN' => 'nullable|date',
+            'NOMOR_DOKUMEN' => 'nullable|string|max:255',
+            'LUAS' => 'nullable|numeric',
+            'STATUS_TANAH' => 'nullable|string|max:255',
+            'NOMOR_KODE_TANAH' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'KETERANGAN' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('FOTO')) {
+            $request->validate([
+                'FOTO' => 'image|mimes:jpeg,png,jpg,gif|max:3072'
             ]);
+            $file = $request->file('FOTO');
+            $path = $file->store('private/photos');
+            $datac['FOTO'] = $path;
+        } else {
+            unset($datac['FOTO']);
+        }
 
-            if ($request->hasFile('FOTO')) {
-                $request->validate([
-                    'FOTO' => 'image|mimes:jpeg,png,jpg,gif|max:3072'
-                ]);
+        if ($request->hasFile('DOWNLOAD')) {
+            $request->validate([
+                'DOWNLOAD' => 'mimes:pdf|max:4096'
+            ]);
+            $file = $request->file('DOWNLOAD');
+            $path = $file->store('private/files');
+            $datac['DOWNLOAD'] = $path;
+        } else {
+            unset($datac['DOWNLOAD']);
+        }
 
-                $file = $request->file('FOTO');
-                $path = $file->store('private/photos');
-                $datac['FOTO'] = $path;
-            } else {
-                unset($datac['FOTO']);
-            }
-
-            if ($request->hasFile('DOWNLOAD')) {
-                $request->validate([
-                    'DOWNLOAD' => 'mimes:pdf|max:4096'
-                ]);
-
-                $file = $request->file('DOWNLOAD');
-                $path = $file->store('private/files');
-                $datac['DOWNLOAD'] = $path;
-            } else {
-                unset($datac['DOWNLOAD']);
-            }
+        try {
             DB::table('kibcs')->where('id', $id)->update($datac);
-
             return redirect()->route('detailDataKibc', ['id' => $id])->with('success', 'Data berhasil diupdate.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal edit data: ' . $e->getMessage()]);
         }
     }
 
-    public function hapusDataKibc($id)
+    public function destroy($id)
     {
         try {
             $deleted = Kibc::where('id', $id)->delete();
@@ -154,14 +152,13 @@ class ControllerC extends Controller
             if (!$deleted) {
                 return redirect()->route('kib_c.data_kibc')->with('error', 'Data tidak ditemukan');
             }
-
             return redirect()->route('datakibc')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->route('datakibc')->with('error', 'Gagal menghapus data: ' . $e->getMessage());
         }
     }
 
-    public function exportc(Request $request)
+    public function export(Request $request)
     {
         $bidang = $request->input('bidang');
         $unit = $request->input('unit');
@@ -175,7 +172,9 @@ class ControllerC extends Controller
             ->where('KODE_SUB_UNITS', $subunit)
             ->where('KODE_UPB', $upb)
             ->get([
-                'NAMA_BARANG', 'KODE_BARANG', 'NOMOR_REGISTER',
+                'NAMA_BARANG',
+                'KODE_BARANG',
+                'NOMOR_REGISTER',
                 'KONDISI_BANGUNAN',
                 'BANGUNAN_BERTINGKAT',
                 'BANGUNAN_BETON',
@@ -217,7 +216,7 @@ class ControllerC extends Controller
         return Excel::download(new DataExportc($kib, $columnsc), $namaFile);
     }
 
-    public function exportAllc()
+    public function exportAll()
     {
         $all = Kibc::orderBy('kode_upb')->get();
 

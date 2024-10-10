@@ -41,12 +41,6 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
-                @if (session()->has('add'))
-                    <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
-                        {{ session('add') }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                @endif
                 <form id="filterFormb">
                     <div class="mb-3">
                         <label for="bidang" class="form-label">Pilih Bidang</label>

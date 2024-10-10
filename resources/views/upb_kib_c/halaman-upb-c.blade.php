@@ -52,13 +52,6 @@
                                     aria-label="Close"></button>
                             </div>
                         @endif
-                        @if (session('hapus'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('hapus') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
                         <hr>
                     </div>
                 </div>

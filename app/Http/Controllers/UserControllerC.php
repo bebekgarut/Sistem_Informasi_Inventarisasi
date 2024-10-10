@@ -15,18 +15,11 @@ class UserControllerC extends Controller
 {
     public function index($KODE_UPB)
     {
-        // if (Auth::user()->role == 'upb' && Auth::user()->KODE_UPB == $KODE_UPB) {
-        //     $kiba = KIBA::where('KODE_UPB', $KODE_UPB)->get();
-        //     return view('test', compact('kiba'));
-        // }
-
-        // abort(403, 'Unauthorized action.');
         if (Auth::user()->role == 'upb' && Auth::user()->KODE_UPB == $KODE_UPB) {
             $kibc = Kibc::where('kode_upb', $KODE_UPB)->paginate(100);
             return view('upb_kib_c.halaman-upb-c', compact('kibc'));
         }
     }
-
 
     public function detail($KODE_UPB, $id, Request $request)
     {
@@ -35,34 +28,17 @@ class UserControllerC extends Controller
             $kibc = Kibc::where('kode_upb', $KODE_UPB)->where('id', $id)->findOrFail($id);
             return view('upb_kib_c.detail-upb-c', compact('kibc'));
         }
-
-        abort(403, 'Unauthorized action.');
     }
 
     public function create($KODE_UPB)
     {
-
-        $user = Auth::user();
-
-        if ($user->role == 'upb' && $user->KODE_UPB == $KODE_UPB) {
-
-            $UPB = UPB::where('KODE_UPB', $KODE_UPB)->first();
-            $KODE_BIDANG = $UPB->KODE_BIDANG;
-            $KODE_UNITS = $UPB->KODE_UNITS;
-            $KODE_SUB_UNITS = $UPB->KODE_SUB_UNITS;
-
-            $sub_unit = SubUnit::where('KODE_SUB_UNITS', $KODE_SUB_UNITS)->first();
-            $PENGGUNA_BARANG = $sub_unit->NAMA_SUB_UNITS;
-
-            return view('upb_kib_c.add-upb-c', compact('KODE_BIDANG', 'KODE_UNITS', 'KODE_SUB_UNITS', 'KODE_UPB', 'PENGGUNA_BARANG'));
+        if (Auth::user()->role == 'upb' && Auth::user()->KODE_UPB == $KODE_UPB) {
+            return view('upb_kib_c.add-upb-c');
         }
-
-        abort(403, 'Unauthorized action.');
     }
 
-    public function storeUPB(Request $request, $KODE_UPB)
+    public function store(Request $request, $KODE_UPB)
     {
-
         $validatedData = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
             'KODE_BARANG' => 'required|string|max:255',
@@ -107,11 +83,10 @@ class UserControllerC extends Controller
         }
         try {
             Kibc::create($validatedData);
+            return redirect()->route('data-upb-c', ['KODE_UPB' => $KODE_UPB])->with('success', 'Data berhasil ditambahkan');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['message' => 'Gagal menambahkan data. Silakan coba lagi.']);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
         }
-
-        return redirect()->route('data-upb-c', ['KODE_UPB' => $KODE_UPB])->with('success', 'Data berhasil ditambahkan');
     }
 
     public function edit($KODE_UPB, $id)
@@ -120,17 +95,10 @@ class UserControllerC extends Controller
             $kibc = Kibc::where('kode_upb', $KODE_UPB)->where('id', $id)->findOrFail($id);
             return view('upb_kib_c.edit-upb-c', compact('kibc'));
         }
-
-        abort(403, 'Unauthorized action.');
     }
 
-    public function updatec(Request $request, $KODE_UPB, $id)
+    public function update(Request $request, $KODE_UPB, $id)
     {
-
-        if (Auth::user()->role !== 'upb' && Auth::user()->KODE_UPB !== $KODE_UPB) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $validatedDatac = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
             'KODE_BARANG' => 'required|string|max:255',
@@ -164,22 +132,16 @@ class UserControllerC extends Controller
             $validatedDatac['DOWNLOAD'] = $path;
         }
 
-
         try {
             DB::table('kibcs')->where('id', $id)->where('KODE_UPB', $KODE_UPB)->update($validatedDatac);
+            return redirect()->route('detail-upb-c', ['KODE_UPB' => $kibc->KODE_UPB, 'id' => $kibc->id])->with('success', 'Data berhasil diupdate');
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['message' => 'Gagal menambahkan data. Silakan coba lagi.']);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
         }
-        return redirect()->route('detail-upb-c', ['KODE_UPB' => $kibc->KODE_UPB, 'id' => $kibc->id])->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($KODE_UPB, $id)
     {
-
-        if (Auth::user()->role !== 'upb' && Auth::user()->KODE_UPB !== $KODE_UPB) {
-            abort(403, 'Unauthorized action.');
-        }
-
         $kibc = Kibc::findOrFail($id);
 
         try {
@@ -188,9 +150,9 @@ class UserControllerC extends Controller
             if (!$deleted) {
                 return redirect()->route('detail-upb-c', ['KODE_UPB' => $kibc->KODE_UPB, 'id' => $kibc->id])->with('error', 'Data tidak ditemukan');
             }
-            return redirect()->route('data-upb-c', ['KODE_UPB' => $KODE_UPB])->with('hapus', 'Data berhasil dihapus');
+            return redirect()->route('data-upb-c', ['KODE_UPB' => $KODE_UPB])->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
-            return back()->withErrors(['message' => 'Gagal menghapus data. Silakan coba lagi.']);
+            return redirect()->back()->withInput()->withErrors(['error' => 'Gagal menambahkan data: ' . $e->getMessage()]);
         }
     }
 
@@ -205,33 +167,31 @@ class UserControllerC extends Controller
 
     public function search(Request $request, $KODE_UPB)
     {
-        if (Auth::user()->role !== 'upb' && Auth::user()->KODE_UPB !== $KODE_UPB) {
-            abort(403, 'Unauthorized action.');
+        if (Auth::user()->role == 'upb' && Auth::user()->KODE_UPB == $KODE_UPB) {
+            $keyword = $request->input('keyword');
+
+            $kibc = Kibc::where('KODE_UPB', Auth::user()->KODE_UPB)
+                ->where(function ($query) use ($keyword) {
+                    $query->where('NAMA_BARANG', 'like', "%$keyword%")
+                        ->orWhere('KODE_BARANG', 'like', "%$keyword%")
+                        ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
+                        ->orWhere('KONDISI_BANGUNAN', 'like', "%$keyword%")
+                        ->orWhere('BANGUNAN_BERTINGKAT', 'like', "%$keyword%")
+                        ->orWhere('BANGUNAN_BETON', 'like', "%$keyword%")
+                        ->orWhere('LUAS_LANTAI', 'like', "%$keyword%")
+                        ->orWhere('LETAK_ALAMAT', 'like', "%$keyword%")
+                        ->orWhere('TANGGAL_DOKUMEN', 'like', "%$keyword%")
+                        ->orWhere('NOMOR_DOKUMEN', 'like', "%$keyword%")
+                        ->orWhere('LUAS', 'like', "%$keyword%")
+                        ->orWhere('STATUS_TANAH', 'like', "%$keyword%")
+                        ->orWhere('NOMOR_KODE_TANAH', 'like', "%$keyword%")
+                        ->orWhere('ASAL_USUL', 'like', "%$keyword%")
+                        ->orWhere('HARGA', 'like', "%$keyword%")
+                        ->orWhere('KETERANGAN', 'like', "%$keyword%");
+                })
+                ->paginate(50);
+
+            return view('upb_kib_c.search-upb-c', compact('kibc'));
         }
-
-        $keyword = $request->input('keyword');
-
-        $kibc = Kibc::where('KODE_UPB', Auth::user()->KODE_UPB)
-            ->where(function ($query) use ($keyword) {
-                $query->where('NAMA_BARANG', 'like', "%$keyword%")
-                    ->orWhere('KODE_BARANG', 'like', "%$keyword%")
-                    ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
-                    ->orWhere('KONDISI_BANGUNAN', 'like', "%$keyword%")
-                    ->orWhere('BANGUNAN_BERTINGKAT', 'like', "%$keyword%")
-                    ->orWhere('BANGUNAN_BETON', 'like', "%$keyword%")
-                    ->orWhere('LUAS_LANTAI', 'like', "%$keyword%")
-                    ->orWhere('LETAK_ALAMAT', 'like', "%$keyword%")
-                    ->orWhere('TANGGAL_DOKUMEN', 'like', "%$keyword%")
-                    ->orWhere('NOMOR_DOKUMEN', 'like', "%$keyword%")
-                    ->orWhere('LUAS', 'like', "%$keyword%")
-                    ->orWhere('STATUS_TANAH', 'like', "%$keyword%")
-                    ->orWhere('NOMOR_KODE_TANAH', 'like', "%$keyword%")
-                    ->orWhere('ASAL_USUL', 'like', "%$keyword%")
-                    ->orWhere('HARGA', 'like', "%$keyword%")
-                    ->orWhere('KETERANGAN', 'like', "%$keyword%");
-            })
-            ->paginate(50);
-
-        return view('upb_kib_c.search-upb-c', compact('kibc'));
     }
 }

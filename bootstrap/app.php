@@ -5,9 +5,6 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use App\Http\Middleware\CheckRole;
 use App\Http\Middleware\CheckRoleUPB;
-use App\Http\Middleware\RedirectUpb;
-use Illuminate\Support\Facades\Redirect;
-use SebastianBergmann\CodeCoverage\Report\Html\CustomCssFile;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,7 +16,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin' => CheckRole::class,
             'upb' => CheckRoleUPB::class,
-            'redirectUPB' => RedirectUpb::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
