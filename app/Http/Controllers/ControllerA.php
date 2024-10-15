@@ -54,14 +54,12 @@ class ControllerA extends Controller
 
     public function detail($id, Request $request)
     {
-        // $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
         $request->session()->put('previous_url', url()->previous());
         $kiba = Kiba::find($id);
         if (!$kiba) {
             return redirect('/data_kiba')->with('error', 'Data tidak ditemukan');
         }
         return view('kib_a.detail', compact('kiba'));
-        // return view('kib_a.detail', compact('kiba', 'googleMapsApiKey'));
     }
 
     public function create()
@@ -291,8 +289,6 @@ class ControllerA extends Controller
 
     public function rekapKoordinat()
     {
-        // $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
-        // $kibas = Kiba::all();
         $kibas = Kiba::whereNotNull('KOORDINAT')
             ->get(['NAMA_BARANG', 'NOMOR_REGISTER', 'KODE_BARANG', 'PENGGUNAAN', 'KOORDINAT']);
         $countKoordinat = $kibas->filter(function ($kiba) {
@@ -300,7 +296,6 @@ class ControllerA extends Controller
         })->count();
 
         return view('kib_a.rekapkoordinat-a', compact('kibas', 'countKoordinat'));
-        // return view('kib_a.rekapkoordinat-a', compact('kibas', 'countKoordinat', 'googleMapsApiKey'));
     }
 
     public function showFile($filename)

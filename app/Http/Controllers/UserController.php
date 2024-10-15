@@ -12,6 +12,12 @@ use Illuminate\Validation\Rule;
 class UserController extends Controller
 {
 
+    public function data()
+    {
+        $users = User::orderBy('role', 'asc')->paginate(100);
+        return view('user.data_user', compact('users'));
+    }
+
     public function tambah()
     {
         $upbs = UPB::all();
@@ -37,12 +43,6 @@ class UserController extends Controller
         return redirect('/data_user');
     }
 
-    public function data()
-    {
-        $users = User::orderBy('role', 'asc')->paginate(100);
-        return view('user.data_user', compact('users'));
-    }
-
     public function edit($id)
     {
         $users = User::where('id', $id)->findOrFail($id);
@@ -66,13 +66,13 @@ class UserController extends Controller
 
         DB::table('Users')->where('id', $id)->update($validatedData);
 
-        return redirect()->route('datauser')->with('successEdit', 'Data berhasil diupdate');
+        return redirect()->route('datauser')->with('success', 'Data berhasil diupdate');
     }
 
     public function destroy($id)
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return redirect()->route('datauser')->with('hapus', 'Data berhasil dihapus');
+        return redirect()->route('datauser')->with('success', 'Data berhasil dihapus');
     }
 }

@@ -54,12 +54,8 @@ class ArsipController extends Controller
 
     public function edit($id)
     {
-        try {
-            $arsip = Arsip::with('files')->findOrFail($id);
-            return view('arsip.edit-arsip', compact('arsip'));
-        } catch (\Exception $e) {
-            return redirect()->route('arsip')->with('error', 'Data tidak ditemukan');
-        }
+        $arsip = Arsip::with('files')->findOrFail($id);
+        return view('arsip.edit-arsip', compact('arsip'));
     }
 
     public function hapusFileEdit($id)
@@ -114,7 +110,6 @@ class ArsipController extends Controller
                 $arsip->files()->create(['file_path' => $filepath]);
             }
         }
-
         return redirect()->route('arsip')->with('success', 'Data arsip berhasil diperbarui.');
     }
 

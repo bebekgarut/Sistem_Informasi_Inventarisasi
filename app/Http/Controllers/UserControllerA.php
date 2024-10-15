@@ -33,11 +33,9 @@ class UserControllerA extends Controller
     public function detail($KODE_UPB, $id, Request $request)
     {
         $request->session()->put('previous_url', url()->previous());
-        // $googleMapsApiKey = env('GOOGLE_MAPS_API_KEY');
         if (Auth::user()->role == 'upb' && Auth::user()->KODE_UPB == $KODE_UPB) {
             $kiba = Kiba::where('kode_upb', $KODE_UPB)->where('id', $id)->findOrFail($id);
             return view('upb_kib_a.detail-upb-a', compact('kiba'));
-            // return view('upb_kib_a.detail-upb-a', compact('kiba', 'googleMapsApiKey'));
         }
     }
 

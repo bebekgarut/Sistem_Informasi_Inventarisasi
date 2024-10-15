@@ -7,7 +7,6 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithTitle;
 use Illuminate\Support\Collection;
-use App\Models\Kiba;
 
 class DataExportAlla implements FromCollection, WithHeadings, WithMapping, WithTitle
 {

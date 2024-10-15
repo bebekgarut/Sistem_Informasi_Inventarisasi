@@ -83,6 +83,14 @@ $(document).ready(function() {
         }
     });
 
+     // Fungsi untuk menangani perubahan upb
+     $('#upb').on('change', function() {
+        var kodeUPB = $(this).val();
+        if (kodeUPB) {
+            fetchKibaData('/getKibaByUPB/' + kodeUPB);
+        }
+    });
+
     function fetchKibaData(url) {
         $.ajax({
             url: url,
@@ -159,14 +167,6 @@ $(document).ready(function() {
     $('#exportBtn').on('click', function() {
         var formData = $('#filterForm').serialize();
         window.location.href = '/export?' + formData;
-    });
-
-    // Fungsi untuk menangani perubahan upb
-    $('#upb').on('change', function() {
-        var kodeUPB = $(this).val();
-        if (kodeUPB) {
-            fetchKibaData('/getKibaByUPB/' + kodeUPB);
-        }
     });
 
     function fetchKibbData(url) {

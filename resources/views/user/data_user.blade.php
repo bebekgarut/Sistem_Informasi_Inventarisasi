@@ -41,20 +41,6 @@
                                     aria-label="Close"></button>
                             </div>
                         @endif
-                        @if (session()->has('successEdit'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('successEdit') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
-                        @if (session()->has('hapus'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                {{ session('hapus') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
                         <hr>
                     </div>
                 </div>

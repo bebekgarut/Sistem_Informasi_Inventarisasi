@@ -13,6 +13,28 @@ class LoginController extends Controller
         return view('login');
     }
 
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+
+            if (Auth::User()->role == 'admin') {
+                $request->session()->regenerate();
+
+                return redirect()->intended('/home');
+            } else if (Auth::User()->role == 'upb') {
+                $request->session()->regenerate();
+
+                return redirect()->route('home-upb', ['KODE_UPB' => Auth::user()->KODE_UPB]);;
+            }
+        }
+        return back()->with('gagal', 'Username atau Password salah!!!');
+    }
+
     // public function authenticate(Request $request)
     // {
     //     $credentials = $request->validate([
@@ -37,28 +59,6 @@ class LoginController extends Controller
 
     //     return back()->with('gagal', 'Username atau Password salah!!!');
     // }
-
-    public function authenticate(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
-
-        if (Auth::attempt($credentials)) {
-
-            if (Auth::User()->role == 'admin') {
-                $request->session()->regenerate();
-
-                return redirect()->intended('/home');
-            } else if (Auth::User()->role == 'upb') {
-                $request->session()->regenerate();
-
-                return redirect()->route('home-upb', ['KODE_UPB' => Auth::user()->KODE_UPB]);;
-            }
-        }
-        return back()->with('gagal', 'Username atau Password salah!!!');
-    }
 
     public function logout(Request $request)
     {
