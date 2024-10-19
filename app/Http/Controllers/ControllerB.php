@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataExportb;
 use App\Exports\DataExportAllb;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Storage;
 
 class ControllerB extends Controller
 {
@@ -49,6 +51,7 @@ class ControllerB extends Controller
             'HARGA' => 'nullable|numeric',
             'KETERANGAN' => 'nullable|string|max:255',
             'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
+            'DOWNLOAD_2' => 'nullable|mimes:pdf|max:4096',
             'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
             'KODE_BIDANG' => 'required|numeric',
             'KODE_UNITS' => 'required|numeric',
@@ -63,8 +66,33 @@ class ControllerB extends Controller
         }
 
         if ($request->hasFile('DOWNLOAD')) {
-            $path = $request->file('DOWNLOAD')->store('private/files');
-            $data['DOWNLOAD'] = $path;
+            $filename = pathinfo($request->File('DOWNLOAD')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD'] = $filepath;
+        }
+
+        if ($request->hasFile('DOWNLOAD_2')) {
+            $filename = pathinfo($request->File('DOWNLOAD_2')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD_2')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD_2')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD_2'] = $filepath;
         }
 
         try {
@@ -93,7 +121,7 @@ class ControllerB extends Controller
 
     public function update(Request $request, $id)
     {
-        $datab = $request->validate([
+        $data = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
             'KODE_BARANG' => 'required|string|max:255',
             'NOMOR_REGISTER' => 'required|string|max:50',
@@ -110,27 +138,64 @@ class ControllerB extends Controller
             'HARGA' => 'nullable|numeric',
             'KETERANGAN' => 'nullable|string|max:255',
             'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
+            'DOWNLOAD_2' => 'nullable|mimes:pdf|max:4096',
             'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ]);
 
+        $oldData = DB::table('kibbs')->where('id', $id)->first();
+
         if ($request->hasFile('FOTO')) {
+            if ($oldData && $oldData->FOTO) {
+                Storage::delete($oldData->FOTO);
+            }
+
             $file = $request->file('FOTO');
             $path = $file->store('private/photos');
-            $datab['FOTO'] = $path;
+            $data['FOTO'] = $path;
         } else {
-            unset($datab['FOTO']);
+            unset($data['FOTO']);
         }
 
         if ($request->hasFile('DOWNLOAD')) {
-            $file = $request->file('DOWNLOAD');
-            $path = $file->store('private/files');
-            $datab['DOWNLOAD'] = $path;
-        } else {
-            unset($datab['DOWNLOAD']);
+            if ($oldData && $oldData->DOWNLOAD) {
+                Storage::delete($oldData->DOWNLOAD);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD'] = $filepath;
+        }
+
+        if ($request->hasFile('DOWNLOAD_2')) {
+            if ($oldData && $oldData->DOWNLOAD_2) {
+                Storage::delete($oldData->DOWNLOAD_2);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD_2')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD_2')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD_2')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD_2'] = $filepath;
         }
 
         try {
-            DB::table('kibbs')->where('id', $id)->update($datab);
+            DB::table('kibbs')->where('id', $id)->update($data);
             return redirect()->route('detailDataKibb', ['id' => $id])->with('success', 'Data berhasil diupdate.');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->withErrors(['error' => 'Gagal edit data: ' . $e->getMessage()]);
@@ -140,6 +205,20 @@ class ControllerB extends Controller
     public function destroy($id)
     {
         try {
+            $kibb = Kibb::findOrFail($id);
+
+            if ($kibb && $kibb->FOTO) {
+                Storage::delete($kibb->FOTO);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD) {
+                Storage::delete($kibb->DOWNLOAD);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD_2) {
+                Storage::delete($kibb->DOWNLOAD_2);
+            }
+
             $deleted = Kibb::where('id', $id)->delete();
             if (!$deleted) {
                 return redirect()->route('kib_b.data_kibb')->with('error', 'Data tidak ditemukan');

@@ -135,14 +135,27 @@
                                     autocomplete="off">
                             </div>
                             <div class="mb-3">
-                                <label for="DOWNLOAD" class="form-label">File BPKB <i>(max 4 MB)</i></label>
+                                <label for="DOWNLOAD" class="form-label">File STNK <i>(max 4 MB)</i></label>
                                 @if ($kibb->DOWNLOAD)
                                     <a href="{{ route('files.download', ['filename' => basename($kibb->DOWNLOAD)]) }}"
-                                        class="no-hover-link" id="DOWNLOAD" style="color: #2C3B42">Lihat file
+                                        class="no-hover-link" id="DOWNLOAD" style="color: #2C3B42">Lihat file STNK
                                         saat ini</a>
                                 @endif
                                 <input class="form-control form-control-sm input-file" id="DOWNLOAD" name="DOWNLOAD"
                                     type="file" style="border-color: #2C3B42; border-width:2px; border-radius:5px;"
+                                    accept=".pdf">
+                                <span id="fileError" style="color:red;"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="DOWNLOAD_2" class="form-label">File BPKB <i>(max 4 MB)</i></label>
+                                @if ($kibb->DOWNLOAD_2)
+                                    <a href="{{ route('files.download', ['filename' => basename($kibb->DOWNLOAD_2)]) }}"
+                                        class="no-hover-link" id="DOWNLOAD_2" style="color: #2C3B42">Lihat file BPKB
+                                        saat ini</a>
+                                @endif
+                                <input class="form-control form-control-sm input-file" id="DOWNLOAD_2"
+                                    name="DOWNLOAD_2" type="file"
+                                    style="border-color: #2C3B42; border-width:2px; border-radius:5px;"
                                     accept=".pdf">
                                 <span id="fileError" style="color:red;"></span>
                             </div>

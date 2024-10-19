@@ -30,6 +30,7 @@ class Kibb extends Model
         'KETERANGAN',
         'FOTO',
         'DOWNLOAD',
+        'DOWNLOAD_2',
         'KODE_BIDANG',
         'KODE_UNITS',
         'KODE_SUB_UNITS',

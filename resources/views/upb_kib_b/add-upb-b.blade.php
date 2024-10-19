@@ -135,9 +135,17 @@
                                     placeholder="Masukkan Keterangan" autocomplete="off">{{ old('KETERANGAN') }}</textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="DOWNLOAD" class="form-label">Unggah File BPKB(PDF)(max 4 mb)</label>
+                                <label for="DOWNLOAD" class="form-label">Unggah File STNK(PDF)(max 4 mb)</label>
                                 <input class="form-control form-control-sm input-file" id="DOWNLOAD" name="DOWNLOAD"
                                     type="file"
+                                    style="border-color: #2C3B42; border-width:2px; border-radius: 5px;"
+                                    accept=".pdf">
+                                <span id="fileError" style="color:red;"></span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="DOWNLOAD_2" class="form-label">Unggah File BPKB(PDF)(max 4 mb)</label>
+                                <input class="form-control form-control-sm input-file" id="DOWNLOAD_2"
+                                    name="DOWNLOAD_2" type="file"
                                     style="border-color: #2C3B42; border-width:2px; border-radius: 5px;"
                                     accept=".pdf">
                                 <span id="fileError" style="color:red;"></span>
@@ -150,11 +158,6 @@
                                     accept=".jpg, .png, .jpeg ">
                                 <span id="fotoError" style="color:red;"></span>
                             </div>
-                            <input type="hidden" name="KODE_BIDANG" value="{{ $KODE_BIDANG }}">
-                            <input type="hidden" name="KODE_UNITS" value="{{ $KODE_UNITS }}">
-                            <input type="hidden" name="KODE_SUB_UNITS" value="{{ $KODE_SUB_UNITS }}">
-                            <input type="hidden" name="KODE_UPB" value="{{ $KODE_UPB }}">
-                            <input type="hidden" name="PENGGUNA_BARANG" value="{{ $PENGGUNA_BARANG }}">
                             <hr>
                             <a href="{{ route('data-upb-b', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
                                 class="btn">Kembali</a>

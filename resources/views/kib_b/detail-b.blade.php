@@ -119,12 +119,23 @@
                                     <td>{{ $kibb->KETERANGAN }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Unduh BPKB</th>
+                                    <th scope="row">STNK</th>
                                     <td>
                                         @if ($kibb->DOWNLOAD)
                                             <a href="{{ route('files.download', ['filename' => basename($kibb->DOWNLOAD)]) }}"
                                                 target="_blank">
-                                                <p style="color: blue;height:10px">Unduh PDF</p>
+                                                <p style="color: blue;height:10px">Lihat File</p>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BPKB</th>
+                                    <td>
+                                        @if ($kibb->DOWNLOAD_2)
+                                            <a href="{{ route('files.download', ['filename' => basename($kibb->DOWNLOAD_2)]) }}"
+                                                target="_blank">
+                                                <p style="color: blue;height:10px">Lihat File</p>
                                             </a>
                                         @endif
                                     </td>

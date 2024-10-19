@@ -119,12 +119,23 @@
                                     <td>{{ $kibb->PENGGUNA_BARANG }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Unduh BPKB</th>
+                                    <th scope="row">STNK</th>
                                     <td>
                                         @if ($kibb->DOWNLOAD)
                                             <a href="{{ route('files.show-upb', ['KODE_UPB' => $kibb->KODE_UPB, 'filename' => basename($kibb->DOWNLOAD)]) }}"
                                                 target="_blank">
-                                                <p style="color: blue;height:10px">Unduh PDF</p>
+                                                <p style="color: blue;height:10px">Lihat File STNK</p>
+                                            </a>
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">BPKB</th>
+                                    <td>
+                                        @if ($kibb->DOWNLOAD)
+                                            <a href="{{ route('files.show-upb', ['KODE_UPB' => $kibb->KODE_UPB, 'filename' => basename($kibb->DOWNLOAD)]) }}"
+                                                target="_blank">
+                                                <p style="color: blue;height:10px">Lihat File BPKB</p>
                                             </a>
                                         @endif
                                     </td>
