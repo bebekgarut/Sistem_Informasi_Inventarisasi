@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{{ asset('img/kota-palemba1684853666_aae063f287870b58f219.png') }}">
     <title>Tambah Data User</title>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!--Select-->
@@ -46,7 +47,8 @@
                             <div class="mb-3">
                                 <label for="USERNAME" class="add-form-label">Username</label>
                                 <input type="text" class="add-form-control" id="username" name="username"
-                                    autocomplete="off" value="{{ old('username') }}" required>
+                                    autocomplete="off" value="{{ old('username') }}" placeholder="Masukkan Username"
+                                    required>
                                 @error('username')
                                     <div class="invalid-feedback" style="display: block">
                                         {{ $message }}
@@ -55,8 +57,8 @@
                             </div>
                             <div class="mb-3">
                                 <label for="PASSWORD" class="add-form-label">Password</label>
-                                <input type="password" class="add-form-control" id="PASSWORD" name="password"
-                                    autocomplete="off" required>
+                                <input type="password" class="add-form-control" id="PASSWORD"
+                                    placeholder="Masukkan Password" name="password" autocomplete="off" required>
                                 @error('password')
                                     <div class="invalid-feedback" style="display: block">
                                         {{ $message }}

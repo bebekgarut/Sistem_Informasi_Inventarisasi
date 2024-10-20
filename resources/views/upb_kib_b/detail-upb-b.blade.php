@@ -33,8 +33,8 @@
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            </button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
@@ -132,8 +132,8 @@
                                 <tr>
                                     <th scope="row">BPKB</th>
                                     <td>
-                                        @if ($kibb->DOWNLOAD)
-                                            <a href="{{ route('files.show-upb', ['KODE_UPB' => $kibb->KODE_UPB, 'filename' => basename($kibb->DOWNLOAD)]) }}"
+                                        @if ($kibb->DOWNLOAD_2)
+                                            <a href="{{ route('files.show-upb', ['KODE_UPB' => $kibb->KODE_UPB, 'filename' => basename($kibb->DOWNLOAD_2)]) }}"
                                                 target="_blank">
                                                 <p style="color: blue;height:10px">Lihat File BPKB</p>
                                             </a>
@@ -147,9 +147,7 @@
                 <div class="row my-2">
                     <div class="col-md text-center">
                         <a href="{{ route('edit-upb-b', ['KODE_UPB' => $kibb->KODE_UPB, 'id' => $kibb->id]) }}"
-                            class="btn"><i class="bi bi-pencil"></i>
-                            Edit</a>
-
+                            class="btn">Edit</a>
                         <button type="button" class="btn" data-bs-toggle="modal"
                             data-bs-target="#hapusModal">Hapus</button>
                         <a href="{{ session('previous_url') }}" class="btn">Kembali</a>

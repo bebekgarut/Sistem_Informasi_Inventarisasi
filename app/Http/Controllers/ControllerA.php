@@ -134,12 +134,16 @@ class ControllerA extends Controller
             'HARGA' => 'nullable|numeric',
             'KETERANGAN' => 'nullable|string|max:255',
             'KOORDINAT' => 'nullable|string|max:255',
+            'FOTO' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072',
+            'DOWNLOAD' => 'nullable|mimes:pdf|max:4096'
         ]);
 
+        $oldData = DB::table('kibas')->where('id', $id)->first();
+
         if ($request->hasFile('FOTO')) {
-            $request->validate([
-                'FOTO' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072'
-            ]);
+            if ($oldData && $oldData->FOTO) {
+                Storage::delete($oldData->FOTO);
+            }
 
             $file = $request->file('FOTO');
             $path = $file->store('private/photos');
@@ -149,9 +153,9 @@ class ControllerA extends Controller
         }
 
         if ($request->hasFile('DOWNLOAD')) {
-            $request->validate([
-                'DOWNLOAD' => 'nullable|mimes:pdf|max:4096'
-            ]);
+            if ($oldData && $oldData->DOWNLOAD) {
+                Storage::delete($oldData->DOWNLOAD);
+            }
 
             $file = $request->file('DOWNLOAD');
             $path = $file->store('private/files');
@@ -171,12 +175,20 @@ class ControllerA extends Controller
     public function destroy($id)
     {
         try {
-            $deleted = Kiba::where('id', $id)->delete();
+            $kiba = Kiba::findOrFail($id);
 
+            if ($kiba && $kiba->FOTO) {
+                Storage::delete($kiba->FOTO);
+            }
+
+            if ($kiba && $kiba->DOWNLOAD) {
+                Storage::delete($kiba->DOWNLOAD);
+            }
+
+            $deleted = Kiba::where('id', $id)->delete();
             if (!$deleted) {
                 return redirect()->route('kib_a.data_kiba')->with('error', 'Data tidak ditemukan');
             }
-
             return redirect()->route('datakiba')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
             return redirect()->route('datakiba')->with('error', 'Gagal menghapus data: ' . $e->getMessage());

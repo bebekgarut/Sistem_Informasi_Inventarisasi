@@ -37,8 +37,8 @@
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
+                                <button type="button" class="close" data-bs-dismiss="alert"
+                                    aria-label="Close"><span>&times;</span></button>
                             </div>
                         @endif
                     </div>
@@ -135,7 +135,8 @@
                                 <label for="DOWNLOAD" class="form-label">File Sertifikat (max 4 MB)</label>
                                 @if ($kiba->DOWNLOAD)
                                     <a href="{{ route('files.download', ['filename' => basename($kiba->DOWNLOAD)]) }}"
-                                        class="no-hover-link" id="DOWNLOAD" style="color: #2C3B42">Lihat file
+                                        class="no-hover-link" target="_blank" id="DOWNLOAD"
+                                        style="color: #2C3B42">Lihat file
                                         saat ini</a>
                                 @endif
                                 <input class="form-control form-control-sm input-gambar" id="DOWNLOAD"

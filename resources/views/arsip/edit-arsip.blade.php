@@ -34,8 +34,8 @@
                         @if (session('success'))
                             <div class="alert alert-success alert-dismissible fade show" role="alert">
                                 {{ session('success') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
+                                <button type="button" class="close" data-bs-dismiss="alert"
+                                    aria-label="Close"><span>&times;</span></button>
                             </div>
                         @endif
                         @if ($errors->any())
@@ -43,8 +43,8 @@
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
+                                <button type="button" class="close" data-bs-dismiss="alert"
+                                    aria-label="Close"><span>&times;</span></button>
                             </div>
                         @endif
                     </div>
@@ -75,7 +75,8 @@
                                         @foreach ($arsip->files as $file)
                                             <li class="align-items-center mr-0">
                                                 <a href="{{ route('filesArsip', ['filename' => basename($file->file_path)]) }}"
-                                                    class="text-dark me-2" style="text-decoration: none;">
+                                                    class="text-dark me-2" style="text-decoration: none;"
+                                                    target="_blank">
                                                     {{ basename($file->file_path) }}
                                                 </a>
                                                 <button type="button" class="btn btn-danger btn-sm btn-delete"

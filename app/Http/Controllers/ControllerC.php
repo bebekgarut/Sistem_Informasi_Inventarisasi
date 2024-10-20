@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataExportc;
 use App\Exports\DataExportAllc;
-
+use Illuminate\Support\Facades\Storage;
 
 class ControllerC extends Controller
 {
@@ -112,28 +112,28 @@ class ControllerC extends Controller
             'HARGA' => 'nullable|numeric',
             'ASAL_USUL' => 'nullable|string|max:255',
             'KETERANGAN' => 'nullable|string|max:255',
+            'FOTO' => 'image|mimes:jpeg,png,jpg,gif|max:3072',
+            'DOWNLOAD' => 'mimes:pdf|max:4096'
         ]);
 
+        $oldData = DB::table('kibcs')->where('id', $id)->first();
+
         if ($request->hasFile('FOTO')) {
-            $request->validate([
-                'FOTO' => 'image|mimes:jpeg,png,jpg,gif|max:3072'
-            ]);
+            if ($oldData && $oldData->FOTO) {
+                Storage::delete($oldData->FOTO);
+            }
             $file = $request->file('FOTO');
             $path = $file->store('private/photos');
             $datac['FOTO'] = $path;
-        } else {
-            unset($datac['FOTO']);
         }
 
         if ($request->hasFile('DOWNLOAD')) {
-            $request->validate([
-                'DOWNLOAD' => 'mimes:pdf|max:4096'
-            ]);
+            if ($oldData && $oldData->DOWNLOAD) {
+                Storage::delete($oldData->DOWNLOAD);
+            }
             $file = $request->file('DOWNLOAD');
             $path = $file->store('private/files');
             $datac['DOWNLOAD'] = $path;
-        } else {
-            unset($datac['DOWNLOAD']);
         }
 
         try {
@@ -147,6 +147,16 @@ class ControllerC extends Controller
     public function destroy($id)
     {
         try {
+            $kibc = Kibc::findOrFail($id);
+
+            if ($kibc && $kibc->FOTO) {
+                Storage::delete($kibc->FOTO);
+            }
+
+            if ($kibc && $kibc->DOWNLOAD) {
+                Storage::delete($kibc->DOWNLOAD);
+            }
+
             $deleted = Kibc::where('id', $id)->delete();
 
             if (!$deleted) {

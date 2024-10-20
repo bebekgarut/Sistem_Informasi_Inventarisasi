@@ -38,7 +38,7 @@ class UserControllerB extends Controller
         }
     }
 
-    public function storeUPB(Request $request, $KODE_UPB)
+    public function store(Request $request, $KODE_UPB)
     {
         $validatedData = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
@@ -124,7 +124,7 @@ class UserControllerB extends Controller
         }
     }
 
-    public function updateb(Request $request, $KODE_UPB, $id)
+    public function update(Request $request, $KODE_UPB, $id)
     {
         $validatedDatab = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',

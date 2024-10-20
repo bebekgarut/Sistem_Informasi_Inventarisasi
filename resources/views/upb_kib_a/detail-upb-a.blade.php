@@ -33,8 +33,8 @@
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-                            </button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
@@ -134,9 +134,7 @@
                 <div class="row my-2">
                     <div class="col-md text-center">
                         <a href="{{ route('edit-upb-a', ['KODE_UPB' => $kiba->KODE_UPB, 'id' => $kiba->id]) }}"
-                            class="btn"><i class="bi bi-pencil"></i>
-                            Edit</a>
-
+                            class="btn">Edit</a>
                         <button type="button" class="btn" data-bs-toggle="modal"
                             data-bs-target="#hapusModal">Hapus</button>
                         <a href="{{ session('previous_url') }}" class="btn">Kembali</a>

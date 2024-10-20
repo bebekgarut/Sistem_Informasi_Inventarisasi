@@ -31,12 +31,11 @@
                     <div class="col-md">
                         <h3 class="fw-bold text-uppercase"><i class="bi bi-info-circle"></i></i>&nbsp;Detail Data</h3>
                     </div>
-                    @if (session('success'))
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @if (session()->has('success'))
+                        <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
@@ -176,7 +175,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
         </script>
-        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
         <script src="{{ asset('js/custom.js') }}"></script>
 </body>

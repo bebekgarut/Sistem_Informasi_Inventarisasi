@@ -98,18 +98,18 @@ Route::group(['middleware' => 'upb'], function () {
     Route::get('/detail-upb-c/{KODE_UPB}/{id}', [UserControllerC::class, 'detail'])->name('detail-upb-c');
 
     Route::get('/add-upb-a/{KODE_UPB}', [UserControllerA::class, 'create'])->name('add-upb-a');
-    Route::post('/add-upb-a/{KODE_UPB}', [UserControllerA::class, 'storeUPB'])->name('store-upb-a');
+    Route::post('/add-upb-a/{KODE_UPB}', [UserControllerA::class, 'store'])->name('store-upb-a');
     Route::get('/add-upb-b/{KODE_UPB}', [UserControllerB::class, 'create'])->name('add-upb-b');
-    Route::post('/add-upb-b/{KODE_UPB}', [UserControllerB::class, 'storeUPB'])->name('store-upb-b');
+    Route::post('/add-upb-b/{KODE_UPB}', [UserControllerB::class, 'store'])->name('store-upb-b');
     Route::get('/add-upb-c/{KODE_UPB}', [UserControllerC::class, 'create'])->name('add-upb-c');
-    Route::post('/add-upb-c/{KODE_UPB}', [UserControllerC::class, 'storeUPB'])->name('store-upb-c');
+    Route::post('/add-upb-c/{KODE_UPB}', [UserControllerC::class, 'store'])->name('store-upb-c');
 
     Route::get('/edit-upb-a/{KODE_UPB}/{id}', [UserControllerA::class, 'edit'])->name('edit-upb-a');
     Route::post('/edit-upb-a/{KODE_UPB}/{id}', [UserControllerA::class, 'update'])->name('update-upb-a');
     Route::get('/edit-upb-b/{KODE_UPB}/{id}', [UserControllerB::class, 'edit'])->name('edit-upb-b');
-    Route::post('/edit-upb-b/{KODE_UPB}/{id}', [UserControllerB::class, 'updateb'])->name('update-upb-b');
+    Route::post('/edit-upb-b/{KODE_UPB}/{id}', [UserControllerB::class, 'update'])->name('update-upb-b');
     Route::get('/edit-upb-c/{KODE_UPB}/{id}', [UserControllerC::class, 'edit'])->name('edit-upb-c');
-    Route::post('/edit-upb-c/{KODE_UPB}/{id}', [UserControllerC::class, 'updatec'])->name('update-upb-c');
+    Route::post('/edit-upb-c/{KODE_UPB}/{id}', [UserControllerC::class, 'update'])->name('update-upb-c');
 
     Route::delete('/delete-upb-a/{KODE_UPB}/{id}', [UserControllerA::class, 'destroy'])->name('delete-upb-a');
     Route::delete('/delete-upb-b/{KODE_UPB}/{id}', [UserControllerB::class, 'destroy'])->name('delete-upb-b');

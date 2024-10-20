@@ -35,8 +35,8 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
@@ -135,9 +135,7 @@
                 <div id="googleMap" style="width:100%;height:380px;"></div>
                 <div class="row my-2">
                     <div class="col-md text-center">
-                        <a href="{{ route('editDataKiba', $kiba->id) }}" class="btn"><i class="bi bi-pencil"></i>
-                            Edit</a>
-
+                        <a href="{{ route('editDataKiba', $kiba->id) }}" class="btn">Edit</a>
                         <button type="button" class="btn" data-bs-toggle="modal"
                             data-bs-target="#hapusModal">Hapus</button>
                         <a href="{{ session('previous_url') }}" class="btn">Kembali</a>

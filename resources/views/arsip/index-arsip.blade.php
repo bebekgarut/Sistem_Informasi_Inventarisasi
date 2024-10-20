@@ -68,8 +68,8 @@
                     @if (session('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
@@ -103,7 +103,7 @@
                                     <td>
                                         @foreach ($item->files as $file)
                                             <a href="{{ route('filesArsip', ['filename' => basename($file->file_path)]) }}"
-                                                style="color: blue"><i class="fas fa-file-pdf mr-1"
+                                                style="color: blue" target="_blank"><i class="fas fa-file-pdf mr-1"
                                                     style="color: red"></i>{{ basename($file->file_path) }}</a><br>
                                         @endforeach
                                     </td>

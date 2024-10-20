@@ -35,8 +35,8 @@
                                 @foreach ($errors->all() as $error)
                                     <li>{{ $error }}</li>
                                 @endforeach
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
+                                <button type="button" class="close" data-bs-dismiss="alert"
+                                    aria-label="Close"><span>&times;</span></button>
                             </div>
                         @endif
                     </div>

@@ -147,7 +147,8 @@
                                 <label for="DOWNLOAD" class="form-label">File Sertifikat <i>(max 4 MB)</i></label>
                                 @if ($kibc->DOWNLOAD)
                                     <a href="{{ route('files.download', ['filename' => basename($kibc->DOWNLOAD)]) }}"
-                                        class="no-hover-link" id="DOWNLOAD" style="color: #2C3B42">Lihat file
+                                        class="no-hover-link" target="_blank" id="DOWNLOAD"
+                                        style="color: #2C3B42">Lihat file
                                         saat ini</a>
                                 @endif
                                 <input class="form-control form-control-sm input-file" id="DOWNLOAD" name="DOWNLOAD"

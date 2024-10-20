@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportUPBC;
+use Illuminate\Support\Facades\Storage;
 
 class UserControllerC extends Controller
 {
@@ -123,11 +124,17 @@ class UserControllerC extends Controller
         $kibc = Kibc::findOrFail($id);
 
         if ($request->hasFile('FOTO')) {
+            if ($kibc && $kibc->FOTO) {
+                Storage::delete($kibc->FOTO);
+            }
             $path = $request->file('FOTO')->store('private/photos');
             $validatedDatac['FOTO'] = $path;
         }
 
         if ($request->hasFile('DOWNLOAD')) {
+            if ($kibc && $kibc->DOWNLOAD) {
+                Storage::delete($kibc->DOWNLOAD);
+            }
             $path = $request->file('DOWNLOAD')->store('private/files');
             $validatedDatac['DOWNLOAD'] = $path;
         }
@@ -145,6 +152,13 @@ class UserControllerC extends Controller
         $kibc = Kibc::findOrFail($id);
 
         try {
+            if ($kibc && $kibc->FOTO) {
+                Storage::delete($kibc->FOTO);
+            }
+
+            if ($kibc && $kibc->DOWNLOAD) {
+                Storage::delete($kibc->DOWNLOAD);
+            }
             $deleted = Kibc::where('id', $id)->where('KODE_UPB', $KODE_UPB)->delete();
 
             if (!$deleted) {

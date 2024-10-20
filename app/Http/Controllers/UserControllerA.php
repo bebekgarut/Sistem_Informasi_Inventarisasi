@@ -46,7 +46,7 @@ class UserControllerA extends Controller
         }
     }
 
-    public function storeUPB(Request $request, $KODE_UPB)
+    public function store(Request $request, $KODE_UPB)
     {
         $validatedData = $request->validate([
             'NAMA_BARANG' => 'required|string|max:255',
@@ -127,11 +127,17 @@ class UserControllerA extends Controller
         $kiba = Kiba::findOrFail($id);
 
         if ($request->hasFile('FOTO')) {
+            if ($kiba && $kiba->FOTO) {
+                Storage::delete($kiba->FOTO);
+            }
             $path = $request->file('FOTO')->store('private/photos');
             $validatedData['FOTO'] = $path;
         }
 
         if ($request->hasFile('DOWNLOAD')) {
+            if ($kiba && $kiba->DOWNLOAD) {
+                Storage::delete($kiba->DOWNLOAD);
+            }
             $path = $request->file('DOWNLOAD')->store('private/files');
             $validatedData['DOWNLOAD'] = $path;
         }
@@ -146,9 +152,17 @@ class UserControllerA extends Controller
 
     public function destroy($KODE_UPB, $id)
     {
-        $kiba = Kiba::findOrFail($id);
-
         try {
+            $kiba = Kiba::findOrFail($id);
+
+            if ($kiba && $kiba->FOTO) {
+                Storage::delete($kiba->FOTO);
+            }
+
+            if ($kiba && $kiba->DOWNLOAD) {
+                Storage::delete($kiba->DOWNLOAD);
+            }
+
             $deleted = Kiba::where('id', $id)->where('KODE_UPB', $KODE_UPB)->delete();
 
             if (!$deleted) {

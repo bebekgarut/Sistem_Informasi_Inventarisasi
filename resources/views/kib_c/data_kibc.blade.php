@@ -39,8 +39,8 @@
                     @if (session()->has('success'))
                         <div class="alert alert-success alert-dismissible fade show mt-4" role="alert">
                             {{ session('success') }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <div class="mb-3">

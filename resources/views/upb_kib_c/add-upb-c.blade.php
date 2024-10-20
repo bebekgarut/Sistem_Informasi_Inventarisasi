@@ -36,15 +36,15 @@
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
                             @endforeach
-                            <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                aria-label="Close"></button>
+                            <button type="button" class="close" data-bs-dismiss="alert"
+                                aria-label="Close"><span>&times;</span></button>
                         </div>
                     @endif
                     <hr>
                 </div>
                 <div class="row my-2">
                     <div class="col-md">
-                        <form action="{{ route('store-upb-c', ['KODE_UPB' => $KODE_UPB]) }}" method="post"
+                        <form action="{{ route('store-upb-c', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}" method="post"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
@@ -158,11 +158,6 @@
                                     accept=".jpg, .png, .jpeg">
                                 <span id="fotoError" style="color:red;"></span>
                             </div>
-                            <input type="hidden" name="KODE_BIDANG" value="{{ $KODE_BIDANG }}">
-                            <input type="hidden" name="KODE_UNITS" value="{{ $KODE_UNITS }}">
-                            <input type="hidden" name="KODE_SUB_UNITS" value="{{ $KODE_SUB_UNITS }}">
-                            <input type="hidden" name="KODE_UPB" value="{{ $KODE_UPB }}">
-                            <input type="hidden" name="PENGGUNA_BARANG" value="{{ $PENGGUNA_BARANG }}">
                             <hr>
                             <a href="{{ route('data-upb-c', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
                                 class="btn">Kembali</a>

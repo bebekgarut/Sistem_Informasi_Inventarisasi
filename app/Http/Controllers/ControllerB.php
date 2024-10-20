@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataExportb;
 use App\Exports\DataExportAllb;
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Storage;
 
 class ControllerB extends Controller
