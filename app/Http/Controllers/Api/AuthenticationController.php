@@ -26,14 +26,9 @@ class AuthenticationController extends Controller
             ]);
         }
 
-        if ($user->role !== 'admin') {
-            throw ValidationException::withMessages([
-                'message' => ['You do not have permission to access this resource.'],
-            ]);
-        }
-
         return response()->json([
             'token' => $user->createToken($request->name)->plainTextToken,
+            'user'  => $user
         ]);
     }
 
