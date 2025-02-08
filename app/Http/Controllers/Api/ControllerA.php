@@ -9,7 +9,6 @@ use App\Models\Unit;
 use App\Models\Subunit;
 use App\Models\UPB;
 use Illuminate\Http\Request;
-use SebastianBergmann\CodeUnit\FunctionUnit;
 
 class ControllerA extends Controller
 {
@@ -47,5 +46,52 @@ class ControllerA extends Controller
     {
         $kiba = Kiba::findOrFail($id);
         return response()->json($kiba);
+    }
+
+    public function store(Request $request)
+    {
+        $data = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:50',
+            'NOMOR_REGISTER' => 'required|string|max:50',
+            'LUAS' => 'nullable|numeric',
+            'TAHUN_PENGADAAN' => 'nullable|date_format:Y',
+            'LETAK_ALAMAT' => 'nullable|string|max:255',
+            'HAK' => 'nullable|string|max:255',
+            'TANGGAL_SERTIFIKAT' => 'nullable|date',
+            'NO_SERTIFIKAT' => 'nullable|string|max:100',
+            'PENGGUNAAN' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|string|max:255',
+            'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
+            'FOTO' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:3072',
+            'KOORDINAT' => 'nullable|string|max:255',
+            'KODE_BIDANG' => 'required|numeric|exists:bidangs,KODE_BIDANG',
+            'KODE_UNITS' => 'required|numeric|exists:units,KODE_UNITS',
+            'KODE_SUB_UNITS' => 'required|numeric|exists:subunits,KODE_SUB_UNITS',
+            'KODE_UPB' => 'required|numeric|exists:upbs,KODE_UPB',
+            'PENGGUNA_BARANG' => 'required|string|max:100||exists:subunits,NAMA_SUB_UNITS'
+        ]);
+
+        if ($request->hasFile('FOTO')) {
+            $path = $request->file('FOTO')->store('private/photos');
+            $data['FOTO'] = $path;
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            $path = $request->file('DOWNLOAD')->store('private/files');
+            $data['DOWNLOAD'] = $path;
+        }
+
+        try {
+            Kiba::create($data);
+            return response()->json(['message' => 'Data berhasil ditambahkan',]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menambahkan data',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }

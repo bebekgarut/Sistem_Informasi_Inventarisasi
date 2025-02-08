@@ -27,12 +27,15 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
 
     Route::get('/getKIBA/{kode_upb}', [ControllerA::class, 'getKIBA']);
     Route::get('/showKIBA/{id}', [ControllerA::class, 'showKIBA']);
+    Route::post('/kiba', [ControllerA::class, 'store']);
 
     Route::get('/getKIBB/{kode_upb}', [ControllerB::class, 'getKIBB']);
     Route::get('/showKIBB/{id}', [ControllerB::class, 'showKIBB']);
+    Route::post('/kibb', [ControllerB::class, 'store']);
 
     Route::get('/getKIBC/{kode_upb}', [ControllerC::class, 'getKIBC']);
     Route::get('/showKIBC/{id}', [ControllerC::class, 'showKIBC']);
+    Route::post('/kibc', [ControllerC::class, 'store']);
 });
 
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
