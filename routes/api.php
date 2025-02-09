@@ -41,10 +41,13 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
     Route::get('opd/getKIBA/{kode_upb}', [OPDControllerA::class, 'getKIBA']);
     Route::get('opd/showKIBA/{kode_upb}/{id}', [OPDControllerA::class, 'showKIBA']);
+    Route::post('opd/kiba/{kode_upb}', [OPDControllerA::class, 'store']);
 
     Route::get('opd/getKIBB/{kode_upb}', [OPDControllerB::class, 'getKIBB']);
     Route::get('opd/showKIBB/{kode_upb}/{id}', [OPDControllerB::class, 'showKIBB']);
+    Route::post('opd/kibb/{kode_upb}', [OPDControllerB::class, 'store']);
 
     Route::get('opd/getKIBC/{kode_upb}', [OPDControllerc::class, 'getKIBC']);
     Route::get('opd/showKIBC/{kode_upb}/{id}', [OPDControllerC::class, 'showKIBC']);
+    Route::post('opd/kibc/{kode_upb}', [OPDControllerC::class, 'store']);
 });
