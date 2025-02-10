@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Kibb;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ControllerB extends Controller
 {
@@ -90,6 +91,92 @@ class ControllerB extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:255',
+            'NOMOR_REGISTER' => 'required|string|max:50',
+            'MERK_TYPE' => 'nullable|string|max:255',
+            'UKURAN_CC' => 'nullable|string|max:255',
+            'BAHAN' => 'nullable|string|max:255',
+            'TAHUN_PEMBELIAN' => 'nullable|date_format:Y',
+            'NOMOR_PABRIK' => 'nullable|string|max:100',
+            'NOMOR_RANGKA' => 'nullable|string|max:50',
+            'NOMOR_MESIN' => 'nullable|string|max:255',
+            'NOMOR_POLISI' => 'nullable|string|max:20',
+            'NOMOR_BPKB' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|string|max:255',
+            'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
+            'DOWNLOAD_2' => 'nullable|mimes:pdf|max:4096',
+            'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
+        ]);
+
+        $oldData = DB::table('kibbs')->where('id', $id)->first();
+
+        if ($request->hasFile('FOTO')) {
+            if ($oldData && $oldData->FOTO) {
+                Storage::delete($oldData->FOTO);
+            }
+
+            $file = $request->file('FOTO');
+            $path = $file->store('private/photos');
+            $data['FOTO'] = $path;
+        } else {
+            unset($data['FOTO']);
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            if ($oldData && $oldData->DOWNLOAD) {
+                Storage::delete($oldData->DOWNLOAD);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD'] = $filepath;
+        }
+
+        if ($request->hasFile('DOWNLOAD_2')) {
+            if ($oldData && $oldData->DOWNLOAD_2) {
+                Storage::delete($oldData->DOWNLOAD_2);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD_2')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD_2')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD_2')->storeAs('private/files', basename($filepath));
+            $data['DOWNLOAD_2'] = $filepath;
+        }
+
+        try {
+            DB::table('kibbs')->where('id', $id)->update($data);
+            return response()->json(['message' => 'Data berhasil diubah',]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal mengubah data',
                 'error' => $e->getMessage()
             ]);
         }

@@ -28,6 +28,7 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::get('/getKIBA/{kode_upb}', [ControllerA::class, 'getKIBA']);
     Route::get('/showKIBA/{id}', [ControllerA::class, 'showKIBA']);
     Route::post('/kiba', [ControllerA::class, 'store']);
+    Route::patch('/kiba/{id}', [ControllerA::class, 'update']);
 
     Route::get('/getKIBB/{kode_upb}', [ControllerB::class, 'getKIBB']);
     Route::get('/showKIBB/{id}', [ControllerB::class, 'showKIBB']);
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
     Route::get('opd/getKIBA/{kode_upb}', [OPDControllerA::class, 'getKIBA']);
     Route::get('opd/showKIBA/{kode_upb}/{id}', [OPDControllerA::class, 'showKIBA']);
     Route::post('opd/kiba/{kode_upb}', [OPDControllerA::class, 'store']);
+    Route::patch('opd/kiba/{kode_upb}', [OPDControllerA::class, 'update']);
 
     Route::get('opd/getKIBB/{kode_upb}', [OPDControllerB::class, 'getKIBB']);
     Route::get('opd/showKIBB/{kode_upb}/{id}', [OPDControllerB::class, 'showKIBB']);

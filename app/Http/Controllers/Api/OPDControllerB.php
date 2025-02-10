@@ -37,7 +37,7 @@ class OPDControllerB extends Controller
             'NOMOR_PABRIK' => 'nullable|string|max:50',
             'NOMOR_RANGKA' => 'nullable|string|max:50',
             'NOMOR_MESIN' => 'nullable|string|max:255',
-            'NOMOR_POLISI' => 'nullable|string|max:255',
+            'NOMOR_POLISI' => 'nullable|string|max:15',
             'NOMOR_BPKB' => 'nullable|string|max:255',
             'ASAL_USUL' => 'nullable|string|max:255',
             'HARGA' => 'nullable|numeric',
