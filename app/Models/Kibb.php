@@ -36,7 +36,7 @@ class Kibb extends Model
         'KODE_SUB_UNITS',
         'KODE_UPB',
     ];
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 
     public function bidang()
     {

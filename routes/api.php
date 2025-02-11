@@ -14,7 +14,9 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::apiResource('/bidang', App\Http\Controllers\Api\BidangController::class)->middleware(['auth:sanctum']);
+Route::apiResource('/bidang', App\Http\Controllers\Api\BidangController::class);
+Route::apiResource('/test', App\Http\Controllers\Api\ControllerA::class)->middleware(['auth:sanctum']);
+
 
 Route::post('/login', [AuthenticationController::class, 'login']);
 Route::get('/logout', [AuthenticationController::class, 'logout'])->middleware(['auth:sanctum']);
@@ -28,15 +30,17 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::get('/getKIBA/{kode_upb}', [ControllerA::class, 'getKIBA']);
     Route::get('/showKIBA/{id}', [ControllerA::class, 'showKIBA']);
     Route::post('/kiba', [ControllerA::class, 'store']);
-    Route::patch('/kiba/{id}', [ControllerA::class, 'update']);
+    Route::post('/kiba/{id}', [ControllerA::class, 'update']);
 
     Route::get('/getKIBB/{kode_upb}', [ControllerB::class, 'getKIBB']);
     Route::get('/showKIBB/{id}', [ControllerB::class, 'showKIBB']);
     Route::post('/kibb', [ControllerB::class, 'store']);
+    Route::post('/kibb/{id}', [ControllerB::class, 'update']);
 
     Route::get('/getKIBC/{kode_upb}', [ControllerC::class, 'getKIBC']);
     Route::get('/showKIBC/{id}', [ControllerC::class, 'showKIBC']);
     Route::post('/kibc', [ControllerC::class, 'store']);
+    Route::post('/kibc/{id}', [ControllerC::class, 'update']);
 });
 
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {

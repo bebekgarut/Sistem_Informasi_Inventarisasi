@@ -35,7 +35,7 @@ class Kiba extends Model
         'KODE_UNITS',
         'KODE_UPB',
     ];
-    protected $primaryKey = 'ID';
+    protected $primaryKey = 'id';
 
     public function bidang()
     {

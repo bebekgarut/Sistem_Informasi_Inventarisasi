@@ -118,7 +118,7 @@ class ControllerA extends Controller
             'DOWNLOAD' => 'nullable|mimes:pdf|max:4096'
         ]);
 
-        $oldData = DB::table('kibas')->where('id', $id)->first();
+        $oldData = Kiba::findOrFail($id);
 
         if ($request->hasFile('FOTO')) {
             if ($oldData && $oldData->FOTO) {
@@ -145,7 +145,8 @@ class ControllerA extends Controller
         }
 
         try {
-            DB::table('kibas')->where('id', $id)->update($data);
+            $kiba = Kiba::findOrFail($id);
+            $kiba->update($data);
             return response()->json(['message' => 'Data berhasil diubah',]);
         } catch (\Exception $e) {
             return response()->json([

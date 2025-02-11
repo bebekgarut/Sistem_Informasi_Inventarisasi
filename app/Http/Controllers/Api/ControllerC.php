@@ -93,7 +93,7 @@ class ControllerC extends Controller
             'DOWNLOAD' => 'mimes:pdf|max:4096'
         ]);
 
-        $oldData = DB::table('kibcs')->where('id', $id)->first();
+        $oldData = Kibc::findOrFail($id);
 
         if ($request->hasFile('FOTO')) {
             if ($oldData && $oldData->FOTO) {
@@ -114,7 +114,8 @@ class ControllerC extends Controller
         }
 
         try {
-            DB::table('kibcs')->where('id', $id)->update($datac);
+            $kibc = Kibc::findOrFail($id);
+            $kibc->update($datac);
             return response()->json(['message' => 'Data berhasil diubah',]);
         } catch (\Exception $e) {
             return response()->json([

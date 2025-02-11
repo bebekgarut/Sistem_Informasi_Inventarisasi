@@ -119,7 +119,7 @@ class ControllerB extends Controller
             'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ]);
 
-        $oldData = DB::table('kibbs')->where('id', $id)->first();
+        $oldData = Kibb::findOrFail($id);
 
         if ($request->hasFile('FOTO')) {
             if ($oldData && $oldData->FOTO) {
@@ -172,7 +172,8 @@ class ControllerB extends Controller
         }
 
         try {
-            DB::table('kibbs')->where('id', $id)->update($data);
+            $kibb = Kibb::findOrFail($id);
+            $kibb->update($data);
             return response()->json(['message' => 'Data berhasil diubah',]);
         } catch (\Exception $e) {
             return response()->json([
