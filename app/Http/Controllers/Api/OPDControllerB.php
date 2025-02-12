@@ -7,6 +7,7 @@ use App\Models\Kibb;
 use App\Models\Subunit;
 use App\Models\UPB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class OPDControllerB extends Controller
@@ -94,6 +95,92 @@ class OPDControllerB extends Controller
         try {
             Kibb::create($validatedData);
             return response()->json(['message' => 'Data berhasil ditambahkan',]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menambahkan data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function update(Request $request, $KODE_UPB, $id)
+    {
+        $validatedDatab = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:255',
+            'NOMOR_REGISTER' => 'required|string|max:255',
+            'MERK_TYPE' => 'nullable|string|max:255',
+            'UKURAN_CC' => 'nullable|string|max:100',
+            'BAHAN' => 'nullable|string|max:255',
+            'TAHUN_PEMBELIAN' => 'nullable|date_format:Y',
+            'NOMOR_PABRIK' => 'nullable|string|max:50',
+            'NOMOR_RANGKA' => 'nullable|string|max:50',
+            'NOMOR_MESIN' => 'nullable|string|max:255',
+            'NOMOR_POLISI' => 'nullable|string|max:50',
+            'NOMOR_BPKB' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|max:255',
+            'DOWNLOAD' => 'nullable|file|mimes:pdf|max:4096',
+            'DOWNLOAD_2' => 'nullable|file|mimes:pdf|max:4096',
+            'FOTO' => 'nullable|image|mimes:jpg,jpeg,png|max:3072'
+        ]);
+
+        $kibb = Kibb::findOrFail($id);
+
+        if ($request->hasFile('FOTO')) {
+            if ($kibb && $kibb->FOTO) {
+                Storage::delete($kibb->FOTO);
+            }
+
+            $file = $request->file('FOTO');
+            $path = $file->store('private/photos');
+            $validatedDatab['FOTO'] = $path;
+        } else {
+            unset($validatedDatab['FOTO']);
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            if ($kibb && $kibb->DOWNLOAD) {
+                Storage::delete($kibb->DOWNLOAD);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD')->storeAs('private/files', basename($filepath));
+            $validatedDatab['DOWNLOAD'] = $filepath;
+        }
+
+        if ($request->hasFile('DOWNLOAD_2')) {
+            if ($kibb && $kibb->DOWNLOAD_2) {
+                Storage::delete($kibb->DOWNLOAD_2);
+            }
+
+            $filename = pathinfo($request->File('DOWNLOAD_2')->getClientOriginalName(), PATHINFO_FILENAME);
+            $extension = $request->File('DOWNLOAD_2')->getClientOriginalExtension();
+            $filepath = 'private/files/' . $filename . '.' . $extension;
+            $counter = 1;
+
+            while (Storage::exists($filepath)) {
+                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
+                $counter++;
+            }
+
+            $request->File('DOWNLOAD_2')->storeAs('private/files', basename($filepath));
+            $validatedDatab['DOWNLOAD_2'] = $filepath;
+        }
+
+        try {
+            DB::table('kibbs')->where('id', $id)->where('KODE_UPB', $KODE_UPB)->update($validatedDatab);
+            return response()->json('data berhasil diubah');
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan data',

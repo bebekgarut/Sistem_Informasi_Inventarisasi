@@ -7,6 +7,10 @@ use App\Models\Kiba;
 use App\Models\Subunit;
 use App\Models\UPB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\Return_;
 
 class OPDControllerA extends Controller
 {
@@ -69,6 +73,56 @@ class OPDControllerA extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Gagal menambahkan data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function update(Request $request, $KODE_UPB, $id)
+    {
+        $validatedData = $request->validate([
+            'NAMA_BARANG' => 'required|string|max:255',
+            'KODE_BARANG' => 'required|string|max:255',
+            'NOMOR_REGISTER' => 'required|string|max:255',
+            'LUAS' => 'nullable|numeric',
+            'TAHUN_PENGADAAN' => 'nullable|date_format:Y',
+            'LETAK_ALAMAT' => 'nullable|string|max:255',
+            'HAK' => 'nullable|string|max:255',
+            'TANGGAL_SERTIFIKAT' => 'nullable|date',
+            'NO_SERTIFIKAT' => 'nullable|string|max:255',
+            'PENGGUNAAN' => 'nullable|string|max:255',
+            'ASAL_USUL' => 'nullable|string|max:255',
+            'HARGA' => 'nullable|numeric',
+            'KETERANGAN' => 'nullable|string|max:255',
+            'KOORDINAT' => 'nullable|string|max:255',
+            'DOWNLOAD' => 'nullable|file|mimes:pdf|max:4096',
+            'FOTO' => 'nullable|image|mimes:jpg,jpeg,png|max:3072'
+        ]);
+
+        $kiba = Kiba::findOrFail($id);
+
+        if ($request->hasFile('FOTO')) {
+            if ($kiba && $kiba->FOTO) {
+                Storage::delete($kiba->FOTO);
+            }
+            $path = $request->file('FOTO')->store('private/photos');
+            $validatedData['FOTO'] = $path;
+        }
+
+        if ($request->hasFile('DOWNLOAD')) {
+            if ($kiba && $kiba->DOWNLOAD) {
+                Storage::delete($kiba->DOWNLOAD);
+            }
+            $path = $request->file('DOWNLOAD')->store('private/files');
+            $validatedData['DOWNLOAD'] = $path;
+        }
+
+        try {
+            DB::table('kibas')->where('id', $id)->where('KODE_UPB', $KODE_UPB)->update($validatedData);
+            return response()->json("data berhasil diubah");
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal mengubah data',
                 'error' => $e->getMessage()
             ]);
         }

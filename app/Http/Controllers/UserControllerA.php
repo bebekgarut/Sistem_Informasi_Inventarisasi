@@ -118,8 +118,6 @@ class UserControllerA extends Controller
             'ASAL_USUL' => 'nullable|string|max:255',
             'HARGA' => 'nullable|numeric',
             'KETERANGAN' => 'nullable|string|max:255',
-            'KOORDINAT' => 'nullable|string|max:255',
-            'LINK' => 'nullable|string|max:255',
             'DOWNLOAD' => 'nullable|file|mimes:pdf|max:4096',
             'FOTO' => 'nullable|image|mimes:jpg,jpeg,png|max:3072'
         ]);
