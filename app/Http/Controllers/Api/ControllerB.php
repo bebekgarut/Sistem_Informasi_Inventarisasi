@@ -182,4 +182,31 @@ class ControllerB extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $kibb = Kibb::findOrFail($id);
+
+            if ($kibb && $kibb->FOTO) {
+                Storage::delete($kibb->FOTO);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD) {
+                Storage::delete($kibb->DOWNLOAD);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD_2) {
+                Storage::delete($kibb->DOWNLOAD_2);
+            }
+
+            Kibb::where('id', $id)->delete();
+            return response()->json('data berhasil dihapus');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'gagal menghapus data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }

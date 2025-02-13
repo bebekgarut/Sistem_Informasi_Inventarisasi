@@ -31,6 +31,7 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::get('/showKIBA/{id}', [ControllerA::class, 'showKIBA']);
     Route::post('/kiba', [ControllerA::class, 'store']);
     Route::post('/kiba/{id}', [ControllerA::class, 'update']);
+    Route::delete('/kiba/{id}', [ControllerA::class, 'destroy']);
 
     Route::get('/getKIBB/{kode_upb}', [ControllerB::class, 'getKIBB']);
     Route::get('/showKIBB/{id}', [ControllerB::class, 'showKIBB']);

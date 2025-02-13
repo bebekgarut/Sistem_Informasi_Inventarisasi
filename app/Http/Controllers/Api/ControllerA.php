@@ -155,4 +155,27 @@ class ControllerA extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $kiba = Kiba::findOrFail($id);
+
+            if ($kiba && $kiba->FOTO) {
+                Storage::delete($kiba->FOTO);
+            }
+
+            if ($kiba && $kiba->DOWNLOAD) {
+                Storage::delete($kiba->DOWNLOAD);
+            }
+
+            Kiba::where('id', $id)->delete();
+            return response()->json('data berhasil dihapus');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'gagal menghapus data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }
