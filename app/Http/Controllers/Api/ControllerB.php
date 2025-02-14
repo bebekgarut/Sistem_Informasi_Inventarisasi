@@ -209,4 +209,26 @@ class ControllerB extends Controller
             ]);
         }
     }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $kibb = Kibb::where('NAMA_BARANG', 'like', "%$keyword%")
+            ->orWhere('KODE_BARANG', 'like', "%$keyword%")
+            ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
+            ->orWhere('MERK_TYPE', 'like', "%$keyword%")
+            ->orWhere('TAHUN_PEMBELIAN', 'like', "%$keyword%")
+            ->orWhere('UKURAN_CC', 'like', "%$keyword%")
+            ->orWhere('BAHAN', 'like', "%$keyword%")
+            ->orWhere('NOMOR_PABRIK', 'like', "%$keyword%")
+            ->orWhere('NOMOR_MESIN', 'like', "%$keyword%")
+            ->orWhere('NOMOR_POLISI', 'like', "%$keyword%")
+            ->orWhere('NOMOR_BPKB', 'like', "%$keyword%")
+            ->orWhere('ASAL_USUL', 'like', "%$keyword%")
+            ->orWhere('HARGA', 'like', "%$keyword%")
+            ->orWhere('KETERANGAN', 'like', "%$keyword%")
+            ->orWhere('PENGGUNA_BARANG', 'like', "%$keyword%")
+            ->paginate(50);
+        return response()->json($kibb);
+    }
 }

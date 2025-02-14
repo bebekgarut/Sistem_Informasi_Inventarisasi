@@ -32,16 +32,21 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::post('/kiba', [ControllerA::class, 'store']);
     Route::post('/kiba/{id}', [ControllerA::class, 'update']);
     Route::delete('/kiba/{id}', [ControllerA::class, 'destroy']);
+    Route::get('/kiba/search', [ControllerA::class, 'search']);
 
     Route::get('/getKIBB/{kode_upb}', [ControllerB::class, 'getKIBB']);
     Route::get('/showKIBB/{id}', [ControllerB::class, 'showKIBB']);
     Route::post('/kibb', [ControllerB::class, 'store']);
     Route::post('/kibb/{id}', [ControllerB::class, 'update']);
+    Route::delete('/kibb/{id}', [ControllerB::class, 'destroy']);
+    Route::get('/kibb/search', [ControllerB::class, 'search']);
 
     Route::get('/getKIBC/{kode_upb}', [ControllerC::class, 'getKIBC']);
     Route::get('/showKIBC/{id}', [ControllerC::class, 'showKIBC']);
     Route::post('/kibc', [ControllerC::class, 'store']);
     Route::post('/kibc/{id}', [ControllerC::class, 'update']);
+    Route::delete('/kibc/{id}', [ControllerC::class, 'destroy']);
+    Route::get('/kibc/search', [ControllerC::class, 'search']);
 });
 
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {

@@ -124,4 +124,53 @@ class ControllerC extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        try {
+            $kibc = Kibc::findOrFail($id);
+
+            if ($kibc && $kibc->FOTO) {
+                Storage::delete($kibc->FOTO);
+            }
+
+            if ($kibc && $kibc->DOWNLOAD) {
+                Storage::delete($kibc->DOWNLOAD);
+            }
+
+            Kibc::where('id', $id)->delete();
+
+            return response()->json('data berhasil dihapus');
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menambahkan data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public function search(Request $request)
+    {
+        $keyword = $request->input('keyword');
+        $kibc = Kibc::where('NAMA_BARANG', 'like', "%$keyword%")
+            ->orWhere('KODE_BARANG', 'like', "%$keyword%")
+            ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
+            ->orWhere('KONDISI_BANGUNAN', 'like', "%$keyword%")
+            ->orWhere('BANGUNAN_BERTINGKAT', 'like', "%$keyword%")
+            ->orWhere('BANGUNAN_BETON', 'like', "%$keyword%")
+            ->orWhere('LUAS_LANTAI', 'like', "%$keyword%")
+            ->orWhere('LETAK_ALAMAT', 'like', "%$keyword%")
+            ->orWhere('TANGGAL_DOKUMEN', 'like', "%$keyword%")
+            ->orWhere('NOMOR_DOKUMEN', 'like', "%$keyword%")
+            ->orWhere('LUAS', 'like', "%$keyword%")
+            ->orWhere('STATUS_TANAH', 'like', "%$keyword%")
+            ->orWhere('NOMOR_KODE_TANAH', 'like', "%$keyword%")
+            ->orWhere('ASAL_USUL', 'like', "%$keyword%")
+            ->orWhere('HARGA', 'like', "%$keyword%")
+            ->orWhere('KETERANGAN', 'like', "%$keyword%")
+            ->orWhere('PENGGUNA_BARANG', 'like', "%$keyword%")
+            ->paginate(50);
+        return response()->json($kibc);
+    }
 }
