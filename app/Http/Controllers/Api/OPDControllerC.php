@@ -129,4 +129,27 @@ class OPDControllerC extends Controller
             ]);
         }
     }
+
+    public function destroy($kode_upb, $id)
+    {
+        $kibc = Kibc::findOrFail($id);
+
+        try {
+            if ($kibc && $kibc->FOTO) {
+                Storage::delete($kibc->FOTO);
+            }
+
+            if ($kibc && $kibc->DOWNLOAD) {
+                Storage::delete($kibc->DOWNLOAD);
+            }
+            Kibc::where('id', $id)->where('KODE_UPB', $kode_upb)->delete();
+
+            return response()->json("data berhasil dihapus");
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'gagal menghapus data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 }

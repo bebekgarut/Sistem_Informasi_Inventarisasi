@@ -183,7 +183,34 @@ class OPDControllerB extends Controller
             return response()->json('data berhasil diubah');
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Gagal menambahkan data',
+                'message' => 'Gagal mengubah data',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+    public function destroy($kode_upb, $id)
+    {
+        try {
+            $kibb = Kibb::findOrFail($id);
+
+            if ($kibb && $kibb->FOTO) {
+                Storage::delete($kibb->FOTO);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD) {
+                Storage::delete($kibb->DOWNLOAD);
+            }
+
+            if ($kibb && $kibb->DOWNLOAD_2) {
+                Storage::delete($kibb->DOWNLOAD_2);
+            }
+            Kibb::where('id', $id)->where('KODE_UPB', $kode_upb)->delete();
+
+            return response()->json("data berhasil dihapus");
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Gagal menghapus data',
                 'error' => $e->getMessage()
             ]);
         }
