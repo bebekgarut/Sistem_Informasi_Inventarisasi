@@ -55,16 +55,19 @@ Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
     Route::post('opd/kiba/{kode_upb}', [OPDControllerA::class, 'store']);
     Route::post('opd/kiba/{kode_upb}/{id}', [OPDControllerA::class, 'update']);
     Route::delete('opd/kiba/{kode_upb}/{id}', [OPDControllerA::class, 'destroy']);
+    Route::get('opd/kiba/search/{kode_upb}', [OPDControllerA::class, 'search']);
 
     Route::get('opd/getKIBB/{kode_upb}', [OPDControllerB::class, 'getKIBB']);
     Route::get('opd/showKIBB/{kode_upb}/{id}', [OPDControllerB::class, 'showKIBB']);
     Route::post('opd/kibb/{kode_upb}', [OPDControllerB::class, 'store']);
     Route::post('opd/kibb/{kode_upb}/{id}', [OPDControllerB::class, 'update']);
     Route::delete('opd/kibb/{kode_upb}/{id}', [OPDControllerB::class, 'destroy']);
+    Route::get('opd/kibb/search/{kode_upb}', [OPDControllerB::class, 'search']);
 
     Route::get('opd/getKIBC/{kode_upb}', [OPDControllerc::class, 'getKIBC']);
     Route::get('opd/showKIBC/{kode_upb}/{id}', [OPDControllerC::class, 'showKIBC']);
     Route::post('opd/kibc/{kode_upb}', [OPDControllerC::class, 'store']);
     Route::post('opd/kibc/{kode_upb}/{id}', [OPDControllerC::class, 'update']);
     Route::delete('opd/kibc/{kode_upb}/{id}', [OPDControllerC::class, 'destroy']);
+    Route::get('opd/kibc/search/{kode_upb}', [OPDControllerC::class, 'search']);
 });

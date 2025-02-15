@@ -151,4 +151,29 @@ class OPDControllerA extends Controller
             ]);
         }
     }
+
+    public function search(Request $request, $kode_upb)
+    {
+        $keyword = $request->input('keyword');
+
+        $kiba = Kiba::where('KODE_UPB', $kode_upb)
+            ->where(function ($query) use ($keyword) {
+                $query->where('NAMA_BARANG', 'like', "%$keyword%")
+                    ->orWhere('KODE_BARANG', 'like', "%$keyword%")
+                    ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
+                    ->orWhere('LUAS', 'like', "%$keyword%")
+                    ->orWhere('TAHUN_PENGADAAN', 'like', "%$keyword%")
+                    ->orWhere('LETAK_ALAMAT', 'like', "%$keyword%")
+                    ->orWhere('HAK', 'like', "%$keyword%")
+                    ->orWhere('TANGGAL_SERTIFIKAT', 'like', "%$keyword%")
+                    ->orWhere('NO_SERTIFIKAT', 'like', "%$keyword%")
+                    ->orWhere('PENGGUNAAN', 'like', "%$keyword%")
+                    ->orWhere('ASAL_USUL', 'like', "%$keyword%")
+                    ->orWhere('HARGA', 'like', "%$keyword%")
+                    ->orWhere('KETERANGAN', 'like', "%$keyword%");
+            })
+            ->paginate(50);
+
+        return response()->json($kiba);
+    }
 }

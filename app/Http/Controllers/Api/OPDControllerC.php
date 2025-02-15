@@ -152,4 +152,33 @@ class OPDControllerC extends Controller
             ]);
         }
     }
+
+
+    public function search(Request $request, $kode_upb)
+    {
+        $keyword = $request->input('keyword');
+
+        $kibc = Kibc::where('KODE_UPB', $kode_upb)
+            ->where(function ($query) use ($keyword) {
+                $query->where('NAMA_BARANG', 'like', "%$keyword%")
+                    ->orWhere('KODE_BARANG', 'like', "%$keyword%")
+                    ->orWhere('NOMOR_REGISTER', 'like', "%$keyword%")
+                    ->orWhere('KONDISI_BANGUNAN', 'like', "%$keyword%")
+                    ->orWhere('BANGUNAN_BERTINGKAT', 'like', "%$keyword%")
+                    ->orWhere('BANGUNAN_BETON', 'like', "%$keyword%")
+                    ->orWhere('LUAS_LANTAI', 'like', "%$keyword%")
+                    ->orWhere('LETAK_ALAMAT', 'like', "%$keyword%")
+                    ->orWhere('TANGGAL_DOKUMEN', 'like', "%$keyword%")
+                    ->orWhere('NOMOR_DOKUMEN', 'like', "%$keyword%")
+                    ->orWhere('LUAS', 'like', "%$keyword%")
+                    ->orWhere('STATUS_TANAH', 'like', "%$keyword%")
+                    ->orWhere('NOMOR_KODE_TANAH', 'like', "%$keyword%")
+                    ->orWhere('ASAL_USUL', 'like', "%$keyword%")
+                    ->orWhere('HARGA', 'like', "%$keyword%")
+                    ->orWhere('KETERANGAN', 'like', "%$keyword%");
+            })
+            ->paginate(50);
+
+        return response()->json($kibc);
+    }
 }
