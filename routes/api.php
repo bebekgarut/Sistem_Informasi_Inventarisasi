@@ -47,6 +47,7 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::post('/kibc/{id}', [ControllerC::class, 'update']);
     Route::delete('/kibc/{id}', [ControllerC::class, 'destroy']);
     Route::get('/kibc/search', [ControllerC::class, 'search']);
+    Route::apiResource('/user', App\Http\Controllers\Api\UserController::class);
 });
 
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
