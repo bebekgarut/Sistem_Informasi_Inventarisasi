@@ -21,7 +21,7 @@ class UserController extends Controller
         $data = $request->validate([
             'username' => 'required|min:5|max:24|unique:users',
             'password' => 'required|min:8|max:255',
-            'role' => 'required|max:5',
+            'role' => 'required|max:5|in:admin,upb',
             'KODE_UPB' => 'nullable'
         ]);
 
