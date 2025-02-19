@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ArsipController;
 use App\Http\Controllers\Api\AuthenticationController;
 use App\Http\Controllers\Api\ControllerA;
 use App\Http\Controllers\Api\ControllerB;
@@ -53,7 +54,12 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::post('/user', [UserController::class, 'store']);
     Route::post('/user/{id}', [UserController::class, 'update']);
     Route::delete('/user/{id}', [UserController::class, 'destroy']);
+
+    Route::get('/arsip', [ArsipController::class, 'index']);
+    Route::post('/arsip', [ArsipController::class, 'store']);
+    Route::delete('/arsip/hapusFileEdit/{id}', [ArsipController::class, 'hapusFileEdit']);
 });
+
 
 Route::middleware(['auth:sanctum', 'apiUPB'])->group(function () {
     Route::get('opd/getKIBA/{kode_upb}', [OPDControllerA::class, 'getKIBA']);
