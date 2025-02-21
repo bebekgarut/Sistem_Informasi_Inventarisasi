@@ -58,6 +58,8 @@ Route::middleware(['auth:sanctum', 'apiAdmin'])->group(function () {
     Route::get('/arsip', [ArsipController::class, 'index']);
     Route::post('/arsip', [ArsipController::class, 'store']);
     Route::delete('/arsip/hapusFileEdit/{id}', [ArsipController::class, 'hapusFileEdit']);
+    Route::post('/arsip/{id}', [ArsipController::class, 'update']);
+    Route::delete('/arsip/{id}', [ArsipController::class, 'destroy']);
 });
 
 

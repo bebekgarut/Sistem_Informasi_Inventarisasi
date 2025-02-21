@@ -59,13 +59,9 @@ class ArsipController extends Controller
 
             $deleted = $file->delete();
 
-            if (!$deleted) {
-                return redirect()->route('arsip')->with('error', 'Data tidak ditemukan');
-            }
-
-            return back()->with('success', 'File berhasil dihapus');
+            return response()->json('berhasil menghapus file');
         } catch (\Exception $e) {
-            return back()->with('error', 'Gagal menghapus data: ' . $e->getMessage());
+            return response()->json('gagal menghapus file');
         }
     }
 
@@ -116,10 +112,10 @@ class ArsipController extends Controller
                 $file->delete();
             }
             $arsip->delete();
-            return response()->json("data berhasil ditambahkan");
+            return response()->json("data berhasil dihapus");
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Gagal menambahkan data',
+                'message' => 'Gagal menghapus data',
                 'error' => $e->getMessage()
             ]);
         }
