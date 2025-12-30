@@ -5,18 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Kibe extends Model
+class Kibf extends Model
 {
     use HasFactory;
 
-    protected $table = 'kibes';
+    protected $table = 'kibfs';
 
     protected $fillable = [
-        'nama_barang',
+        'id',
         'kode_barang',
-        'nomor_register',
+        'nama_barang',
         'nibar',
-        'spesifikasi_nama_jasa',
+        'nomor_register',
+        'spesifikasi_nama_barang',
         'spesifikasi_lainnya',
         'lokasi',
         'jumlah',
