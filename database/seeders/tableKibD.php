@@ -50,7 +50,6 @@ class tableKibD extends Seeder
                 'KODE_UNITS'                   => $rowData[25],
                 'KODE_SUB_UNITS'               => $rowData[26],
                 'KODE_UPB'                     => $rowData[27],
-
             ]);
         }
     }
