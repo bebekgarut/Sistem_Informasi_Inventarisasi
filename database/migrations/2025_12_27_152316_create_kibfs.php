@@ -11,26 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kibds', function (Blueprint $table) {
+        Schema::create('kibfs', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_barang');
             $table->string('kode_barang');
+            $table->string('nama_barang');
             $table->string('nibar');
             $table->string('nomor_register');
             $table->string('spesifikasi_nama_barang')->nullable();
-            $table->string('spesifkasi_lainnya')->nullable();
-            $table->string('nomor_ruas_jalan')->nullable();
-            $table->string('nomor_ruas_jembatan')->nullable();
-            $table->string('nomor_ruas_jaringan_irigasi')->nullable();
+            $table->string('spesifikasi_lainnya')->nullable();
             $table->string('lokasi')->nullable();
-            $table->string('titik_koordinat')->nullable();
-            $table->string('status_kepemilikan_tanah')->nullable();
             $table->integer('jumlah')->nullable();
             $table->string('satuan')->nullable();
             $table->bigInteger('harga_satuan_perolehan')->nullable();
+            $table->bigInteger('nilai_perolehan')->nullable();
             $table->string('cara_perolehan')->nullable();
             $table->date('tanggal_perolehan')->nullable();
-            $table->bigInteger('nilai_perolehan')->nullable();
             $table->string('status_penggunaan')->nullable();
             $table->string('keterangan')->nullable();
             $table->string('PENGGUNA_BARANG');
@@ -56,6 +51,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kibds');
+        Schema::dropIfExists('kibfs');
     }
 };
