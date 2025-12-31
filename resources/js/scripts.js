@@ -1,361 +1,157 @@
-$(document).ready(function() {
-    // Fungsi untuk menangani perubahan bidang
-    $('#bidang').on('change', function() {
-        var KODE_BIDANG = $(this).val();
-        if (KODE_BIDANG) {
-            $.ajax({
-                url: '/getUnits/' + KODE_BIDANG,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    console.log('Data Units:', data);
-                    $('#unit').html('<option value="">--Pilih--</option>');
-                    $.each(data, function(key, value) {
-                        console.log('Unit:', value);
-                        $('#unit').append('<option value="' + value.KODE_UNITS +
-                            '">' + value.NAMA_UNITS + '</option>');
-                    });
-                    $('#subunit').html('<option value="">--Pilih--</option>');
-                    $('#upb').html('<option value="">--Pilih--</option>');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching units:', textStatus, errorThrown);
-                }
-            });
-        } else {
-            $('#unit').html('<option value="">--Pilih--</option>');
-            $('#subunit').html('<option value="">--Pilih--</option>');
-            $('#upb').html('<option value="">--Pilih--</option>');
-        }
-    });
+$(document).ready(function () {
 
-    // Fungsi untuk menangani perubahan unit
-    $('#unit').on('change', function() {
-        var KODE_UNITS = $(this).val();
-        if (KODE_UNITS) {
-            $.ajax({
-                url: '/getSubunits/' + KODE_UNITS,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    console.log('Data Subunits:', data);
-                    $('#subunit').html('<option value="">--Pilih--</option>');
-                    $.each(data, function(key, value) {
-                        console.log('Subunit:', value);
-                        $('#subunit').append('<option value="' + value.KODE_SUB_UNITS +
-                            '">' + value.NAMA_SUB_UNITS + '</option>');
-                    });
-                    $('#upb').html('<option value="">--Pilih--</option>');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching subunits:', textStatus, errorThrown);
-                }
-            });
-        } else {
-            $('#subunit').html('<option value="">--Pilih--</option>');
-            $('#upb').html('<option value="">--Pilih--</option>');
-        }
-    });
-
-    // Fungsi untuk menangani perubahan Sub unit
-    $('#subunit').on('change', function() {
-        var KODE_SUB_UNITS = $(this).val();
-        if (KODE_SUB_UNITS) {
-            $.ajax({
-                url: '/getUPB/' + KODE_SUB_UNITS,
-                type: "GET",
-                dataType: "json",
-                success: function(data) {
-                    console.log('Data UPB:', data);
-                    $('#upb').html('<option value="">--Pilih--</option>');
-                    $.each(data, function(key, value) {
-                        console.log('UPB:', value);
-                        $('#upb').append('<option value="' + value.KODE_UPB +
-                            '">' + value.NAMA_UPB + '</option>');
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Error fetching subunits:', textStatus, errorThrown);
-                }
-            });
-        } else {
-            $('#upb').html('<option value="">--Pilih--</option>');
-        }
-    });
-
-     // Fungsi untuk menangani perubahan upb
-     $('#upb').on('change', function() {
-        var kodeUPB = $(this).val();
-        if (kodeUPB) {
-            fetchKibaData('/getKibaByUPB/' + kodeUPB);
-        }
-    });
-
-    function fetchKibaData(url) {
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                console.log('Data KIBA:', data);
-                var tableBody = $('#kibaData').find('tbody');
-                tableBody.empty(); 
-                if (data.data.length === 0) {
-                    tableBody.append('<tr><td colspan="5">Data tidak ditemukan</td></tr>');
-                } else {
-                    $.each(data.data, function(index, kiba) {
-                        var row = $('<tr>');
-                        row.append($('<td>').text(index + 1)); 
-                        row.append($('<td>').text(kiba.NAMA_BARANG));
-                        row.append($('<td>').text(kiba.LETAK_ALAMAT));
-                        row.append($('<td>').text(kiba.PENGGUNAAN));
-                        var detailButton = '<td><a href="/detail/' + kiba.id + '" class="btn btn-success btn-sm text-white detail" data-id="' + kiba.ID + '" style="font-weight: 600; margin-top:0px;"><i class="bi bi-info-circle-fill"></i>&nbsp;Detail</a></td>';
-                        row.append(detailButton);
-                        tableBody.append(row);
-                    });
-                }
-                $('#kibaData').show();
-
-                $('#pagination').empty();
-                if (data.last_page > 1) { 
-                    if (data.prev_page_url) {
-                        $('#pagination').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.prev_page_url + '">Previous</a></li>');
-                    }
-
-                    var visiblePages = 4;
-
-                    var startPage = Math.max(1, data.current_page - Math.floor(visiblePages / 2));
-                    var endPage = Math.min(data.last_page, startPage + visiblePages - 1);
-
-                    if (startPage > 1) {
-                        $('#pagination').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=1">1</a></li>');
-                        if (startPage > 2) {
-                            $('#pagination').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                        }
-                    }
-
-                    for (var i = startPage; i <= endPage; i++) {
-                        var activeClass = data.current_page === i ? ' active' : '';
-                        $('#pagination').append('<li class="page-item' + activeClass + '"><a class="page-link" href="#" data-url="' + data.path + '?page=' + i + '">' + i + '</a></li>');
-                    }
-
-                    if (endPage < data.last_page) {
-                        if (endPage < data.last_page - 1) {
-                            $('#pagination').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                        }
-                        $('#pagination').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=' + data.last_page + '">' + data.last_page + '</a></li>');
-                    }
-
-                    if (data.next_page_url) {
-                        $('#pagination').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.next_page_url + '">Next</a></li>');
-                    }
-                }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Error fetching KIBA:', textStatus, errorThrown);
-            }
-        });
-    }
-        
-    $('select').select2({
-        theme: 'bootstrap-5',
-        width: '100%',
-        placeholder: function() {
-            return $(this).data('placeholder');
-        }
-    });
-    $('#exportBtn').on('click', function() {
-        var formData = $('#filterForm').serialize();
-        window.location.href = '/export?' + formData;
-    });
-
-    function fetchKibbData(url) {
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                console.log('Data KIBB:', data);
-                var tableBody = $('#kibbData').find('tbody');
-                tableBody.empty(); 
-                if (data.data.length === 0) {
-                    tableBody.append('<tr><td colspan="5">Data tidak ditemukan</td></tr>');
-                } else {
-                    $.each(data.data, function(index, kibb) {
-                        var row = $('<tr>');
-                        row.append($('<td>').text(index + 1));
-                        row.append($('<td>').text(kibb.NAMA_BARANG));
-                        row.append($('<td>').text(kibb.MERK_TYPE));
-                        row.append($('<td>').text(kibb.NOMOR_POLISI));
-                        var detailButton = '<td><a href="/detail-b/' + kibb.id + '" class="btn btn-success btn-sm text-white detail" data-id="' + kibb.ID + '" style="font-weight: 600; margin-top:0px;"><i class="bi bi-info-circle-fill"></i>&nbsp;Detail</a></td>';
-                        row.append(detailButton);
-                        tableBody.append(row);
-                    });
-                }
-                $('#kibbData').show();
-
-                $('#paginationb').empty();
-                    if (data.last_page > 1) { 
-                        if (data.prev_page_url) {
-                            $('#paginationb').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.prev_page_url + '">Previous</a></li>');
-                        }
-    
-                        var visiblePages = 4;
-    
-                        var startPage = Math.max(1, data.current_page - Math.floor(visiblePages / 2));
-                        var endPage = Math.min(data.last_page, startPage + visiblePages - 1);
-    
-                        if (startPage > 1) {
-                            $('#paginationb').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=1">1</a></li>');
-                            if (startPage > 2) {
-                                $('#paginationb').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                            }
-                        }
-    
-                        for (var i = startPage; i <= endPage; i++) {
-                            var activeClass = data.current_page === i ? ' active' : '';
-                            $('#paginationb').append('<li class="page-item' + activeClass + '"><a class="page-link" href="#" data-url="' + data.path + '?page=' + i + '">' + i + '</a></li>');
-                        }
-    
-                        if (endPage < data.last_page) {
-                            if (endPage < data.last_page - 1) {
-                                $('#paginationb').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                            }
-                            $('#paginationb').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=' + data.last_page + '">' + data.last_page + '</a></li>');
-                        }
-    
-                        if (data.next_page_url) {
-                            $('#paginationb').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.next_page_url + '">Next</a></li>');
-                        }
-                    }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Error fetching KIBB:', textStatus, errorThrown);
-            }
+    function initSelect2(selector, placeholder = 'Choose one option') {
+        $(selector).select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: placeholder,
+            allowClear: false
         });
     }
 
-    // Fungsi untuk menangani perubahan upb
-    $('#upb').on('change', function() {
-        var kodeUPB = $(this).val();
-        if (kodeUPB) {
-            fetchKibbData('/getKibbByUPB/' + kodeUPB);
+    function resetSelect2(selector, placeholder = '--Pilih--') {
+        if ($(selector).hasClass('select2-hidden-accessible')) {
+            $(selector).select2('destroy');
         }
-    });
 
+        $(selector).html(`<option value="">${placeholder}</option>`);
 
-    // Handle pagination link clicks
-    $(document).on('click', '.page-link', function(e) {
-        e.preventDefault();
-        var url = $(this).data('url');
-        if (url) {
-            fetchKibaData(url);
-        }
-    });
-
-    $('#exportBtnb').on('click', function() {
-        var formData = $('#filterFormb').serialize();
-        window.location.href = '/exportb?' + formData;
-    });
-
-
-    // Handle pagination link clicks
-    $(document).on('click', '.page-link', function(e) {
-        e.preventDefault();
-        var url = $(this).data('url');
-        if (url) {
-            fetchKibbData(url);
-        }
-    });
-
-    function fetchKibcData(url) {
-        $.ajax({
-            url: url,
-            type: "GET",
-            dataType: "json",
-            success: function(data) {
-                console.log('Data KIBC:', data);
-                var tableBody = $('#kibcData').find('tbody');
-                tableBody.empty(); 
-                if (data.data.length === 0) {
-                    tableBody.append('<tr><td colspan="5">Data tidak ditemukan</td></tr>');
-                } else {
-                    $.each(data.data, function(index, kibc) {
-                        var row = $('<tr>');
-                        row.append($('<td>').text(index + 1));
-                        row.append($('<td>').text(kibc.NAMA_BARANG));
-                        row.append($('<td>').text(kibc.LETAK_ALAMAT));
-                        row.append($('<td>').text(kibc.KETERANGAN));
-                        var detailButton = '<td><a href="/detail-c/' + kibc.id + '" class="btn btn-success btn-sm text-white detail" data-id="' + kibc.ID + '" style="font-weight: 600; margin-top:0px;"><i class="bi bi-info-circle-fill"></i>&nbsp;Detail</a></td>';
-                        row.append(detailButton);
-                        tableBody.append(row);
-                    });
-                }
-                $('#kibcData').show();
-
-                  $('#paginationc').empty();
-                  if (data.last_page > 1) { 
-                      if (data.prev_page_url) {
-                          $('#paginationc').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.prev_page_url + '">Previous</a></li>');
-                      }
-  
-                      var visiblePages = 4; 
-  
-                      var startPage = Math.max(1, data.current_page - Math.floor(visiblePages / 2));
-                      var endPage = Math.min(data.last_page, startPage + visiblePages - 1);
-  
-                      if (startPage > 1) {
-                          $('#paginationc').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=1">1</a></li>');
-                          if (startPage > 2) {
-                              $('#paginationc').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                          }
-                      }
-  
-                      for (var i = startPage; i <= endPage; i++) {
-                          var activeClass = data.current_page === i ? ' active' : '';
-                          $('#paginationc').append('<li class="page-item' + activeClass + '"><a class="page-link" href="#" data-url="' + data.path + '?page=' + i + '">' + i + '</a></li>');
-                      }
-  
-                      if (endPage < data.last_page) {
-                          if (endPage < data.last_page - 1) {
-                              $('#paginationc').append('<li class="page-item disabled"><span class="page-link">...</span></li>');
-                          }
-                          $('#paginationc').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.path + '?page=' + data.last_page + '">' + data.last_page + '</a></li>');
-                      }
-  
-                      if (data.next_page_url) {
-                          $('#paginationc').append('<li class="page-item"><a class="page-link" href="#" data-url="' + data.next_page_url + '">Next</a></li>');
-                      }
-                  }
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Error fetching KIBC:', textStatus, errorThrown);
-            }
+        $(selector).select2({
+            theme: 'bootstrap-5',
+            width: '100%',
+            placeholder: placeholder,
+            allowClear: false
         });
     }
 
+    initSelect2('#bidang');
+    initSelect2('#unit');
+    initSelect2('#subunit');
+    initSelect2('#upb');
 
-    // Fungsi untuk menangani perubahan upb
-    $('#upb').on('change', function() {
-        var kodeUPB = $(this).val();
-        if (kodeUPB) {
-            fetchKibcData('/getKibcByUPB/' + kodeUPB);
-        }
+    // BIDANG → UNIT
+    $('#bidang').on('change', function () {
+        const KODE_BIDANG = $(this).val();
+
+        resetSelect2('#unit');
+        resetSelect2('#subunit');
+        resetSelect2('#upb');
+
+        if (!KODE_BIDANG) return;
+
+        $.getJSON('/getUnits/' + KODE_BIDANG, function (data) {
+            $.each(data, function (_, value) {
+                $('#unit').append(
+                    `<option value="${value.KODE_UNITS}">${value.NAMA_UNITS}</option>`
+                );
+            });
+            $('#unit').trigger('change.select2');
+        });
+    });
+
+    // UNIT → SUBUNIT
+    $('#unit').on('change', function () {
+        const KODE_UNITS = $(this).val();
+
+        resetSelect2('#subunit');
+        resetSelect2('#upb');
+
+        if (!KODE_UNITS) return;
+
+        $.getJSON('/getSubunits/' + KODE_UNITS, function (data) {
+            $.each(data, function (_, value) {
+                $('#subunit').append(
+                    `<option value="${value.KODE_SUB_UNITS}">${value.NAMA_SUB_UNITS}</option>`
+                );
+            });
+            $('#subunit').trigger('change.select2');
+        });
+    });
+
+    // SUBUNIT → UPB
+    $('#subunit').on('change', function () {
+        const KODE_SUB_UNITS = $(this).val();
+
+        resetSelect2('#upb');
+
+        if (!KODE_SUB_UNITS) return;
+
+        $.getJSON('/getUPB/' + KODE_SUB_UNITS, function (data) {
+            $.each(data, function (_, value) {
+                $('#upb').append(
+                    `<option value="${value.KODE_UPB}">${value.NAMA_UPB}</option>`
+                );
+            });
+            $('#upb').trigger('change.select2');
+        });
     });
   
-    // Handle pagination link clicks
-    $(document).on('click', '.page-link', function(e) {
-        e.preventDefault();
-        var url = $(this).data('url');
-        if (url) {
-            fetchKibcData(url);
+     // KIB CONFIG & FETCH
+    const kibConfig = {
+        a: { table: '#kibaData', pagination: '#pagination', api: '/getKibaByUPB/', detailUrl: '/detail/', columns: ['NAMA_BARANG', 'LETAK_ALAMAT', 'PENGGUNAAN'] },
+        b: { table: '#kibbData', pagination: '#paginationb', api: '/getKibbByUPB/', detailUrl: '/detail-b/', columns: ['NAMA_BARANG', 'MERK_TYPE', 'NOMOR_POLISI'] },
+        c: { table: '#kibcData', pagination: '#paginationc', api: '/getKibcByUPB/', detailUrl: '/detail-c/', columns: ['NAMA_BARANG', 'LETAK_ALAMAT', 'KETERANGAN'] },
+        d: { table: '#kibdData', pagination: '#paginationd', api: '/getKibdByUPB/', detailUrl: '/detail-d/', columns: ['nama_barang', 'spesifikasi_nama_barang', 'lokasi'] }
+    };
+
+    function fetchKibData(type, url) {
+        const cfg = kibConfig[type];
+
+        $.getJSON(url, function (data) {
+            const tbody = $(cfg.table).find('tbody').empty();
+
+            if (!data.data.length) {
+                tbody.append('<tr><td colspan="5">Data tidak ditemukan</td></tr>');
+            } else {
+                $.each(data.data, function (i, item) {
+                    let row = `<tr><td>${i + 1}</td>`;
+                    cfg.columns.forEach(col => row += `<td>${item[col] ?? '-'}</td>`);
+                    row += `
+                        <td>
+                            <a href="${cfg.detailUrl}${item.id}" class="btn btn-sm d-block d-md-inline-block mb-2 mb-md-0 detail">
+                                <i class="bi bi-info-circle-fill"></i> Detail
+                            </a>
+                        </td>
+                    </tr>`;
+                    tbody.append(row);
+                });
+            }
+
+            $(cfg.table).show();
+            renderPagination(type, data);
+        });
+    }
+
+    function renderPagination(type, data) {
+        const pag = $(kibConfig[type].pagination).empty();
+
+        if (data.last_page <= 1) return;
+
+        for (let i = 1; i <= data.last_page; i++) {
+            pag.append(`
+                <li class="page-item ${data.current_page === i ? 'active' : ''}">
+                    <a class="page-link" data-type="${type}" data-url="${data.path}?page=${i}">${i}</a>
+                </li>
+            `);
         }
+    }
+
+    $('#upb').on('change', function () {
+        const kodeUPB = $(this).val();
+        if (!kodeUPB) return;
+
+        Object.keys(kibConfig).forEach(type => {
+            fetchKibData(type, kibConfig[type].api + kodeUPB);
+        });
     });
-    $('#exportBtnc').on('click', function() {
-        var formData = $('#filterFormc').serialize();
-        window.location.href = '/exportc?' + formData;
+
+    $(document).on('click', '.page-link', function (e) {
+        e.preventDefault();
+        fetchKibData($(this).data('type'), $(this).data('url'));
     });
+
 });
+
 
     // Menyimpan nilai ke localStorage setelah user memilih
 $('#bidang').on('change', function() {
@@ -413,5 +209,7 @@ document.getElementById('FOTO').addEventListener('change', function() {
         document.getElementById('fotoError').textContent = '';
     }
 });
+
+
 
 
