@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('nibar');
             $table->string('nomor_register');
             $table->string('spesifikasi_nama_barang')->nullable();
-            $table->string('spesifkasi_lainnya')->nullable();
+            $table->string('spesifikasi_lainnya')->nullable();
             $table->string('nomor_ruas_jalan')->nullable();
             $table->string('nomor_ruas_jembatan')->nullable();
             $table->string('nomor_ruas_jaringan_irigasi')->nullable();

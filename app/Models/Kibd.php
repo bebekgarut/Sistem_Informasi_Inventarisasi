@@ -17,7 +17,7 @@ class Kibd extends Model
         'nibar',
         'nomor_register',
         'spesifikasi_nama_barang',
-        'spesifkasi_lainnya',
+        'spesifikasi_lainnya',
         'nomor_ruas_jalan',
         'nomor_ruas_jembatan',
         'nomor_ruas_jaringan_irigasi',
