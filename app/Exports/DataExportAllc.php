@@ -5,10 +5,9 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-use Maatwebsite\Excel\Concerns\WithTitle;
 use Illuminate\Support\Collection;
 
-class DataExportAllc implements FromCollection, WithHeadings, WithMapping, WithTitle
+class DataExportAllc implements FromCollection, WithHeadings, WithMapping
 {
     protected $all;
     protected $columnsall;
@@ -53,10 +52,5 @@ class DataExportAllc implements FromCollection, WithHeadings, WithMapping, WithT
             $row->KETERANGAN
 
         ];
-    }
-
-    public function title(): string
-    {
-        return 'Data KIB A';
     }
 }
