@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DataExportb;
-use App\Exports\DataExportAllb;
+use App\Exports\DataExportAllD;
 use Illuminate\Support\Facades\Storage;
 
 class ControllerD extends Controller
@@ -264,24 +264,29 @@ class ControllerD extends Controller
 
         $columnsall = [
             'No',
-            'Nama Barang/Jenis Barang',
+            'Nama Barang',
             'Kode Barang',
+            'Nibar',
             'Nomor Register',
-            'Merk/Type',
-            'Ukuran/CC',
-            'Bahan',
-            'Tahun Pembelian',
-            'Nomor Pabrik',
-            'Nomor Rangka',
-            'Nomor Mesin',
-            'Nomor Polisi',
-            'Nomor BPKB',
-            'Asal Usul',
-            'Harga(Dalam Ribuan)',
-            'Keterangan'
+            'Spesifikasi Nama Barang',
+            'Spesifikasi Lainnya',
+            'Nomor Ruas Jalan',
+            'Nomor Ruas Jembatan',
+            'Nomor Ruas Jaringan Irigasi',
+            'Lokasi',
+            'Titik Koordinat',
+            'Status Kepemilikan Tanah',
+            'Jumlah',
+            'Satuan',
+            'Harga Satuan Perolehan',
+            'Cara Perolehan',
+            'Tanggal Perolehan',
+            'Nilai Perolehan',
+            'Status Penggunaan',
+            'Keterangan',
         ];
 
-        return Excel::download(new DataExportAllb($all, $columnsall), $namaFile);
+        return Excel::download(new DataExportAllD($all, $columnsall), $namaFile);
     }
 
     public function search(Request $request)
