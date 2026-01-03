@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ControllerA;
 use App\Http\Controllers\ControllerB;
 use App\Http\Controllers\ControllerC;
+use App\Http\Controllers\ControllerD;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserControllerA;
@@ -22,6 +23,7 @@ Route::post('/logout', [LoginController::class, 'logout']);
 Route::get('/photos/{filename}', [ControllerA::class, 'showPhoto'])->middleware('auth')->name('photos.show');
 
 Route::group(['middleware' => 'admin'], function () {
+
     Route::get('/home', function () {
         return view('home');
     })->name('home');
@@ -64,6 +66,18 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/exportc', [ControllerC::class, 'export'])->name('exportc');
     Route::get('/export-allc', [ControllerC::class, 'exportAll'])->name('exportAllc');
     Route::get('/search-c', [ControllerC::class, 'search'])->name('search-c');
+
+    Route::get('/getKibdByUPB/{kodeUPB}', [ControllerD::class, 'getByUPB']);
+    Route::get('/data_kibd', [ControllerD::class, 'index'])->name('datakibd');
+    Route::get('/add-d', [ControllerD::class, 'create']);
+    Route::post('/add-d', [ControllerD::class, 'store'])->name('storeDataKibd');
+    Route::get('/detail-d/{id}', [ControllerD::class, 'detail'])->name('detailDataKibd');
+    Route::get('/edit-d/{id}', [ControllerD::class, 'edit'])->name('editDataKibd');
+    Route::put('/update-d/{id}', [ControllerD::class, 'update'])->name('updateDataKibd');
+    Route::delete('/hapus-d/{id}', [ControllerD::class, 'destroy'])->name('hapusDataKibd');
+    Route::get('/exportd', [ControllerD::class, 'export'])->name('exportd');
+    Route::get('/export-alld', [ControllerD::class, 'exportAll'])->name('exportAlld');
+    Route::get('/search-d', [ControllerD::class, 'search'])->name('search-d');
 
     Route::get('/data_user', [UserController::class, 'data'])->name('datauser');
     Route::get('/tambah-user', [UserController::class, 'tambah'])->name('tambahUser');
