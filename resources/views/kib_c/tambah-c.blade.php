@@ -65,9 +65,9 @@
                                     value="{{ old('NOMOR_REGISTER') }}" autocomplete="off" required>
                             </div>
                             <div class="mb-3">
-                                <label for="KONDISI BANGUNAN" class="add-form-label">Kondisi Bangunan</label>
-                                <input type="text" class="add-form-control" id="KONDISI BANGUNAN"
-                                    placeholder="Baik/Kurang Baik/Rusak Berat" name="KONDISI BANGUNAN"
+                                <label for="KONDISI_BANGUNAN" class="add-form-label">Kondisi Bangunan</label>
+                                <input type="text" class="add-form-control" id="KONDISI_BANGUNAN"
+                                    placeholder="Baik/Kurang Baik/Rusak Berat" name="KONDISI_BANGUNAN"
                                     value="{{ old('KONDISI_BANGUNAN') }}" autocomplete="off">
                             </div>
                             <div class="mb-3">
