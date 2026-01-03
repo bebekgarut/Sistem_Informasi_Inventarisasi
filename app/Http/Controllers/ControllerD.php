@@ -104,29 +104,33 @@ class ControllerD extends Controller
     public function edit(Request $request, $id)
     {
         $kibd = Kibd::where('id', $id)->first();
-        return view('kib_b.edit-b', compact('kibd'));
+        return view('kib_d.edit-d', compact('kibd'));
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->validate([
-            'NAMA_BARANG' => 'required|string|max:255',
-            'KODE_BARANG' => 'required|string|max:255',
-            'NOMOR_REGISTER' => 'required|string|max:50',
-            'MERK_TYPE' => 'nullable|string|max:255',
-            'UKURAN_CC' => 'nullable|string|max:255',
-            'BAHAN' => 'nullable|string|max:255',
-            'TAHUN_PEMBELIAN' => 'nullable|date_format:Y',
-            'NOMOR_PABRIK' => 'nullable|string|max:100',
-            'NOMOR_RANGKA' => 'nullable|string|max:50',
-            'NOMOR_MESIN' => 'nullable|string|max:255',
-            'NOMOR_POLISI' => 'nullable|string|max:20',
-            'NOMOR_BPKB' => 'nullable|string|max:255',
-            'ASAL_USUL' => 'nullable|string|max:255',
-            'HARGA' => 'nullable|numeric',
-            'KETERANGAN' => 'nullable|string|max:255',
+            'nama_barang' => 'required|string|max:255',
+            'kode_barang' => 'required|string|max:255',
+            'nibar' => 'required|string|max:255',
+            'nomor_register' => 'required|string|max:255',
+            'spesifikasi_nama_barang' => 'nullable|string|max:255',
+            'spesifikasi_lainnya' => 'nullable|string|max:255',
+            'nomor_ruas_jalan' => 'nullable|string|max:255',
+            'nomor_ruas_jembatan' => 'nullable|string|max:255',
+            'nomor_ruas_jaringan_irigasi' => 'nullable|string|max:255',
+            'lokasi' => 'nullable|string|max:255',
+            'titik_koordinat' => 'nullable|string|max:255',
+            'status_kepemilikan_tanah' => 'nullable|string|max:255',
+            'jumlah' => 'nullable|numeric',
+            'satuan' => 'nullable|string|max:255',
+            'harga_satuan_perolehan' => 'nullable|numeric|',
+            'cara_perolehan' => 'nullable|string|max:255',
+            'tanggal_perolehan' => 'nullable|date',
+            'nilai_perolehan' => 'nullable|numeric',
+            'status_penggunaan' => 'nullable|string|max:255',
+            'keterangan' => 'nullable|string|max:255',
             'DOWNLOAD' => 'nullable|mimes:pdf|max:4096',
-            'DOWNLOAD_2' => 'nullable|mimes:pdf|max:4096',
             'FOTO' => 'nullable|image|mimes:jpeg,png,jpg|max:3072',
         ]);
 
@@ -163,25 +167,6 @@ class ControllerD extends Controller
             $data['DOWNLOAD'] = $filepath;
         }
 
-        if ($request->hasFile('DOWNLOAD_2')) {
-            if ($oldData && $oldData->DOWNLOAD_2) {
-                Storage::delete($oldData->DOWNLOAD_2);
-            }
-
-            $filename = pathinfo($request->File('DOWNLOAD_2')->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $request->File('DOWNLOAD_2')->getClientOriginalExtension();
-            $filepath = 'private/files/' . $filename . '.' . $extension;
-            $counter = 1;
-
-            while (Storage::exists($filepath)) {
-                $filepath = 'private/files/' . $filename . "($counter)." . $extension;
-                $counter++;
-            }
-
-            $request->File('DOWNLOAD_2')->storeAs('private/files', basename($filepath));
-            $data['DOWNLOAD_2'] = $filepath;
-        }
-
         try {
             DB::table('kibds')->where('id', $id)->update($data);
             return redirect()->route('detailDataKibd', ['id' => $id])->with('success', 'Data berhasil diupdate.');
@@ -209,7 +194,7 @@ class ControllerD extends Controller
 
             $deleted = Kibd::where('id', $id)->delete();
             if (!$deleted) {
-                return redirect()->route('kib_b.data_kibd')->with('error', 'Data tidak ditemukan');
+                return redirect()->route('kib_d.data_kibd')->with('error', 'Data tidak ditemukan');
             }
             return redirect()->route('datakibd')->with('success', 'Data berhasil dihapus');
         } catch (\Exception $e) {
@@ -275,7 +260,7 @@ class ControllerD extends Controller
     {
         $all = Kibd::orderBy('kode_upb')->get();
 
-        $namaFile = 'All-Data-KIB-B.xlsx';
+        $namaFile = 'All-Data-KIB-D.xlsx';
 
         $columnsall = [
             'No',
