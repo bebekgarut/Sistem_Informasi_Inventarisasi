@@ -35,6 +35,23 @@
                         <a href="{{ route('data-upb-c', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
                             class="sidebar-link">Data KIB C</a>
                     </li>
+                    <li
+                        class="sidebar-item {{ Request::is('halaman-upb-d/*') || Request::is('add-upb-d/*') || Request::is('detail-upb-d/*') || Request::is('edit-upb-d/*') ? 'active' : '' }}">
+                        <a href="{{ route('data-upb-d', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
+                            class="sidebar-link">Data KIB D</a>
+                    </li>
+
+                    <li
+                        class="sidebar-item {{ Request::is('halaman-upb-e/*') || Request::is('add-upb-e/*') || Request::is('detail-upb-e/*') || Request::is('edit-upb-e/*') ? 'active' : '' }}">
+                        <a href="{{ route('data-upb-e', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
+                            class="sidebar-link">Data KIB E</a>
+                    </li>
+
+                    <li
+                        class="sidebar-item {{ Request::is('halaman-upb-f/*') || Request::is('add-upb-f/*') || Request::is('detail-upb-f/*') || Request::is('edit-upb-f/*') ? 'active' : '' }}">
+                        <a href="{{ route('data-upb-f', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
+                            class="sidebar-link">Data KIB F</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item {{ Request::is('search-upb*') ? 'active' : '' }}">
@@ -54,6 +71,14 @@
                     <li class="sidebar-item {{ Request::is('search-upb-c/*') ? 'active' : '' }}">
                         <a href="{{ route('search-upb-c', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
                             class="sidebar-link">Cari Data KIB C</a>
+                    </li>
+                    <li class="sidebar-item {{ Request::is('search-upb-d/*') ? 'active' : '' }}">
+                        <a href="{{ route('search-upb-d', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
+                            class="sidebar-link">Cari Data KIB D</a>
+                    </li>
+                    <li class="sidebar-item {{ Request::is('search-upb-d/*') ? 'active' : '' }}">
+                        <a href="{{ route('search-upb-d', ['KODE_UPB' => Auth::user()->KODE_UPB]) }}"
+                            class="sidebar-link">Cari Data KIB D</a>
                     </li>
                 </ul>
             </li>

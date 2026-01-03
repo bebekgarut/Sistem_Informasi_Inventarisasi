@@ -31,6 +31,20 @@
                         class="sidebar-item {{ Request::is('data_kibc') || Request::is('add-c') || Request::is('detail-c/*') || Request::is('edit-c/*') ? 'active' : '' }}">
                         <a href="/data_kibc" class="sidebar-link">Data KIB C</a>
                     </li>
+                    <li
+                        class="sidebar-item {{ Request::is('data_kibd') || Request::is('add-d') || Request::is('detail-d/*') || Request::is('edit-d/*') ? 'active' : '' }}">
+                        <a href="/data_kibd" class="sidebar-link">Data KIB D</a>
+                    </li>
+
+                    <li
+                        class="sidebar-item {{ Request::is('data_kibe') || Request::is('add-e') || Request::is('detail-e/*') || Request::is('edit-e/*') ? 'active' : '' }}">
+                        <a href="/data_kibe" class="sidebar-link">Data KIB E</a>
+                    </li>
+
+                    <li
+                        class="sidebar-item {{ Request::is('data_kibf') || Request::is('add-f') || Request::is('detail-f/*') || Request::is('edit-f/*') ? 'active' : '' }}">
+                        <a href="/data_kibf" class="sidebar-link">Data KIB F</a>
+                    </li>
                 </ul>
             </li>
             <li class="sidebar-item {{ Request::is('search*') ? 'active' : '' }}">
@@ -49,6 +63,15 @@
                     </li>
                     <li class="sidebar-item {{ Request::is('search-c') ? 'active' : '' }}">
                         <a href="/search-c" class="sidebar-link">Cari Data KIB C</a>
+                    </li>
+                    <li class="sidebar-item {{ Request::is('search-d') ? 'active' : '' }}">
+                        <a href="/search-d" class="sidebar-link">Cari Data KIB D</a>
+                    </li>
+                    <li class="sidebar-item {{ Request::is('search-e') ? 'active' : '' }}">
+                        <a href="/search-e" class="sidebar-link">Cari Data KIB E</a>
+                    </li>
+                    <li class="sidebar-item {{ Request::is('search-f') ? 'active' : '' }}">
+                        <a href="/search-f" class="sidebar-link">Cari Data KIB F</a>
                     </li>
                 </ul>
             </li>
